@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRA 1 — Valentina | SPAN 1001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ac:#1A3A5C;--ac-mid:#2A5A8C;--ac-light:#D8E8F5;
+    --terra:#B34A12;--terra-light:#FAEADE;
+    --gold:#7A4A00;--gold-bg:#FEF3C7;
+    --green:#145232;--green-light:#DCFCE7;
+    --purple:#4A1F80;--purple-light:#EDE9FE;
+    --cream:#F9F7F4;--white:#FFFFFF;
+    --text:#111827;--text-mid:#374151;--text-soft:#6B7280;
+    --border:#D1D5DB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65}
+  .skip-link{position:absolute;left:-999px;top:4px;background:var(--ac);color:white;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;z-index:100}
+  .skip-link:focus{left:8px}
+  .page-header{background:var(--ac);color:white;position:relative;overflow:hidden}
+  .header-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px);pointer-events:none}
+  .header-inner{position:relative;max-width:860px;margin:auto;padding:40px 28px 34px;display:flex;align-items:flex-start;gap:18px}
+  .chapter-badge{background:var(--terra);color:white;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-top:5px;flex-shrink:0}
+  .header-text h1{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,30px);font-weight:700;line-height:1.2;color:white;margin-bottom:6px}
+  .header-text h1 em{color:#FFDA8A;font-style:italic}
+  .header-meta{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:rgba(255,255,255,.75);margin-top:10px}
+  .ira-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;margin-top:10px}
+  .main{max-width:860px;margin:auto;padding:32px 20px 60px}
+  .overview{background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:28px}
+  .overview p{color:var(--text-mid);font-size:15px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;font-size:13px;font-weight:500}
+  .pill-terra{background:var(--terra-light);color:#8A3008}
+  .pill-navy{background:var(--ac-light);color:var(--ac)}
+  .pill-gold{background:var(--gold-bg);color:var(--gold)}
+  .steps-track{display:flex;align-items:flex-start;margin-bottom:32px;gap:0}
+  .step-item{flex:1;text-align:center;position:relative}
+  .step-item::before{content:'';position:absolute;top:18px;left:calc(-50% + 20px);right:calc(50% + 20px);height:2px;background:#D1D5DB;z-index:0}
+  .step-item:first-child::before{display:none}
+  .step-circle{width:36px;height:36px;border-radius:50%;background:#D1D5DB;color:white;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative;z-index:1;transition:background .2s}
+  .step-item.active .step-circle{background:var(--terra)}
+  .step-item.active::before{background:var(--terra)}
+  .step-label{font-size:12px;font-weight:500;color:var(--text-soft);line-height:1.3}
+  .step-item.active .step-label{color:var(--terra);font-weight:600}
+  .section-card{background:white;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:26px}
+  .section-header{padding:18px 26px;display:flex;align-items:center;gap:14px;border-bottom:1.5px solid var(--border)}
+  .section-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .icon-ac{background:var(--ac-light)}
+  .icon-terra{background:var(--terra-light)}
+  .icon-green{background:var(--green-light)}
+  .icon-gold{background:var(--gold-bg)}
+  .section-header h2{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--text)}
+  .section-subtitle{font-size:13px;color:var(--text-soft);margin-top:2px}
+  .section-body{padding:22px 26px}
+  .callout{border-radius:10px;padding:15px 18px;margin-bottom:18px;border-left:4px solid;font-size:15px}
+  .callout-navy{background:var(--ac-light);border-color:var(--ac)}
+  .callout-gold{background:var(--gold-bg);border-color:#B45309}
+  .callout-purple{background:var(--purple-light);border-color:var(--purple)}
+  .callout-terra{background:var(--terra-light);border-color:var(--terra)}
+  .callout-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;display:block}
+  .callout-navy .callout-label{color:var(--ac)}
+  .callout-gold .callout-label{color:#7A4A00}
+  .callout-purple .callout-label{color:var(--purple)}
+  .callout-terra .callout-label{color:var(--terra)}
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin:16px 0}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:var(--cream);border-radius:8px;font-size:15px}
+  .check-num{width:24px;height:24px;border-radius:50%;border:2px solid var(--terra);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;color:var(--terra);font-size:11px;font-weight:700}
+  .example-block{background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:18px 22px;margin:18px 0;position:relative}
+  .example-label{position:absolute;top:-11px;left:14px;background:white;padding:2px 10px;border-radius:999px;border:1.5px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--text-soft);text-transform:uppercase}
+  .example-block p{font-size:15px;color:var(--text-mid);margin-bottom:4px;font-style:italic}
+  .example-block p:last-child{margin-bottom:0}
+  .hl{font-weight:700;font-style:normal;color:var(--terra)}
+  .hl-n{font-weight:700;font-style:normal;color:var(--ac)}
+  .grammar-note{background:var(--purple-light);border:1.5px solid #C4B5FD;border-radius:12px;padding:18px 22px;margin:18px 0}
+  .grammar-note h3{font-family:'Fraunces',serif;font-size:16px;color:var(--purple);margin-bottom:10px}
+  .grammar-note ul{padding-left:20px}
+  .grammar-note li{margin-bottom:7px;font-size:15px}
+  .grammar-note code{background:rgba(74,31,128,.1);color:var(--purple);padding:2px 7px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600}
+
+  /* ── CHARACTER CARD ── */
+  .char-card{background:linear-gradient(135deg,var(--ac) 0%,var(--ac-mid) 100%);border-radius:14px;padding:24px;margin-bottom:20px;display:flex;align-items:flex-start;gap:20px;color:white}
+  .char-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+  .char-name{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:3px}
+  .char-detail{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:4px}
+  .char-tag{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:999px;font-size:12px;padding:3px 10px;margin-top:6px;margin-right:5px}
+
+  /* ── AUDIO PLAYER ── */
+  .audio-block{background:var(--ac-light);border:2px solid var(--ac-mid);border-radius:12px;padding:18px 20px;margin:18px 0;display:flex;align-items:center;gap:16px}
+  .audio-icon{width:48px;height:48px;background:var(--ac);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:white}
+  .audio-info{flex:1}
+  .audio-title{font-weight:700;font-size:15px;color:var(--ac);margin-bottom:3px}
+  .audio-note{font-size:13px;color:var(--text-soft)}
+  .audio-placeholder{background:#E5E7EB;border-radius:6px;height:38px;margin-top:10px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-soft);font-style:italic}
+
+  /* ── MESSAGE BOX ── */
+  .message-box{background:white;border:2px solid var(--ac-light);border-radius:12px;padding:20px 24px;margin:16px 0;position:relative}
+  .message-box::before{content:'';position:absolute;left:24px;top:-10px;width:18px;height:18px;background:white;border-left:2px solid var(--ac-light);border-top:2px solid var(--ac-light);transform:rotate(45deg)}
+  .message-speaker{font-size:13px;font-weight:700;color:var(--ac);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .message-text{font-size:16px;color:var(--text);line-height:1.7}
+  .message-text .hl{color:var(--ac)}
+
+  /* ── PANORAMA BOX ── */
+  .panorama-box{background:linear-gradient(135deg,#FEF3C7 0%,#FFFBEB 100%);border:1.5px solid #FDE68A;border-radius:12px;padding:20px 24px;margin:20px 0}
+  .panorama-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#92400E;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .panorama-box h3{font-family:'Fraunces',serif;font-size:17px;color:#78350F;margin-bottom:10px}
+  .panorama-items{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .panorama-item{background:white;border-radius:8px;padding:12px 14px;border:1px solid #FDE68A}
+  .panorama-item .pi-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#92400E;margin-bottom:4px}
+  .panorama-item .pi-text{font-size:14px;color:var(--text-mid)}
+
+  /* ── FLIP CARDS ── */
+  .flip-intro{font-size:13px;color:var(--text-soft);margin:6px 0 12px;display:flex;align-items:center;gap:6px}
+  .flip-intro::before{content:'🔊';font-size:15px}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-top:4px}
+  .flip-card{height:84px;perspective:900px;cursor:pointer}
+  .flip-card:focus{outline:3px solid var(--terra);outline-offset:3px;border-radius:10px}
+  .flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+  .flip-front{background:var(--ac);color:white;border:2px solid transparent}
+  .flip-card:hover .flip-front{border-color:rgba(255,255,255,.35)}
+  .flip-back{background:var(--green);color:white;transform:rotateY(180deg)}
+  .flip-es{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:4px}
+  .flip-hint{font-size:11px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:3px}
+  .flip-en{font-size:13px;font-weight:500;line-height:1.35}
+  .flip-heard{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px}
+  .submit-box{background:var(--green-light);border:1.5px solid #86EFAC;border-radius:14px;padding:22px 26px;margin-top:28px;text-align:center}
+  .submit-box h2{font-family:'Fraunces',serif;font-size:19px;color:var(--green);margin-bottom:8px}
+  .submit-steps{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+  .submit-step{background:white;border:1.5px solid #86EFAC;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--green)}
+  .submit-step .snum{width:22px;height:22px;background:var(--green);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+  .tech-note{background:#F3F4F6;border:1.5px solid #D1D5DB;border-radius:10px;padding:15px 18px;margin-top:18px;font-size:14px;color:var(--text-mid)}
+  .tech-note h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .tech-note ul{padding-left:18px}
+  .tech-note li{margin-bottom:4px}
+  @media(max-width:600px){.header-inner{flex-direction:column;gap:12px}.section-body,.section-header{padding:16px 18px}.card-grid{grid-template-columns:repeat(2,1fr)}.char-card{flex-direction:column}.panorama-items{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="page-header" role="banner">
+  <div class="header-pattern" aria-hidden="true"></div>
+  <div class="header-inner">
+    <div class="chapter-badge" aria-label="Chapter 1">Cap. 1</div>
+    <div class="header-text">
+      <h1>¡Hola! Soy Valentina — <em>Input-Response Activity</em></h1>
+      <div class="ira-badge">🎧 Input-Response Activity</div>
+      <div class="header-meta" aria-label="Assignment details">
+        <span>🎥 Bongo Video Response</span>
+        <span>📅 Due after Week 2</span>
+        <span>🌍 Panorama: EE.UU. y Canadá</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="main-content">
+  <div class="overview" role="region" aria-label="Assignment overview">
+    <p><strong>What you'll practice:</strong> Listening to a real introduction from a Venezuelan student and responding in Spanish — using <em>ser</em>, <em>de</em>, names, and occupations from Chapter 1.</p>
+    <div class="pill-row">
+      <span class="pill pill-terra">🎧 Listening</span>
+      <span class="pill pill-navy">🗣 Speaking</span>
+      <span class="pill pill-gold">📖 Ch. 1 — ser, de, occupations</span>
+    </div>
+  </div>
+
+  <nav class="steps-track" aria-label="Assignment steps">
+    <div class="step-item active"><div class="step-circle" aria-hidden="true">1</div><div class="step-label">Read &amp;<br>Listen</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">2</div><div class="step-label">Record<br>Response</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">✓</div><div class="step-label">Mark<br>Complete</div></div>
+  </nav>
+
+  <!-- STIMULUS -->
+  <article class="section-card" aria-labelledby="stimulus-h">
+    <div class="section-header">
+      <div class="section-icon icon-ac" aria-hidden="true">💬</div>
+      <div>
+        <h2 id="stimulus-h">Step 1 — Meet Valentina</h2>
+        <div class="section-subtitle">Read her message and listen to her audio introduction</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="char-card" role="region" aria-label="Character profile: Valentina Morales">
+        <div class="char-avatar" aria-hidden="true">👩</div>
+        <div>
+          <div class="char-name">Valentina Morales</div>
+          <div class="char-detail">📍 Caracas, Venezuela → United States</div>
+          <div class="char-detail">🎓 International student, first semester</div>
+          <div>
+            <span class="char-tag">friendly</span>
+            <span class="char-tag">curious</span>
+            <span class="char-tag">loves languages</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-block" role="region" aria-label="Audio message from Valentina">
+        <div class="audio-icon" aria-hidden="true">▶</div>
+        <div class="audio-info">
+          <div class="audio-title">Valentina's Introduction — ~40 seconds</div>
+          <div class="audio-note">Native speaker recording by a Venezuelan Spanish speaker</div>
+          <div class="audio-placeholder" role="status">🎙 Audio recording coming soon</div>
+        </div>
+      </div>
+
+      <div class="message-box" role="region" aria-label="Valentina's written message">
+        <div class="message-speaker">🗣 Valentina dice:</div>
+        <div class="message-text">
+          <p>Hola, <span class="hl">me llamo Valentina</span>. <span class="hl">Soy de Caracas, Venezuela</span> — es una ciudad grande y muy bonita.</p>
+          <p style="margin-top:10px"><span class="hl">Soy estudiante</span> aquí en los Estados Unidos. Me gusta mucho el inglés, ¡pero el español es mi lengua favorita!</p>
+          <p style="margin-top:10px">En Venezuela decimos <em>"chévere"</em> cuando algo es muy bueno. ¡Las clases aquí son muy chéveres!</p>
+          <p style="margin-top:10px">Y tú, <strong>¿cómo te llamas? ¿De dónde eres? ¿Eres estudiante también?</strong></p>
+        </div>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-label">📖 New vocabulary</span>
+        <strong>chévere</strong> = great, awesome (Venezuelan slang) &nbsp;·&nbsp; <strong>lengua</strong> = language &nbsp;·&nbsp; <strong>ciudad</strong> = city &nbsp;·&nbsp; <strong>bonita</strong> = pretty/nice
+      </div>
+    </div>
+  </article>
+
+  <!-- PANORAMA -->
+  <article class="section-card" aria-labelledby="panorama-h">
+    <div class="section-header">
+      <div class="section-icon icon-gold" aria-hidden="true">🌎</div>
+      <div>
+        <h2 id="panorama-h">Cultural Spotlight — <em>Venezuela y EE.UU.</em></h2>
+        <div class="section-subtitle">Connected to Vistas Panorama: Chapter 1</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="panorama-box">
+        <div class="panorama-label">🗺 Panorama: EE.UU. y Canadá</div>
+        <h3>Spanish in the United States</h3>
+        <p style="font-size:15px;color:var(--text-mid)">The US has the second-largest Spanish-speaking population in the world. Spanish speakers come from dozens of countries — and Valentina is one of them. Each community brings its own vocabulary and expressions.</p>
+        <div class="panorama-items">
+          <div class="panorama-item">
+            <div class="pi-label">🗺 Geography</div>
+            <div class="pi-text">Venezuela is on the northern coast of South America. Its capital, Caracas, is one of the largest cities in the continent.</div>
+          </div>
+          <div class="panorama-item">
+            <div class="pi-label">🍽 Food culture</div>
+            <div class="pi-text">Arepas — corn cakes stuffed with cheese, meat, or beans — are an everyday food in Venezuela, eaten at any meal.</div>
+          </div>
+          <div class="panorama-item">
+            <div class="pi-label">💬 Language variation</div>
+            <div class="pi-text"><em>Chévere</em> is uniquely Venezuelan/Caribbean. In Mexico, people say <em>padre</em> or <em>chido</em>. In Spain, <em>guay</em>. Same meaning — different words!</div>
+          </div>
+          <div class="panorama-item">
+            <div class="pi-label">🎓 Personal connection</div>
+            <div class="pi-text">Many international students like Valentina study in the US. They navigate two languages every day — just like you're learning to do.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- RESPONSE TASK -->
+  <article class="section-card" aria-labelledby="response-h">
+    <div class="section-header">
+      <div class="section-icon icon-terra" aria-hidden="true">🎥</div>
+      <div>
+        <h2 id="response-h">Step 2 — Record Your Response</h2>
+        <div class="section-subtitle">Open Bongo in D2L and record a 30–45 second video in Spanish</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-navy">
+        <span class="callout-label">📌 How to Access Bongo</span>
+        Open this assignment in D2L and <strong>scroll to the bottom</strong>. Click the <strong>Bongo video link</strong> to start recording. You are responding <em>as if</em> you are talking directly to Valentina.
+      </div>
+
+      <p style="margin-bottom:14px;font-size:15px">Valentina asked you three questions. Your response video must include:</p>
+      <ol class="checklist">
+        <li><span class="check-num" aria-hidden="true">1</span><span><strong>Greet her and give your name</strong> — <em>Hola Valentina, me llamo…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">2</span><span><strong>Say where you are from</strong> — <em>Soy de…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">3</span><span><strong>State your occupation or major</strong> — <em>Soy estudiante de…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">4</span><span><strong>React to something she said</strong> — comment on Venezuela, <em>chévere</em>, or her classes</span></li>
+      </ol>
+
+      <div class="example-block">
+        <span class="example-label">Example response</span>
+        <p>Hola Valentina, <span class="hl">me llamo Jordan</span>.</p>
+        <p><span class="hl">Soy de Atlanta, Georgia</span>.</p>
+        <p>Soy <span class="hl">estudiante de español</span> aquí también.</p>
+        <p>¡Me gusta la palabra <em>chévere</em>! <span class="hl-n">Es muy interesante</span>.</p>
+        <p>¡Mucho gusto, Valentina!</p>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-label">💡 Remember</span>
+        This is a spontaneous response — you cannot prepare a full script. It's okay to pause, self-correct, and speak naturally. That's the goal.
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:17px;margin:22px 0 4px;color:var(--ac)">📚 Useful Phrases</h3>
+      <div class="flip-intro" role="note">Click a card to hear pronunciation and reveal the English.</div>
+      <div class="card-grid" id="phrase-grid" role="list" aria-label="Useful response phrases"></div>
+    </div>
+  </article>
+
+  <div class="submit-box" role="region" aria-label="Submission instructions">
+    <h2>✅ How to Submit</h2>
+    <p style="color:var(--green);font-size:15px">Record your response video in Bongo, then mark complete in D2L.</p>
+    <div class="submit-steps">
+      <div class="submit-step"><span class="snum" aria-hidden="true">1</span>Read &amp; listen to Valentina</div>
+      <div class="submit-step"><span class="snum" aria-hidden="true">2</span>Record response in Bongo</div>
+      <div class="submit-step"><span class="snum" aria-hidden="true">3</span>Mark as Complete in D2L</div>
+    </div>
+  </div>
+
+  <div class="tech-note" role="note">
+    <h3>⚠️ Bongo Troubleshooting</h3>
+    <ul>
+      <li>Use <strong>Google Chrome</strong> on a laptop or desktop for best results.</li>
+      <li>If the recorder is stuck, check your camera/microphone permissions.</li>
+      <li>Try an <strong>Incognito window</strong> in Chrome if issues persist.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+const phrases1 = [
+  {es:'me llamo…',            en:'my name is…'},
+  {es:'soy de…',              en:'I am from…'},
+  {es:'soy estudiante de…',   en:'I am a student of…'},
+  {es:'mucho gusto',          en:'nice to meet you'},
+  {es:'encantado / encantada',en:'delighted to meet you'},
+  {es:'es interesante',       en:'it\'s interesting'},
+  {es:'me gusta…',            en:'I like…'},
+  {es:'también',              en:'also / too'},
+  {es:'¡qué chévere!',        en:'how cool! (Venezuelan)'},
+];
+function speakES(t){if(!('speechSynthesis' in window))return;const u=new SpeechSynthesisUtterance(t.replace('/',','));u.lang='es-ES';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function buildCards(gId,vocab){const g=document.getElementById(gId);if(!g)return;vocab.forEach(item=>{const c=document.createElement('div');c.className='flip-card';c.setAttribute('role','listitem');c.setAttribute('tabindex','0');c.setAttribute('aria-label',item.es+' — '+item.en+'. Click or press Enter to hear pronunciation.');c.innerHTML=`<div class="flip-inner" aria-hidden="true"><div class="flip-front"><div class="flip-es">${item.es}</div><div class="flip-hint">🔊 tap to reveal</div></div><div class="flip-back"><div class="flip-en">${item.en}</div><div class="flip-heard">🔊 ${item.es}</div></div></div>`;function tog(){const w=c.classList.contains('flipped');c.classList.toggle('flipped');if(!w)speakES(item.es);}c.addEventListener('click',tog);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});g.appendChild(c);});}
+document.addEventListener('DOMContentLoaded',()=>{ buildCards('phrase-grid',phrases1); });
+</script>
+</body>
+</html>

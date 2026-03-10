@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRA 5 — Camila | SPAN 1001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ac:#075985;--ac-mid:#0284C7;--ac-light:#E0F2FE;
+    --terra:#B34A12;--terra-light:#FAEADE;
+    --gold:#7A4A00;--gold-bg:#FEF3C7;
+    --green:#145232;--green-light:#DCFCE7;
+    --purple:#4A1F80;--purple-light:#EDE9FE;
+    --cream:#F9F7F4;--white:#FFFFFF;
+    --text:#111827;--text-mid:#374151;--text-soft:#6B7280;
+    --border:#D1D5DB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65}
+  .skip-link{position:absolute;left:-999px;top:4px;background:var(--ac);color:white;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;z-index:100}.skip-link:focus{left:8px}
+  .page-header{background:var(--ac);color:white;position:relative;overflow:hidden}
+  .header-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px);pointer-events:none}
+  .header-inner{position:relative;max-width:860px;margin:auto;padding:40px 28px 34px;display:flex;align-items:flex-start;gap:18px}
+  .chapter-badge{background:var(--terra);color:white;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-top:5px;flex-shrink:0}
+  .header-text h1{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,30px);font-weight:700;line-height:1.2;color:white;margin-bottom:6px}
+  .header-text h1 em{color:#FFDA8A;font-style:italic}
+  .header-meta{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:rgba(255,255,255,.75);margin-top:10px}
+  .ira-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;margin-top:10px}
+  .main{max-width:860px;margin:auto;padding:32px 20px 60px}
+  .overview{background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:28px}
+  .overview p{color:var(--text-mid);font-size:15px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;font-size:13px;font-weight:500}
+  .pill-terra{background:var(--terra-light);color:#8A3008} .pill-navy{background:var(--ac-light);color:var(--ac)} .pill-gold{background:var(--gold-bg);color:var(--gold)}
+  .steps-track{display:flex;align-items:flex-start;margin-bottom:32px;gap:0}
+  .step-item{flex:1;text-align:center;position:relative}
+  .step-item::before{content:'';position:absolute;top:18px;left:calc(-50% + 20px);right:calc(50% + 20px);height:2px;background:#D1D5DB;z-index:0}
+  .step-item:first-child::before{display:none}
+  .step-circle{width:36px;height:36px;border-radius:50%;background:#D1D5DB;color:white;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative;z-index:1}
+  .step-item.active .step-circle{background:var(--terra)} .step-item.active::before{background:var(--terra)}
+  .step-label{font-size:12px;font-weight:500;color:var(--text-soft);line-height:1.3}
+  .step-item.active .step-label{color:var(--terra);font-weight:600}
+  .section-card{background:white;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:26px}
+  .section-header{padding:18px 26px;display:flex;align-items:center;gap:14px;border-bottom:1.5px solid var(--border)}
+  .section-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .icon-ac{background:var(--ac-light)} .icon-terra{background:var(--terra-light)} .icon-green{background:var(--green-light)} .icon-gold{background:var(--gold-bg)}
+  .section-header h2{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--text)}
+  .section-subtitle{font-size:13px;color:var(--text-soft);margin-top:2px}
+  .section-body{padding:22px 26px}
+  .callout{border-radius:10px;padding:15px 18px;margin-bottom:18px;border-left:4px solid;font-size:15px}
+  .callout-navy{background:var(--ac-light);border-color:var(--ac)} .callout-gold{background:var(--gold-bg);border-color:#B45309} .callout-purple{background:var(--purple-light);border-color:var(--purple)}
+  .callout-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;display:block}
+  .callout-navy .callout-label{color:var(--ac)} .callout-gold .callout-label{color:#7A4A00} .callout-purple .callout-label{color:var(--purple)}
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin:16px 0}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:var(--cream);border-radius:8px;font-size:15px}
+  .check-num{width:24px;height:24px;border-radius:50%;border:2px solid var(--terra);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;color:var(--terra);font-size:11px;font-weight:700}
+  .example-block{background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:18px 22px;margin:18px 0;position:relative}
+  .example-label{position:absolute;top:-11px;left:14px;background:white;padding:2px 10px;border-radius:999px;border:1.5px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--text-soft);text-transform:uppercase}
+  .example-block p{font-size:15px;color:var(--text-mid);margin-bottom:4px;font-style:italic}
+  .hl{font-weight:700;font-style:normal;color:var(--terra)} .hl-n{font-weight:700;font-style:normal;color:var(--ac)}
+  .grammar-note{background:var(--purple-light);border:1.5px solid #C4B5FD;border-radius:12px;padding:18px 22px;margin:18px 0}
+  .grammar-note h3{font-family:'Fraunces',serif;font-size:16px;color:var(--purple);margin-bottom:10px}
+  .grammar-note ul{padding-left:20px} .grammar-note li{margin-bottom:7px;font-size:15px}
+  .grammar-note code{background:rgba(74,31,128,.1);color:var(--purple);padding:2px 7px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600}
+  .phrase-cards{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+  .phrase-card{background:var(--ac-light);border:1.5px solid var(--ac-mid);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px}
+  .phrase-es{font-weight:700;color:var(--ac);font-size:15px;min-width:180px}
+  .phrase-en{font-size:14px;color:var(--text-mid)}
+  .char-card{background:linear-gradient(135deg,var(--ac) 0%,var(--ac-mid) 100%);border-radius:14px;padding:24px;margin-bottom:20px;display:flex;align-items:flex-start;gap:20px;color:white}
+  .char-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+  .char-name{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:3px}
+  .char-detail{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:4px}
+  .char-tag{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:999px;font-size:12px;padding:3px 10px;margin-top:6px;margin-right:5px}
+  .audio-block{background:var(--ac-light);border:2px solid var(--ac-mid);border-radius:12px;padding:18px 20px;margin:18px 0;display:flex;align-items:center;gap:16px}
+  .audio-icon{width:48px;height:48px;background:var(--ac);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:white}
+  .audio-info{flex:1} .audio-title{font-weight:700;font-size:15px;color:var(--ac);margin-bottom:3px} .audio-note{font-size:13px;color:var(--text-soft)}
+  .audio-placeholder{background:#E5E7EB;border-radius:6px;height:38px;margin-top:10px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-soft);font-style:italic}
+  .message-box{background:white;border:2px solid var(--ac-light);border-radius:12px;padding:20px 24px;margin:16px 0}
+  .message-speaker{font-size:13px;font-weight:700;color:var(--ac);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .message-text{font-size:16px;color:var(--text);line-height:1.7} .message-text .hl{color:var(--ac)}
+  .panorama-box{background:linear-gradient(135deg,#FEF3C7 0%,#FFFBEB 100%);border:1.5px solid #FDE68A;border-radius:12px;padding:20px 24px;margin:20px 0}
+  .panorama-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#92400E;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .panorama-box h3{font-family:'Fraunces',serif;font-size:17px;color:#78350F;margin-bottom:10px}
+  .panorama-items{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .panorama-item{background:white;border-radius:8px;padding:12px 14px;border:1px solid #FDE68A}
+  .panorama-item .pi-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#92400E;margin-bottom:4px}
+  .panorama-item .pi-text{font-size:14px;color:var(--text-mid)}
+  .flip-intro{font-size:13px;color:var(--text-soft);margin:6px 0 12px;display:flex;align-items:center;gap:6px}
+  .flip-intro::before{content:'🔊';font-size:15px}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-top:4px}
+  .flip-card{height:84px;perspective:900px;cursor:pointer}
+  .flip-card:focus{outline:3px solid var(--terra);outline-offset:3px;border-radius:10px}
+  .flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+  .flip-front{background:var(--ac);color:white;border:2px solid transparent}
+  .flip-card:hover .flip-front{border-color:rgba(255,255,255,.35)}
+  .flip-back{background:var(--green);color:white;transform:rotateY(180deg)}
+  .flip-es{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:4px} .flip-hint{font-size:11px;color:rgba(255,255,255,.6)}
+  .flip-en{font-size:13px;font-weight:500;line-height:1.35} .flip-heard{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px}
+  .submit-box{background:var(--green-light);border:1.5px solid #86EFAC;border-radius:14px;padding:22px 26px;margin-top:28px;text-align:center}
+  .submit-box h2{font-family:'Fraunces',serif;font-size:19px;color:var(--green);margin-bottom:8px}
+  .submit-steps{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+  .submit-step{background:white;border:1.5px solid #86EFAC;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--green)}
+  .submit-step .snum{width:22px;height:22px;background:var(--green);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+  .tech-note{background:#F3F4F6;border:1.5px solid #D1D5DB;border-radius:10px;padding:15px 18px;margin-top:18px;font-size:14px;color:var(--text-mid)}
+  .tech-note h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .tech-note ul{padding-left:18px} .tech-note li{margin-bottom:4px}
+  @media(max-width:600px){.header-inner{flex-direction:column;gap:12px}.section-body,.section-header{padding:16px 18px}.card-grid{grid-template-columns:repeat(2,1fr)}.char-card{flex-direction:column}.panorama-items{grid-template-columns:1fr}.phrase-card{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="page-header" role="banner">
+  <div class="header-pattern" aria-hidden="true"></div>
+  <div class="header-inner">
+    <div class="chapter-badge">Cap. 5</div>
+    <div class="header-text">
+      <h1>¡Ayúdame a planear mis vacaciones! Soy Camila — <em>Input-Response Activity</em></h1>
+      <div class="ira-badge">🎧 Input-Response Activity</div>
+      <div class="header-meta">
+        <span>🎥 Bongo Video Response</span>
+        <span>📅 Due after Week 10</span>
+        <span>🌍 Panorama: Puerto Rico</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="main-content">
+  <div class="overview">
+    <p><strong>What you'll practice:</strong> Listening to a Puerto Rican student describe her travel preferences and responding with recommendations — using <em>tienes que, debes, necesitas, te recomiendo</em>, weather vocabulary, and present progressive.</p>
+    <div class="pill-row">
+      <span class="pill pill-terra">🎧 Listening</span>
+      <span class="pill pill-navy">🗣 Speaking</span>
+      <span class="pill pill-gold">📖 Ch. 5 — travel, weather, recommendations</span>
+    </div>
+  </div>
+
+  <nav class="steps-track">
+    <div class="step-item active"><div class="step-circle">1</div><div class="step-label">Read &amp;<br>Listen</div></div>
+    <div class="step-item"><div class="step-circle">2</div><div class="step-label">Record<br>Response</div></div>
+    <div class="step-item"><div class="step-circle">✓</div><div class="step-label">Mark<br>Complete</div></div>
+  </nav>
+
+  <article class="section-card" aria-labelledby="stimulus-h">
+    <div class="section-header">
+      <div class="section-icon icon-ac">💬</div>
+      <div><h2 id="stimulus-h">Step 1 — Meet Camila</h2><div class="section-subtitle">Read her message and listen to her audio</div></div>
+    </div>
+    <div class="section-body">
+      <div class="char-card">
+        <div class="char-avatar">🏖</div>
+        <div>
+          <div class="char-name">Camila Torres</div>
+          <div class="char-detail">📍 San Juan, Puerto Rico</div>
+          <div class="char-detail">🎓 Tourism &amp; Hospitality student, third year</div>
+          <div><span class="char-tag">beach lover</span><span class="char-tag">foodie</span><span class="char-tag">adventurous</span></div>
+        </div>
+      </div>
+
+      <div class="audio-block">
+        <div class="audio-icon">▶</div>
+        <div class="audio-info">
+          <div class="audio-title">Camila's Travel Message — ~40 seconds</div>
+          <div class="audio-note">Native speaker recording by a Puerto Rican Spanish speaker</div>
+          <div class="audio-placeholder">🎙 Audio recording coming soon</div>
+        </div>
+      </div>
+
+      <div class="message-box">
+        <div class="message-speaker">🗣 Camila dice:</div>
+        <div class="message-text">
+          <p>¡Hola! Me llamo Camila y soy de <span class="hl">San Juan, Puerto Rico</span>.</p>
+          <p style="margin-top:10px">Quiero ir de vacaciones pero no sé adónde. <span class="hl">Me gusta mucho el clima cálido</span> y <span class="hl">me encanta la playa</span>. Estoy muy emocionada porque tengo dos semanas libres en mayo.</p>
+          <p style="margin-top:10px">En Puerto Rico hay playas hermosas como Flamenco Beach, pero quiero explorar algo nuevo. <span class="hl">Estoy buscando</span> un lugar diferente y emocionante.</p>
+          <p style="margin-top:10px"><strong>¿Adónde debo ir? ¿Qué tengo que hacer allí? ¡Dame tus recomendaciones!</strong></p>
+        </div>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-label">📖 Vocabulary</span>
+        <strong>clima cálido</strong> = warm weather &nbsp;·&nbsp; <strong>hermosas</strong> = beautiful &nbsp;·&nbsp; <strong>algo nuevo</strong> = something new &nbsp;·&nbsp; <strong>dame</strong> = give me (command)
+      </div>
+    </div>
+  </article>
+
+  <article class="section-card" aria-labelledby="panorama-h">
+    <div class="section-header">
+      <div class="section-icon icon-gold">🌍</div>
+      <div><h2 id="panorama-h">Cultural Spotlight — <em>Puerto Rico</em></h2><div class="section-subtitle">Connected to Vistas Panorama: Chapter 5</div></div>
+    </div>
+    <div class="section-body">
+      <div class="panorama-box">
+        <div class="panorama-label">🗺 Panorama: Puerto Rico</div>
+        <h3>Puerto Rico — La Isla del Encanto</h3>
+        <p style="font-size:15px;color:var(--text-mid)">Puerto Rico is a US territory in the Caribbean known for its stunning beaches, vibrant culture, and distinct variety of Spanish. Camila's desire to explore reflects a Puerto Rican spirit of adventure beyond the island's own beauty.</p>
+        <div class="panorama-items">
+          <div class="panorama-item"><div class="pi-label">🗺 Geography</div><div class="pi-text">Puerto Rico is a Caribbean island about the size of Connecticut. San Juan, its capital, is one of the oldest European-settled cities in the Americas, with a colorful colonial old town.</div></div>
+          <div class="panorama-item"><div class="pi-label">🍽 Food culture</div><div class="pi-text">Puerto Rican food features mofongo (fried plantains with garlic), arroz con gandules (rice with pigeon peas), and lechón (roasted pork) — all central to family celebrations.</div></div>
+          <div class="panorama-item"><div class="pi-label">💬 Language variation</div><div class="pi-text">Puerto Rican Spanish has a distinct Caribbean rhythm. Consonants at the end of syllables are often softened — <em>Puerto Rico</em> sounds more like <em>Pueto Rico</em> in rapid speech. <em>Boricua</em> is the proud name Puerto Ricans use for themselves.</div></div>
+          <div class="panorama-item"><div class="pi-label">🌴 Personal connection</div><div class="pi-text">Puerto Ricans are US citizens and can travel freely to the mainland. Many, like Camila, study abroad while staying deeply connected to the island's culture and identity.</div></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="section-card" aria-labelledby="response-h">
+    <div class="section-header">
+      <div class="section-icon icon-terra">🎥</div>
+      <div><h2 id="response-h">Step 2 — Record Your Response</h2><div class="section-subtitle">You are Camila's travel advisor — record a 40–55 second video in Spanish</div></div>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-navy">
+        <span class="callout-label">📌 How to Access Bongo</span>
+        Open this assignment in D2L and <strong>scroll to the bottom</strong>. Click the <strong>Bongo video link</strong>. You are giving Camila personalized travel advice!
+      </div>
+
+      <p style="margin-bottom:14px;font-size:15px">Your response must include:</p>
+      <ol class="checklist">
+        <li><span class="check-num">1</span><span><strong>Recommend a destination</strong> — be specific (a country, region, or city)</span></li>
+        <li><span class="check-num">2</span><span><strong>Give 2+ suggestions using recommendation phrases</strong> — <em>tienes que…, debes…, necesitas…,</em> or <em>te recomiendo…</em></span></li>
+        <li><span class="check-num">3</span><span><strong>Mention the weather or climate</strong> — use <em>hace calor, llueve, hace sol</em>, etc.</span></li>
+        <li><span class="check-num">4</span><span><strong>Share one thing in common</strong> — <em>A mí también me gusta / me encanta…</em></span></li>
+        <li><span class="check-num">5</span><span><strong>Use present progressive once</strong> — <em>estás buscando, estás viajando</em>, etc.</span></li>
+      </ol>
+
+      <div class="example-block">
+        <span class="example-label">Example response</span>
+        <p>Hola Camila. <span class="hl">Te recomiendo visitar Costa Rica</span>.</p>
+        <p><span class="hl-n">Tienes que ir a la playa de Manuel Antonio</span> — ¡es hermosa!</p>
+        <p><span class="hl">Debes llevar ropa ligera</span> porque hace mucho calor en mayo.</p>
+        <p>También <span class="hl">necesitas probar el gallo pinto</span> — es delicioso.</p>
+        <p>A mí también <span class="hl-n">me encanta el clima cálido</span>. ¡Estás buscando el lugar perfecto!</p>
+      </div>
+
+      <div class="grammar-note">
+        <h3>📝 Recommendation Phrases — Choose 2+</h3>
+        <ul>
+          <li><code>tienes que + inf.</code> — you have to / must</li>
+          <li><code>debes + inf.</code> — you should</li>
+          <li><code>necesitas + inf.</code> — you need to</li>
+          <li><code>te recomiendo + inf.</code> — I recommend you</li>
+        </ul>
+        <p style="font-size:14px;margin-top:10px">All four phrases are followed directly by an <strong>infinitive</strong> — the verb in its base form: <code>tienes que <em>ir</em></code>, <code>debes <em>llevar</em></code>, <code>te recomiendo <em>visitar</em></code>.</p>
+      </div>
+
+      <div class="callout callout-purple">
+        <span class="callout-label">⚠️ Conditional tense — off limits</span>
+        Stick to <strong>tienes que / debes / necesitas / te recomiendo</strong> for recommendations. Avoid <em>sería, estaría, llevaría</em> — those use the conditional tense which is not part of Chapter 5.
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:17px;margin:22px 0 4px;color:var(--ac)">📚 Travel &amp; Weather Phrases</h3>
+      <div class="flip-intro">Click a card to hear pronunciation and reveal the English.</div>
+      <div class="card-grid" id="phrase-grid" role="list"></div>
+    </div>
+  </article>
+
+  <div class="submit-box"><h2>✅ How to Submit</h2><p style="color:var(--green);font-size:15px">Record your response in Bongo, then mark complete in D2L.</p><div class="submit-steps"><div class="submit-step"><span class="snum">1</span>Read &amp; listen to Camila</div><div class="submit-step"><span class="snum">2</span>Record response in Bongo</div><div class="submit-step"><span class="snum">3</span>Mark as Complete in D2L</div></div></div>
+  <div class="tech-note"><h3>⚠️ Bongo Troubleshooting</h3><ul><li>Use <strong>Google Chrome</strong> on a laptop or desktop.</li><li>Check camera/microphone permissions if stuck.</li><li>Try an <strong>Incognito window</strong> if issues persist.</li></ul></div>
+</main>
+
+<script>
+const phrases5=[
+  {es:'tienes que visitar…',      en:'you have to visit…'},
+  {es:'debes llevar…',            en:'you should bring…'},
+  {es:'necesitas probar…',        en:'you need to try…'},
+  {es:'te recomiendo ir a…',      en:'I recommend you go to…'},
+  {es:'hace mucho calor',         en:'it\'s very hot'},
+  {es:'hace sol todos los días',  en:'it\'s sunny every day'},
+  {es:'llueve en…',               en:'it rains in…'},
+  {es:'el clima es cálido',       en:'the climate is warm'},
+  {es:'estás buscando…',          en:'you are looking for…'},
+  {es:'me encanta la playa',      en:'I love the beach'},
+];
+function speakES(t){if(!('speechSynthesis' in window))return;const u=new SpeechSynthesisUtterance(t.replace('/',','));u.lang='es-ES';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function buildCards(gId,vocab){const g=document.getElementById(gId);if(!g)return;vocab.forEach(item=>{const c=document.createElement('div');c.className='flip-card';c.setAttribute('role','listitem');c.setAttribute('tabindex','0');c.setAttribute('aria-label',item.es+' — '+item.en);c.innerHTML=`<div class="flip-inner"><div class="flip-front"><div class="flip-es">${item.es}</div><div class="flip-hint">🔊 tap to reveal</div></div><div class="flip-back"><div class="flip-en">${item.en}</div><div class="flip-heard">🔊 ${item.es}</div></div></div>`;function tog(){const w=c.classList.contains('flipped');c.classList.toggle('flipped');if(!w)speakES(item.es);}c.addEventListener('click',tog);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});g.appendChild(c);});}
+document.addEventListener('DOMContentLoaded',()=>{buildCards('phrase-grid',phrases5);});
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRA 2 — Diego | SPAN 1001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ac:#0E6B6B;--ac-mid:#1A9A9A;--ac-light:#CCEFEF;
+    --terra:#B34A12;--terra-light:#FAEADE;
+    --gold:#7A4A00;--gold-bg:#FEF3C7;
+    --green:#145232;--green-light:#DCFCE7;
+    --purple:#4A1F80;--purple-light:#EDE9FE;
+    --cream:#F9F7F4;--white:#FFFFFF;
+    --text:#111827;--text-mid:#374151;--text-soft:#6B7280;
+    --border:#D1D5DB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65}
+  .skip-link{position:absolute;left:-999px;top:4px;background:var(--ac);color:white;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;z-index:100}
+  .skip-link:focus{left:8px}
+  .page-header{background:var(--ac);color:white;position:relative;overflow:hidden}
+  .header-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px);pointer-events:none}
+  .header-inner{position:relative;max-width:860px;margin:auto;padding:40px 28px 34px;display:flex;align-items:flex-start;gap:18px}
+  .chapter-badge{background:var(--terra);color:white;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-top:5px;flex-shrink:0}
+  .header-text h1{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,30px);font-weight:700;line-height:1.2;color:white;margin-bottom:6px}
+  .header-text h1 em{color:#FFDA8A;font-style:italic}
+  .header-meta{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:rgba(255,255,255,.75);margin-top:10px}
+  .ira-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;margin-top:10px}
+  .main{max-width:860px;margin:auto;padding:32px 20px 60px}
+  .overview{background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:28px}
+  .overview p{color:var(--text-mid);font-size:15px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;font-size:13px;font-weight:500}
+  .pill-terra{background:var(--terra-light);color:#8A3008}
+  .pill-navy{background:var(--ac-light);color:var(--ac)}
+  .pill-gold{background:var(--gold-bg);color:var(--gold)}
+  .steps-track{display:flex;align-items:flex-start;margin-bottom:32px;gap:0}
+  .step-item{flex:1;text-align:center;position:relative}
+  .step-item::before{content:'';position:absolute;top:18px;left:calc(-50% + 20px);right:calc(50% + 20px);height:2px;background:#D1D5DB;z-index:0}
+  .step-item:first-child::before{display:none}
+  .step-circle{width:36px;height:36px;border-radius:50%;background:#D1D5DB;color:white;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative;z-index:1}
+  .step-item.active .step-circle{background:var(--terra)}
+  .step-item.active::before{background:var(--terra)}
+  .step-label{font-size:12px;font-weight:500;color:var(--text-soft);line-height:1.3}
+  .step-item.active .step-label{color:var(--terra);font-weight:600}
+  .section-card{background:white;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:26px}
+  .section-header{padding:18px 26px;display:flex;align-items:center;gap:14px;border-bottom:1.5px solid var(--border)}
+  .section-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .icon-ac{background:var(--ac-light)}
+  .icon-terra{background:var(--terra-light)}
+  .icon-green{background:var(--green-light)}
+  .icon-gold{background:var(--gold-bg)}
+  .section-header h2{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--text)}
+  .section-subtitle{font-size:13px;color:var(--text-soft);margin-top:2px}
+  .section-body{padding:22px 26px}
+  .callout{border-radius:10px;padding:15px 18px;margin-bottom:18px;border-left:4px solid;font-size:15px}
+  .callout-navy{background:var(--ac-light);border-color:var(--ac)}
+  .callout-gold{background:var(--gold-bg);border-color:#B45309}
+  .callout-purple{background:var(--purple-light);border-color:var(--purple)}
+  .callout-terra{background:var(--terra-light);border-color:var(--terra)}
+  .callout-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;display:block}
+  .callout-navy .callout-label{color:var(--ac)}
+  .callout-gold .callout-label{color:#7A4A00}
+  .callout-purple .callout-label{color:var(--purple)}
+  .callout-terra .callout-label{color:var(--terra)}
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin:16px 0}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:var(--cream);border-radius:8px;font-size:15px}
+  .check-num{width:24px;height:24px;border-radius:50%;border:2px solid var(--terra);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;color:var(--terra);font-size:11px;font-weight:700}
+  .example-block{background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:18px 22px;margin:18px 0;position:relative}
+  .example-label{position:absolute;top:-11px;left:14px;background:white;padding:2px 10px;border-radius:999px;border:1.5px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--text-soft);text-transform:uppercase}
+  .example-block p{font-size:15px;color:var(--text-mid);margin-bottom:4px;font-style:italic}
+  .hl{font-weight:700;font-style:normal;color:var(--terra)}
+  .hl-n{font-weight:700;font-style:normal;color:var(--ac)}
+  .grammar-note{background:var(--purple-light);border:1.5px solid #C4B5FD;border-radius:12px;padding:18px 22px;margin:18px 0}
+  .grammar-note h3{font-family:'Fraunces',serif;font-size:16px;color:var(--purple);margin-bottom:10px}
+  .grammar-note ul{padding-left:20px}
+  .grammar-note li{margin-bottom:7px;font-size:15px}
+  .grammar-note code{background:rgba(74,31,128,.1);color:var(--purple);padding:2px 7px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600}
+  .char-card{background:linear-gradient(135deg,var(--ac) 0%,var(--ac-mid) 100%);border-radius:14px;padding:24px;margin-bottom:20px;display:flex;align-items:flex-start;gap:20px;color:white}
+  .char-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+  .char-name{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:3px}
+  .char-detail{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:4px}
+  .char-tag{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:999px;font-size:12px;padding:3px 10px;margin-top:6px;margin-right:5px}
+  .audio-block{background:var(--ac-light);border:2px solid var(--ac-mid);border-radius:12px;padding:18px 20px;margin:18px 0;display:flex;align-items:center;gap:16px}
+  .audio-icon{width:48px;height:48px;background:var(--ac);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:white}
+  .audio-info{flex:1}
+  .audio-title{font-weight:700;font-size:15px;color:var(--ac);margin-bottom:3px}
+  .audio-note{font-size:13px;color:var(--text-soft)}
+  .audio-placeholder{background:#E5E7EB;border-radius:6px;height:38px;margin-top:10px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-soft);font-style:italic}
+  .message-box{background:white;border:2px solid var(--ac-light);border-radius:12px;padding:20px 24px;margin:16px 0;position:relative}
+  .message-box::before{content:'';position:absolute;left:24px;top:-10px;width:18px;height:18px;background:white;border-left:2px solid var(--ac-light);border-top:2px solid var(--ac-light);transform:rotate(45deg)}
+  .message-speaker{font-size:13px;font-weight:700;color:var(--ac);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .message-text{font-size:16px;color:var(--text);line-height:1.7}
+  .message-text .hl{color:var(--ac)}
+  .panorama-box{background:linear-gradient(135deg,#FEF3C7 0%,#FFFBEB 100%);border:1.5px solid #FDE68A;border-radius:12px;padding:20px 24px;margin:20px 0}
+  .panorama-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#92400E;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .panorama-box h3{font-family:'Fraunces',serif;font-size:17px;color:#78350F;margin-bottom:10px}
+  .panorama-items{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .panorama-item{background:white;border-radius:8px;padding:12px 14px;border:1px solid #FDE68A}
+  .panorama-item .pi-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#92400E;margin-bottom:4px}
+  .panorama-item .pi-text{font-size:14px;color:var(--text-mid)}
+  .flip-intro{font-size:13px;color:var(--text-soft);margin:6px 0 12px;display:flex;align-items:center;gap:6px}
+  .flip-intro::before{content:'🔊';font-size:15px}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-top:4px}
+  .flip-card{height:84px;perspective:900px;cursor:pointer}
+  .flip-card:focus{outline:3px solid var(--terra);outline-offset:3px;border-radius:10px}
+  .flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+  .flip-front{background:var(--ac);color:white;border:2px solid transparent}
+  .flip-card:hover .flip-front{border-color:rgba(255,255,255,.35)}
+  .flip-back{background:var(--green);color:white;transform:rotateY(180deg)}
+  .flip-es{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:4px}
+  .flip-hint{font-size:11px;color:rgba(255,255,255,.6)}
+  .flip-en{font-size:13px;font-weight:500;line-height:1.35}
+  .flip-heard{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px}
+  .submit-box{background:var(--green-light);border:1.5px solid #86EFAC;border-radius:14px;padding:22px 26px;margin-top:28px;text-align:center}
+  .submit-box h2{font-family:'Fraunces',serif;font-size:19px;color:var(--green);margin-bottom:8px}
+  .submit-steps{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+  .submit-step{background:white;border:1.5px solid #86EFAC;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--green)}
+  .submit-step .snum{width:22px;height:22px;background:var(--green);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+  .tech-note{background:#F3F4F6;border:1.5px solid #D1D5DB;border-radius:10px;padding:15px 18px;margin-top:18px;font-size:14px;color:var(--text-mid)}
+  .tech-note h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .tech-note ul{padding-left:18px}
+  .tech-note li{margin-bottom:4px}
+  @media(max-width:600px){.header-inner{flex-direction:column;gap:12px}.section-body,.section-header{padding:16px 18px}.card-grid{grid-template-columns:repeat(2,1fr)}.char-card{flex-direction:column}.panorama-items{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="page-header" role="banner">
+  <div class="header-pattern" aria-hidden="true"></div>
+  <div class="header-inner">
+    <div class="chapter-badge" aria-label="Chapter 2">Cap. 2</div>
+    <div class="header-text">
+      <h1>¡Hola desde Madrid! Soy Diego — <em>Input-Response Activity</em></h1>
+      <div class="ira-badge">🎧 Input-Response Activity</div>
+      <div class="header-meta">
+        <span>🎥 Bongo Video Response</span>
+        <span>📅 Due after Week 4</span>
+        <span>🌍 Panorama: España</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="main-content">
+  <div class="overview" role="region" aria-label="Assignment overview">
+    <p><strong>What you'll practice:</strong> Listening to a Spanish student talk about his schedule and responding with your own — using days of the week, times (<em>a las…, de la mañana/tarde/noche</em>), <em>estar</em> + location, and a -ar verb activity.</p>
+    <div class="pill-row">
+      <span class="pill pill-terra">🎧 Listening</span>
+      <span class="pill pill-navy">🗣 Speaking</span>
+      <span class="pill pill-gold">📖 Ch. 2 — schedule, days, time, estar</span>
+    </div>
+  </div>
+
+  <nav class="steps-track" aria-label="Assignment steps">
+    <div class="step-item active"><div class="step-circle" aria-hidden="true">1</div><div class="step-label">Read &amp;<br>Listen</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">2</div><div class="step-label">Record<br>Response</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">✓</div><div class="step-label">Mark<br>Complete</div></div>
+  </nav>
+
+  <article class="section-card" aria-labelledby="stimulus-h">
+    <div class="section-header">
+      <div class="section-icon icon-ac" aria-hidden="true">💬</div>
+      <div>
+        <h2 id="stimulus-h">Step 1 — Meet Diego</h2>
+        <div class="section-subtitle">Read his message and listen to his audio</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="char-card" role="region" aria-label="Character profile: Diego Fernández">
+        <div class="char-avatar" aria-hidden="true">👨‍🎓</div>
+        <div>
+          <div class="char-name">Diego Fernández</div>
+          <div class="char-detail">📍 Madrid, España</div>
+          <div class="char-detail">🎓 History &amp; Economics student, Universidad Complutense</div>
+          <div>
+            <span class="char-tag">curious</span>
+            <span class="char-tag">coffee addict</span>
+            <span class="char-tag">night owl</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-block">
+        <div class="audio-icon" aria-hidden="true">▶</div>
+        <div class="audio-info">
+          <div class="audio-title">Diego's Schedule Message — ~40 seconds</div>
+          <div class="audio-note">Native speaker recording by a Spanish speaker from Spain</div>
+          <div class="audio-placeholder">🎙 Audio recording coming soon</div>
+        </div>
+      </div>
+
+      <div class="message-box">
+        <div class="message-speaker">🗣 Diego dice:</div>
+        <div class="message-text">
+          <p>¡Hola! Me llamo Diego y <span class="hl">soy de Madrid</span>. Estudio en la Universidad Complutense.</p>
+          <p style="margin-top:10px">Tengo clases <span class="hl">los lunes, miércoles y viernes</span>. La clase de historia es <span class="hl">a las diez de la mañana</span> y la clase de economía es <span class="hl">a las tres de la tarde</span>. Los martes estoy en la biblioteca.</p>
+          <p style="margin-top:10px">En España, almorzamos muy tarde — <em>a las dos o las tres</em>. ¡Es diferente a otros países, no?</p>
+          <p style="margin-top:10px"><strong>¿Cuántas clases tienes tú? ¿Tienes clases por la mañana o por la tarde?</strong></p>
+        </div>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-label">📖 Vocabulary</span>
+        <strong>almorzamos</strong> = we eat lunch &nbsp;·&nbsp; <strong>biblioteca</strong> = library &nbsp;·&nbsp; <strong>tarde</strong> = late / afternoon &nbsp;·&nbsp; <strong>países</strong> = countries
+      </div>
+    </div>
+  </article>
+
+  <article class="section-card" aria-labelledby="panorama-h">
+    <div class="section-header">
+      <div class="section-icon icon-gold" aria-hidden="true">🌍</div>
+      <div>
+        <h2 id="panorama-h">Cultural Spotlight — <em>España</em></h2>
+        <div class="section-subtitle">Connected to Vistas Panorama: Chapter 2</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="panorama-box">
+        <div class="panorama-label">🗺 Panorama: España</div>
+        <h3>University Life in Spain</h3>
+        <p style="font-size:15px;color:var(--text-mid)">Spanish universities operate on a very different schedule than American ones. Diego's day-to-day life reflects some of those cultural differences.</p>
+        <div class="panorama-items">
+          <div class="panorama-item">
+            <div class="pi-label">🗺 Geography</div>
+            <div class="pi-text">Madrid is Spain's capital and largest city. The Universidad Complutense, where Diego studies, is one of the oldest universities in the world, founded in 1293.</div>
+          </div>
+          <div class="panorama-item">
+            <div class="pi-label">🍽 Food culture</div>
+            <div class="pi-text">Lunch (el almuerzo) is the biggest meal in Spain, eaten between 2–4 PM. Dinner is usually after 9 PM — very different from American meal times.</div>
+          </div>
+          <div class="panorama-item">
+            <div class="pi-label">💬 Language variation</div>
+            <div class="pi-text">In Spain, <em>vosotros</em> is used for "you all" — Diego might say <em>¿cuántas clases tenéis?</em> In Latin America, everyone uses <em>ustedes</em> instead.</div>
+          </div>
+          <div class="panorama-item">
+            <div class="pi-label">🎓 Personal connection</div>
+            <div class="pi-text">Spanish students often stay at home during university (rather than living on campus). Diego commutes to his university every day from his family's apartment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="section-card" aria-labelledby="response-h">
+    <div class="section-header">
+      <div class="section-icon icon-terra" aria-hidden="true">🎥</div>
+      <div>
+        <h2 id="response-h">Step 2 — Record Your Response</h2>
+        <div class="section-subtitle">Open Bongo in D2L and record a 30–50 second video in Spanish</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-navy">
+        <span class="callout-label">📌 How to Access Bongo</span>
+        Open this assignment in D2L and <strong>scroll to the bottom</strong>. Click the <strong>Bongo video link</strong>. You are responding to Diego's question about your schedule.
+      </div>
+
+      <p style="margin-bottom:14px;font-size:15px">Your response must include:</p>
+      <ol class="checklist">
+        <li><span class="check-num" aria-hidden="true">1</span><span><strong>Answer Diego's question</strong> — how many classes do you have?</span></li>
+        <li><span class="check-num" aria-hidden="true">2</span><span><strong>Name one class, with day and time</strong> — <em>La clase de [subject] es los [day] a las [time]</em></span></li>
+        <li><span class="check-num" aria-hidden="true">3</span><span><strong>State where you are on a specific day</strong> — use <em>estar</em> + location word</span></li>
+        <li><span class="check-num" aria-hidden="true">4</span><span><strong>Name one activity you do</strong> — use any -ar verb (estudiar, trabajar, caminar, etc.)</span></li>
+        <li><span class="check-num" aria-hidden="true">5</span><span><strong>React to something Diego said</strong> — the late lunch, his schedule, or Madrid</span></li>
+      </ol>
+
+      <div class="example-block">
+        <span class="example-label">Example response</span>
+        <p>Hola Diego. <span class="hl">Tengo cuatro clases</span> este semestre.</p>
+        <p>La clase de español es <span class="hl">los lunes y miércoles a las once de la mañana</span>.</p>
+        <p>Los viernes <span class="hl-n">estoy en la biblioteca</span> — ¡yo también!</p>
+        <p><span class="hl">Estudio mucho</span> los fines de semana.</p>
+        <p>¡Me parece interesante que almuercen tan tarde en España!</p>
+      </div>
+
+      <div class="grammar-note">
+        <h3>📝 Grammar Reminder: <em>estar</em> + location</h3>
+        <p style="font-size:15px;margin-bottom:10px">Use <strong>estar</strong> (not <em>ser</em>) to say <em>where</em> someone or something is.</p>
+        <ul>
+          <li><code>Estoy en la clase</code> — I'm in class</li>
+          <li><code>Estoy en la biblioteca</code> — I'm in the library</li>
+          <li><code>Estoy en el trabajo</code> — I'm at work</li>
+          <li><code>Estoy en casa</code> — I'm at home</li>
+        </ul>
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:17px;margin:22px 0 4px;color:var(--ac)">📚 Time &amp; Schedule Phrases</h3>
+      <div class="flip-intro">Click a card to hear pronunciation and reveal the English.</div>
+      <div class="card-grid" id="phrase-grid" role="list"></div>
+    </div>
+  </article>
+
+  <div class="submit-box">
+    <h2>✅ How to Submit</h2>
+    <p style="color:var(--green);font-size:15px">Record your response in Bongo, then mark complete in D2L.</p>
+    <div class="submit-steps">
+      <div class="submit-step"><span class="snum">1</span>Read &amp; listen to Diego</div>
+      <div class="submit-step"><span class="snum">2</span>Record response in Bongo</div>
+      <div class="submit-step"><span class="snum">3</span>Mark as Complete in D2L</div>
+    </div>
+  </div>
+  <div class="tech-note"><h3>⚠️ Bongo Troubleshooting</h3><ul><li>Use <strong>Google Chrome</strong> on a laptop or desktop.</li><li>Check camera/microphone permissions if the recorder is stuck.</li><li>Try an <strong>Incognito window</strong> if issues persist.</li></ul></div>
+</main>
+
+<script>
+const phrases2=[
+  {es:'a las ocho de la mañana',   en:'at 8 in the morning'},
+  {es:'a las tres de la tarde',     en:'at 3 in the afternoon'},
+  {es:'a las nueve de la noche',    en:'at 9 at night'},
+  {es:'los lunes y miércoles',      en:'on Mondays and Wednesdays'},
+  {es:'los fines de semana',        en:'on weekends'},
+  {es:'estoy en la biblioteca',     en:'I\'m in the library'},
+  {es:'estoy en la cafetería',      en:'I\'m in the cafeteria'},
+  {es:'tengo clase de…',            en:'I have a class in…'},
+  {es:'estudio mucho',              en:'I study a lot'},
+  {es:'trabajo los martes',         en:'I work on Tuesdays'},
+];
+function speakES(t){if(!('speechSynthesis' in window))return;const u=new SpeechSynthesisUtterance(t.replace('/',','));u.lang='es-ES';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function buildCards(gId,vocab){const g=document.getElementById(gId);if(!g)return;vocab.forEach(item=>{const c=document.createElement('div');c.className='flip-card';c.setAttribute('role','listitem');c.setAttribute('tabindex','0');c.setAttribute('aria-label',item.es+' — '+item.en);c.innerHTML=`<div class="flip-inner"><div class="flip-front"><div class="flip-es">${item.es}</div><div class="flip-hint">🔊 tap to reveal</div></div><div class="flip-back"><div class="flip-en">${item.en}</div><div class="flip-heard">🔊 ${item.es}</div></div></div>`;function tog(){const w=c.classList.contains('flipped');c.classList.toggle('flipped');if(!w)speakES(item.es);}c.addEventListener('click',tog);c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});g.appendChild(c);});}
+document.addEventListener('DOMContentLoaded',()=>{buildCards('phrase-grid',phrases2);});
+</script>
+</body>
+</html>
