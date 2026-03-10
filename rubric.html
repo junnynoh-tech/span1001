@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Submission Rubric | SPAN 1001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:#4B0082;
+    --purple-mid:#7B3FBF;
+    --purple-light:#f3e8ff;
+    --purple-border:#c4b5fd;
+    --l4:#145232;  --l4-bg:#DCFCE7;  --l4-border:#86EFAC;
+    --l3:#0E6B6B;  --l3-bg:#CCEFEF;  --l3-border:#5EBBBB;
+    --l2:#7A4A00;  --l2-bg:#FEF3C7;  --l2-border:#FCD34D;
+    --l1:#9B2054;  --l1-bg:#FCE4EE;  --l1-border:#F9A8D4;
+    --penalty:#B34A12; --penalty-bg:#FAEADE; --penalty-border:#FDBA74;
+    --cream:#F9F7F4;
+    --text:#111827; --text-mid:#374151; --text-soft:#6B7280;
+    --border:#D1D5DB;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:15px;line-height:1.6}
+
+  /* ── BACK NAV ── */
+  .back-nav{background:rgba(0,0,0,.18);padding:10px 28px;display:flex;align-items:center}
+  .back-nav a{color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px;transition:color .2s}
+  .back-nav a:hover{color:#fff}
+  .back-nav a::before{content:'←';font-size:16px}
+
+  /* ── HEADER ── */
+  .page-header{background:var(--purple);color:white;position:relative;overflow:hidden}
+  .header-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px);pointer-events:none}
+  .header-inner{position:relative;max-width:960px;margin:auto;padding:36px 28px 30px}
+  .header-inner h1{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,32px);font-weight:700;line-height:1.2;margin-bottom:6px}
+  .header-inner h1 em{color:#FFDA8A;font-style:italic}
+  .header-meta{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:rgba(255,255,255,.75);margin-top:10px}
+  .total-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 16px;font-size:13px;font-weight:600;margin-top:10px}
+
+  /* ── MAIN ── */
+  .main{max-width:960px;margin:auto;padding:32px 20px 60px}
+
+  /* ── INTRO CARD ── */
+  .intro-card{background:white;border:1.5px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+  .intro-card p{color:var(--text-mid);font-size:15px;margin-bottom:8px}
+  .intro-card p:last-child{margin-bottom:0}
+  .level-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .legend-pill{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid}
+  .lp-4{background:var(--l4-bg);color:var(--l4);border-color:var(--l4-border)}
+  .lp-3{background:var(--l3-bg);color:var(--l3);border-color:var(--l3-border)}
+  .lp-2{background:var(--l2-bg);color:var(--l2);border-color:var(--l2-border)}
+  .lp-1{background:var(--l1-bg);color:var(--l1);border-color:var(--l1-border)}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .dot-4{background:var(--l4)} .dot-3{background:var(--l3)} .dot-2{background:var(--l2)} .dot-1{background:var(--l1)}
+
+  /* ── RUBRIC SECTIONS ── */
+  .rubric-section{background:white;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px}
+  .section-header{padding:16px 22px;display:flex;align-items:center;gap:14px;border-bottom:1.5px solid var(--border);background:var(--purple-light)}
+  .section-icon{width:44px;height:44px;background:var(--purple);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;color:white}
+  .section-title-group{flex:1}
+  .section-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--purple)}
+  .section-subtitle{font-size:13px;color:var(--text-soft);margin-top:2px}
+  .section-pts{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--purple);white-space:nowrap}
+
+  /* ── LEVELS GRID ── */
+  .levels-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .level-cell{padding:16px 18px;border-right:1px solid var(--border);position:relative}
+  .level-cell:last-child{border-right:none}
+  .level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1.5px solid}
+  .level-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .level-pts{font-family:'Fraunces',serif;font-size:17px;font-weight:700}
+  .level-desc{font-size:13.5px;color:var(--text-mid);line-height:1.55}
+
+  .cell-4{background:var(--l4-bg)}
+  .cell-4 .level-header{border-color:var(--l4-border)}
+  .cell-4 .level-label{color:var(--l4)}
+  .cell-4 .level-pts{color:var(--l4)}
+
+  .cell-3{background:var(--l3-bg)}
+  .cell-3 .level-header{border-color:var(--l3-border)}
+  .cell-3 .level-label{color:var(--l3)}
+  .cell-3 .level-pts{color:var(--l3)}
+
+  .cell-2{background:var(--l2-bg)}
+  .cell-2 .level-header{border-color:var(--l2-border)}
+  .cell-2 .level-label{color:var(--l2)}
+  .cell-2 .level-pts{color:var(--l2)}
+
+  .cell-1{background:var(--l1-bg)}
+  .cell-1 .level-header{border-color:var(--l1-border)}
+  .cell-1 .level-label{color:var(--l1)}
+  .cell-1 .level-pts{color:var(--l1)}
+
+  /* ── WHAT THIS MEANS ROW ── */
+  .what-row{padding:12px 18px;background:#FAFAFA;border-top:1px dashed var(--border);font-size:13px;color:var(--text-soft)}
+  .what-row strong{color:var(--purple);font-weight:600}
+
+  /* ── PENALTY BOX ── */
+  .penalty-box{background:var(--penalty-bg);border:2px solid var(--penalty-border);border-radius:12px;padding:18px 22px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px}
+  .penalty-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+  .penalty-box h3{font-family:'Fraunces',serif;font-size:16px;color:var(--penalty);margin-bottom:6px}
+  .penalty-box p{font-size:14px;color:var(--text-mid);line-height:1.6}
+
+  /* ── SCORE SUMMARY ── */
+  .score-summary{background:white;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px}
+  .score-summary-header{background:var(--purple);color:white;padding:14px 22px;font-family:'Fraunces',serif;font-size:18px;font-weight:700}
+  .score-table{width:100%;border-collapse:collapse}
+  .score-table th{background:var(--purple-light);color:var(--purple);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:10px 18px;text-align:left;border-bottom:1.5px solid var(--purple-border)}
+  .score-table td{padding:11px 18px;font-size:14px;border-bottom:1px solid var(--border)}
+  .score-table tr:last-child td{border-bottom:none;font-weight:700;background:var(--purple-light);color:var(--purple);font-size:15px}
+  .score-table .pts{font-family:'Fraunces',serif;font-weight:700;color:var(--purple)}
+
+  /* ── OVERALL LEVELS ── */
+  .overall-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:0;padding:16px 22px;background:#FAFAFA;border-top:1.5px solid var(--border)}
+  .overall-cell{border-radius:8px;padding:12px 14px;text-align:center;border:1.5px solid}
+  .overall-cell .oc-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+  .overall-cell .oc-pts{font-family:'Fraunces',serif;font-size:16px;font-weight:700;margin-bottom:2px}
+  .overall-cell .oc-desc{font-size:12px;color:var(--text-soft)}
+  .oc-4{background:var(--l4-bg);border-color:var(--l4-border);color:var(--l4)}
+  .oc-3{background:var(--l3-bg);border-color:var(--l3-border);color:var(--l3)}
+  .oc-2{background:var(--l2-bg);border-color:var(--l2-border);color:var(--l2)}
+  .oc-1{background:var(--l1-bg);border-color:var(--l1-border);color:var(--l1)}
+
+  /* ── TECH NOTE ── */
+  .tech-note{background:#F3F4F6;border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--text-mid)}
+  .tech-note h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .tech-note ul{padding-left:18px}
+  .tech-note li{margin-bottom:4px}
+
+  @media(max-width:700px){
+    .levels-grid{grid-template-columns:1fr 1fr}
+    .level-cell:nth-child(2){border-right:none}
+    .level-cell:nth-child(1),.level-cell:nth-child(2){border-bottom:1px solid var(--border)}
+    .overall-grid{grid-template-columns:1fr 1fr}
+    .header-inner{padding:28px 18px 24px}
+  }
+  @media(max-width:480px){
+    .levels-grid{grid-template-columns:1fr}
+    .level-cell{border-right:none;border-bottom:1px solid var(--border)}
+    .level-cell:last-child{border-bottom:none}
+    .overall-grid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header" role="banner">
+  <div class="header-pattern" aria-hidden="true"></div>
+  <nav class="back-nav" aria-label="Site navigation">
+    <a href="index.html">Back to SPAN1001 Home</a>
+  </nav>
+  <div class="header-inner">
+    <h1>Video Submission Rubric — <em>SPAN 1001</em></h1>
+    <div class="total-badge">🎯 25 points total</div>
+    <div class="header-meta">
+      <span>📹 Bongo Video Assignments</span>
+      <span>🎓 ACTFL Novice-Low / Novice-Mid</span>
+      <span>🌱 Elementary Spanish I</span>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="main-content">
+
+  <!-- INTRO -->
+  <div class="intro-card" role="region" aria-label="Rubric overview">
+    <p>Your video will be evaluated across <strong>five areas</strong> that reflect real communication skills. Each level describes what your performance looks and sounds like — read the full row for your category before recording.</p>
+    <p style="margin-top:6px">At the Novice level, the goal is <strong>comprehensible communication</strong>, not perfection. Being understood matters more than having zero errors.</p>
+    <div class="level-legend" role="list" aria-label="Performance levels">
+      <div class="legend-pill lp-4" role="listitem"><div class="legend-dot dot-4"></div>Level 4 — Exceeds</div>
+      <div class="legend-pill lp-3" role="listitem"><div class="legend-dot dot-3"></div>Level 3 — Meets</div>
+      <div class="legend-pill lp-2" role="listitem"><div class="legend-dot dot-2"></div>Level 2 — Approaching</div>
+      <div class="legend-pill lp-1" role="listitem"><div class="legend-dot dot-1"></div>Level 1 — Beginning</div>
+    </div>
+  </div>
+
+  <!-- ── CRITERION 1: CONTENT / COMPLETION ── -->
+  <section class="rubric-section" aria-labelledby="c1-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">✅</div>
+      <div class="section-title-group">
+        <div class="section-title" id="c1-title">Content &amp; Completion</div>
+        <div class="section-subtitle">Did you answer all parts of the prompt with enough detail?</div>
+      </div>
+      <div class="section-pts" aria-label="7 points">7 pts</div>
+    </div>
+    <div class="levels-grid" role="list">
+      <div class="level-cell cell-4" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 4</span>
+          <span class="level-pts">7</span>
+        </div>
+        <p class="level-desc">All parts of the prompt are addressed fully and with detail or elaboration. Meets or exceeds the time requirement.</p>
+      </div>
+      <div class="level-cell cell-3" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 3</span>
+          <span class="level-pts">6</span>
+        </div>
+        <p class="level-desc">Most parts of the prompt are addressed with some detail. Meets the time requirement.</p>
+      </div>
+      <div class="level-cell cell-2" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 2</span>
+          <span class="level-pts">5.5</span>
+        </div>
+        <p class="level-desc">Some parts of the prompt are missing or only briefly touched. Little detail or elaboration. Under the time requirement.</p>
+      </div>
+      <div class="level-cell cell-1" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 1</span>
+          <span class="level-pts">4.5</span>
+        </div>
+        <p class="level-desc">Most parts of the prompt are incomplete or not addressed. No elaboration. Significantly under the time requirement.</p>
+      </div>
+    </div>
+    <div class="what-row"><strong>To score a 7:</strong> Answer every question in the prompt. Add at least one extra detail beyond the minimum (a reason, an example, a reaction).</div>
+  </section>
+
+  <!-- ── CRITERION 2: COMPREHENSIBILITY ── -->
+  <section class="rubric-section" aria-labelledby="c2-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🗣</div>
+      <div class="section-title-group">
+        <div class="section-title" id="c2-title">Comprehensibility &amp; Language Control</div>
+        <div class="section-subtitle">Can a listener understand you? Are your words and structures used correctly?</div>
+      </div>
+      <div class="section-pts" aria-label="5 points">5 pts</div>
+    </div>
+    <div class="levels-grid" role="list">
+      <div class="level-cell cell-4" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 4</span>
+          <span class="level-pts">5</span>
+        </div>
+        <p class="level-desc">Understood without difficulty. Minor vocabulary or grammar errors that do not affect meaning. No English needed.</p>
+      </div>
+      <div class="level-cell cell-3" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 3</span>
+          <span class="level-pts">4</span>
+        </div>
+        <p class="level-desc">Understood with little difficulty. 1–2 moments where clarification would help. Rarely uses English to fill gaps.</p>
+      </div>
+      <div class="level-cell cell-2" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 2</span>
+          <span class="level-pts">3.5</span>
+        </div>
+        <p class="level-desc">Some difficulty understanding. 3–4 unclear moments. Several grammar or vocabulary errors cause minor communication breakdowns. Occasionally resorts to English.</p>
+      </div>
+      <div class="level-cell cell-1" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 1</span>
+          <span class="level-pts">3</span>
+        </div>
+        <p class="level-desc">Great difficulty understanding. Frequent errors cause significant communication breakdown. Frequently uses English words or phrases.</p>
+      </div>
+    </div>
+    <div class="what-row"><strong>Novice tip:</strong> Minor errors in endings or gender agreement are expected and okay. The key question is: does the message get through?</div>
+  </section>
+
+  <!-- ── CRITERION 3: DISCOURSE LEVEL ── -->
+  <section class="rubric-section" aria-labelledby="c3-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">💬</div>
+      <div class="section-title-group">
+        <div class="section-title" id="c3-title">Discourse Level</div>
+        <div class="section-subtitle">Do you speak in full sentences? Do you try to connect ideas?</div>
+      </div>
+      <div class="section-pts" aria-label="5 points">5 pts</div>
+    </div>
+    <div class="levels-grid" role="list">
+      <div class="level-cell cell-4" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 4</span>
+          <span class="level-pts">5</span>
+        </div>
+        <p class="level-desc">Consistently uses complete sentences. Rarely gives one- or two-word answers. Attempts 1–2 linking words (<em>y, pero, también, porque</em>).</p>
+      </div>
+      <div class="level-cell cell-3" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 3</span>
+          <span class="level-pts">4</span>
+        </div>
+        <p class="level-desc">Mostly uses complete sentences. Occasionally gives one- or two-word answers. Some attempt at linking words.</p>
+      </div>
+      <div class="level-cell cell-2" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 2</span>
+          <span class="level-pts">3.5</span>
+        </div>
+        <p class="level-desc">Mix of complete and incomplete sentences. Sometimes gives only a few words. Little to no attempt at linking ideas.</p>
+      </div>
+      <div class="level-cell cell-1" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 1</span>
+          <span class="level-pts">3</span>
+        </div>
+        <p class="level-desc">Most responses are one or two words or fragments. May produce a couple of complete sentences. No attempt to connect ideas.</p>
+      </div>
+    </div>
+    <div class="what-row"><strong>Easy win:</strong> Add <em>también</em> (also), <em>pero</em> (but), or <em>porque</em> (because) once or twice and you'll score at Level 3 or higher here.</div>
+  </section>
+
+  <!-- ── CRITERION 4: ENGAGEMENT ── -->
+  <section class="rubric-section" aria-labelledby="c4-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🌟</div>
+      <div class="section-title-group">
+        <div class="section-title" id="c4-title">Engagement</div>
+        <div class="section-subtitle">Did you follow instructions and show genuine effort or creativity?</div>
+      </div>
+      <div class="section-pts" aria-label="4 points">4 pts</div>
+    </div>
+    <div class="levels-grid" role="list">
+      <div class="level-cell cell-4" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 4</span>
+          <span class="level-pts">4</span>
+        </div>
+        <p class="level-desc">Followed all instructions. Asked a follow-up question or showed creativity in the response — went beyond the minimum.</p>
+      </div>
+      <div class="level-cell cell-3" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 3</span>
+          <span class="level-pts">3</span>
+        </div>
+        <p class="level-desc">Followed instructions. Attempted to ask a question or showed some creativity, even if brief.</p>
+      </div>
+      <div class="level-cell cell-2" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 2</span>
+          <span class="level-pts">2</span>
+        </div>
+        <p class="level-desc">Did not follow all instructions. No follow-up question asked. Little creativity with the submission.</p>
+      </div>
+      <div class="level-cell cell-1" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 1</span>
+          <span class="level-pts">1</span>
+        </div>
+        <p class="level-desc">Did not follow the instructions and/or showed no effort beyond the bare minimum.</p>
+      </div>
+    </div>
+    <div class="what-row"><strong>To score a 4:</strong> Add one genuine reaction, ask a question back, or share one detail that wasn't required. That's all it takes.</div>
+  </section>
+
+  <!-- ── CRITERION 5: PRONUNCIATION / FLUENCY ── -->
+  <section class="rubric-section" aria-labelledby="c5-title">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🔊</div>
+      <div class="section-title-group">
+        <div class="section-title" id="c5-title">Pronunciation &amp; Fluency</div>
+        <div class="section-subtitle">Are your words recognizable? Does your speech flow naturally, without being read?</div>
+      </div>
+      <div class="section-pts" aria-label="4 points">4 pts</div>
+    </div>
+    <div class="levels-grid" role="list">
+      <div class="level-cell cell-4" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 4</span>
+          <span class="level-pts">4</span>
+        </div>
+        <p class="level-desc">Most words pronounced accurately. Little English influence. A few noticeable errors that don't block meaning. Speech flows naturally. Response is not read aloud.</p>
+      </div>
+      <div class="level-cell cell-3" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 3</span>
+          <span class="level-pts">3.5</span>
+        </div>
+        <p class="level-desc">Most words recognizable despite some English influence. No major communication breakdown. Some longer pauses, but doesn't derail the message. Not read aloud.</p>
+      </div>
+      <div class="level-cell cell-2" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 2</span>
+          <span class="level-pts">3</span>
+        </div>
+        <p class="level-desc">Strong English influence. Occasional miscommunications. Comprehension affected by long pauses or flat/robotic delivery. Some portions may be read or heavily rehearsed.</p>
+      </div>
+      <div class="level-cell cell-1" role="listitem">
+        <div class="level-header">
+          <span class="level-label">Level 1</span>
+          <span class="level-pts">2.5</span>
+        </div>
+        <p class="level-desc">Many words unintelligible. Significant English influence. Listener comprehension is difficult. Frequent unfinished thoughts. Significant portions read or scripted.</p>
+      </div>
+    </div>
+    <div class="what-row"><strong>Novice tip:</strong> Pausing to think is fine and natural. What matters is that you're speaking from memory, not reading. Practice 2–3 times before recording.</div>
+  </section>
+
+  <!-- ── PENALTY NOTE ── -->
+  <div class="penalty-box" role="alert" aria-label="Important: spontaneity note">
+    <div class="penalty-icon">⚠️</div>
+    <div>
+      <h3>Authenticity &amp; Spontaneity</h3>
+      <p>Responses that are <strong>significantly read or rehearsed word-for-word</strong> may receive a <strong>3–5 point deduction</strong> from the total score. This applies to both Part 1 (your video) and Part 2 (your response). The goal is genuine communication — not a polished performance. It's okay to pause, self-correct, and speak imperfectly. That's what real language use looks like.</p>
+    </div>
+  </div>
+
+  <!-- ── SCORE SUMMARY ── -->
+  <section class="score-summary" aria-labelledby="score-title">
+    <div class="score-summary-header" id="score-title">📊 Score Summary</div>
+    <table class="score-table">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th>Max Points</th>
+          <th>Your Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>✅ Content &amp; Completion</td>
+          <td class="pts">7</td>
+          <td>_____ / 7</td>
+        </tr>
+        <tr>
+          <td>🗣 Comprehensibility &amp; Language Control</td>
+          <td class="pts">5</td>
+          <td>_____ / 5</td>
+        </tr>
+        <tr>
+          <td>💬 Discourse Level</td>
+          <td class="pts">5</td>
+          <td>_____ / 5</td>
+        </tr>
+        <tr>
+          <td>🌟 Engagement</td>
+          <td class="pts">4</td>
+          <td>_____ / 4</td>
+        </tr>
+        <tr>
+          <td>🔊 Pronunciation &amp; Fluency</td>
+          <td class="pts">4</td>
+          <td>_____ / 4</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td class="pts">25</td>
+          <td>_____ / 25</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="overall-grid" role="list" aria-label="Overall performance thresholds">
+      <div class="overall-cell oc-4" role="listitem">
+        <div class="oc-label">Level 4</div>
+        <div class="oc-pts">22–25 pts</div>
+        <div class="oc-desc">Exceeds expectations</div>
+      </div>
+      <div class="overall-cell oc-3" role="listitem">
+        <div class="oc-label">Level 3</div>
+        <div class="oc-pts">18–21 pts</div>
+        <div class="oc-desc">Meets expectations</div>
+      </div>
+      <div class="overall-cell oc-2" role="listitem">
+        <div class="oc-label">Level 2</div>
+        <div class="oc-pts">13–17 pts</div>
+        <div class="oc-desc">Approaching expectations</div>
+      </div>
+      <div class="overall-cell oc-1" role="listitem">
+        <div class="oc-label">Level 1</div>
+        <div class="oc-pts">0–12 pts</div>
+        <div class="oc-desc">Beginning level</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <div class="tech-note" role="note">
+    <h3>📋 Before You Submit</h3>
+    <ul>
+      <li>Record in a <strong>quiet space</strong> with good lighting so your face is visible.</li>
+      <li>Practice your response 2–3 times before recording — but don't memorize a script word for word.</li>
+      <li>Use <strong>Google Chrome</strong> on a laptop or desktop for Bongo recordings.</li>
+      <li>Check that your microphone and camera permissions are enabled before starting.</li>
+      <li>Watch your video back once before submitting to make sure audio is clear.</li>
+    </ul>
+  </div>
+
+</main>
+</body>
+</html>
