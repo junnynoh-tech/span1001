@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPAN 1001 — Pronunciation Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a3a6b;
+  --blue: #2a5fad;
+  --blue-light: #dceeff;
+  --blue-pale: #f0f6ff;
+  --teal: #0a6b5e;
+  --teal-light: #e0f7f4;
+  --green: #1a5c38;
+  --green-light: #e4f5ec;
+  --red: #b5302a;
+  --gray-50: #f8f9fb;
+  --gray-100: #f0f2f5;
+  --gray-200: #e2e5ea;
+  --gray-400: #636975;
+  --gray-600: #5a6070;
+  --text: #1e2228;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #eef2f8;
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* ── Header ── */
+.site-header {
+  background: var(--navy);
+  color: white;
+  padding: 20px 28px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.site-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: white;
+}
+.site-header .sub { font-size: 0.75rem; color: #c8daf5; margin-top: 2px; }
+.home-link {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.home-link:hover { color: white; background: rgba(255,255,255,0.1); }
+
+/* ── Layout ── */
+.page-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+.page-intro {
+  background: white;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  border: 1.5px solid var(--gray-200);
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+.page-intro strong { color: var(--navy); }
+
+/* ── Section heading ── */
+.section-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-400);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--gray-200);
+}
+
+/* ── Sound card ── */
+.sound-card {
+  background: white;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  scroll-margin-top: 20px;
+}
+.sound-card-hdr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 15px;
+  background: var(--gray-50);
+  border-bottom: 1.5px solid var(--gray-100);
+}
+.sound-symbol {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  color: var(--teal);
+  background: var(--teal-light);
+  border: 1.5px solid #a0ddd4;
+  border-radius: 6px;
+  padding: 1px 10px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+.sound-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+  flex: 1;
+}
+.pron-tag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 8px;
+  border-radius: 9px;
+  background: var(--teal-light);
+  color: var(--teal);
+  white-space: nowrap;
+}
+.sound-card-body {
+  padding: 13px 16px;
+}
+.sound-rule {
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+/* ── Example rows ── */
+.ex-block {
+  background: var(--blue-pale);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 7px 7px 0;
+  padding: 10px 13px;
+}
+.ex-row-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--teal);
+  margin-bottom: 5px;
+  margin-top: 4px;
+}
+.ex-row-label:first-child { margin-top: 0; }
+.ex-pair { margin-bottom: 10px; }
+.ex-pair:last-child { margin-bottom: 0; }
+.ex-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.5;
+}
+.ex-line:last-child { margin-bottom: 0; }
+.ex-sep { height: 1px; background: var(--gray-200); margin: 8px 0; }
+
+/* ── Play button ── */
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.play-btn:hover { background: var(--blue); }
+.play-btn:active { background: #0f2a50; }
+.play-btn.playing { background: var(--teal); }
+.play-btn svg { width: 12px; height: 12px; fill: currentColor; }
+
+/* ── Wrong / right colour ── */
+.wrong { color: var(--red); }
+.right { color: var(--green); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <h1>🔊 SPAN 1001 — Pronunciation Reference</h1>
+    <div class="sub">Click any play button to hear the Spanish pronunciation · Spring 2026</div>
+  </div>
+  <a href="index.html" class="home-link">⌂ Home</a>
+</header>
+
+<div class="page-wrap">
+
+  <div class="page-intro">
+    <strong>How to use this page:</strong> Your TA has flagged a pronunciation item in your feedback.
+    Find the matching sound below and click <strong>▶ Play</strong> next to any word to hear it spoken in Spanish.
+    The ❌ examples show the common English-influenced mistake; the ✅ examples show the correct Spanish sound.
+  </div>
+
+  <!-- ════ CONSONANTS ════ -->
+  <div class="section-label">Consonants</div>
+
+  <!-- h -->
+  <div class="sound-card" id="sound-h">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">h</span>
+      <span class="sound-title">Silent h</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The h in Spanish is always silent. Do not pronounce it like an English h.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>hola → [HOH-la]</span> <button class="play-btn" onclick="speak('hola')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>hola → [OH-la]</span> <button class="play-btn" onclick="speak('hola')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>hablar → [ah-BLAR]</span> <button class="play-btn" onclick="speak('hablar')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- g -->
+  <div class="sound-card" id="sound-g">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">g</span>
+      <span class="sound-title">The letter g</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">G has two sounds depending on what follows it:<br>
+        • g + a, o, u → hard G sound (like English <em>get</em>)<br>
+        • g + e, i → soft H sound (like English h)<br>
+        • gu + e, i → hard G again (the u is silent)<br>
+        • gü + e, i → hard G + W sound (the two dots mean pronounce the u)
+      </p>
+      <div class="ex-block">
+        <div class="ex-row-label">g + a/o/u → hard G</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>gato → [GAY-toh]</span> <button class="play-btn" onclick="speak('gato')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>gato → [GA-toh]</span> <button class="play-btn" onclick="speak('gato')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">g + e/i → soft H</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>gente → [GEN-teh]</span> <button class="play-btn" onclick="speak('gente')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>gente → [HEN-teh]</span> <button class="play-btn" onclick="speak('gente')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">ge → soft H</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>general → [jeh-neh-RAL]</span> <button class="play-btn" onclick="speak('general')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>general → [heh-neh-RAL]</span> <button class="play-btn" onclick="speak('general')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">gu + e/i → hard G (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>guerra → [goo-EH-ra]</span> <button class="play-btn" onclick="speak('guerra')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>guerra → [GEH-ra]</span> <button class="play-btn" onclick="speak('guerra')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">gu + e/i → hard G (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>guitarra → [goo-ee-TAH-ra]</span> <button class="play-btn" onclick="speak('guitarra')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>guitarra → [gee-TAH-ra]</span> <button class="play-btn" onclick="speak('guitarra')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- j -->
+  <div class="sound-card" id="sound-j">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">j</span>
+      <span class="sound-title">The letter j</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The Spanish j is a strong h sound — never the English j sound.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>jueves → [JOO-eh-ves]</span> <button class="play-btn" onclick="speak('jueves')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>jueves → [HWEH-bes]</span> <button class="play-btn" onclick="speak('jueves')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- c -->
+  <div class="sound-card" id="sound-c">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">c</span>
+      <span class="sound-title">The letter c</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">C has two sounds:<br>
+        • c + a, o, u → hard K sound<br>
+        • c + e, i → S sound (Latin American Spanish)<br>
+        • qu + e, i → hard K (u is silent)
+      </p>
+      <div class="ex-block">
+        <div class="ex-row-label">c + a/o/u → K sound</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>casa → [CHA-sa]</span> <button class="play-btn" onclick="speak('casa')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>casa → [KA-sa]</span> <button class="play-btn" onclick="speak('casa')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">c + o → K sound</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>como → [CHOH-moh]</span> <button class="play-btn" onclick="speak('como')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>como → [KOH-moh]</span> <button class="play-btn" onclick="speak('como')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">c + e → S sound</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>ciudad → [choo-DAD]</span> <button class="play-btn" onclick="speak('ciudad')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>ciudad → [syoo-DAD]</span> <button class="play-btn" onclick="speak('ciudad')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">c + i → S sound</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>cine → [CHEE-neh]</span> <button class="play-btn" onclick="speak('cine')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>cine → [SEE-neh]</span> <button class="play-btn" onclick="speak('cine')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">qu + e → K sound (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>que → [KWEH]</span> <button class="play-btn" onclick="speak('que')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>que → [KEH]</span> <button class="play-btn" onclick="speak('que')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">qu + i → K sound (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>quiero → [KWEE-EH-ro]</span> <button class="play-btn" onclick="speak('quiero')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>quiero → [KYEH-ro]</span> <button class="play-btn" onclick="speak('quiero')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- z -->
+  <div class="sound-card" id="sound-z">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">z</span>
+      <span class="sound-title">The letter z</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">In Latin American Spanish, z is pronounced like s — not like English z.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>taza → [TAY-za]</span> <button class="play-btn" onclick="speak('taza')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>taza → [TA-sa]</span> <button class="play-btn" onclick="speak('taza')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ñ -->
+  <div class="sound-card" id="sound-ñ">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">ñ</span>
+      <span class="sound-title">The letter ñ</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Ñ sounds like <em>ny</em> in <em>canyon</em>. It is completely different from plain n.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>año → [A-no]</span> <button class="play-btn" onclick="speak('año')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>año → [A-nyo]</span> <button class="play-btn" onclick="speak('año')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>español → [es-pa-NYOL]</span> <button class="play-btn" onclick="speak('español')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- rr -->
+  <div class="sound-card" id="sound-rr">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">rr</span>
+      <span class="sound-title">The trilled rr</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The double r (rr) and word-initial r require a trill or tap. Practice this sound separately — it takes time to develop!</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>perro (English r)</span> <button class="play-btn" onclick="speak('perro')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>perro → trilled Spanish r</span> <button class="play-btn" onclick="speak('perro')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ll/y -->
+  <div class="sound-card" id="sound-lly">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">ll/y</span>
+      <span class="sound-title">ll / y Sound</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">In Latin American Spanish, ll and y are both pronounced like English <em>y</em> in <em>yes</em>.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>ella → [EL-la]</span> <button class="play-btn" onclick="speak('ella')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>ella → [EY-ya]</span> <button class="play-btn" onclick="speak('ella')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>yo → [YO]</span> <button class="play-btn" onclick="speak('yo')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- v/b -->
+  <div class="sound-card" id="sound-vb">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">v/b</span>
+      <span class="sound-title">v and b Sound</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">In Spanish, v and b have the same soft bilabial sound — not the English v. Think of a very soft b.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>voy (hard English v)</span> <button class="play-btn" onclick="speak('voy')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>voy → soft b/v sound</span> <button class="play-btn" onclick="speak('voy')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- qu- -->
+  <div class="sound-card" id="sound-qu">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">qu-</span>
+      <span class="sound-title">qu- spelling (K sound, u silent)</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">In Spanish, qu only appears before e and i. The u is always silent — never say the u.</p>
+      <div class="ex-block">
+        <div class="ex-row-label">que → K + E (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>que → [KWEH]</span> <button class="play-btn" onclick="speak('que')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>que → [KEH]</span> <button class="play-btn" onclick="speak('que')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">quién → K + IEN (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>quién → [KWYEN]</span> <button class="play-btn" onclick="speak('quién')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>quién → [KYEN]</span> <button class="play-btn" onclick="speak('quién')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">quiero → K + IERO</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>quiero → [KWYE-ro]</span> <button class="play-btn" onclick="speak('quiero')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>quiero → [KYEH-ro]</span> <button class="play-btn" onclick="speak('quiero')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">queso → K + ESO</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>queso → [KWEH-so]</span> <button class="play-btn" onclick="speak('queso')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>queso → [KEH-so]</span> <button class="play-btn" onclick="speak('queso')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- gu- -->
+  <div class="sound-card" id="sound-gu">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">gu-</span>
+      <span class="sound-title">gu- spelling (G sound, u silent)</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Like qu-, the spelling gu before e and i keeps the hard G sound. The u is silent before e/i, but spoken before a/o/u.</p>
+      <div class="ex-block">
+        <div class="ex-row-label">gue → hard G + E (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>guerra → [goo-EH-ra]</span> <button class="play-btn" onclick="speak('guerra')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>guerra → [GEH-ra]</span> <button class="play-btn" onclick="speak('guerra')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">gui → hard G + I (u silent)</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>guitarra → [goo-ee-TAH-ra]</span> <button class="play-btn" onclick="speak('guitarra')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>guitarra → [gee-TAH-ra]</span> <button class="play-btn" onclick="speak('guitarra')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">gustar → u IS spoken (before a)</div>
+        <div class="ex-pair">
+          <div class="ex-line right">✅ <span>gustar → [goos-TAR]</span> <button class="play-btn" onclick="speak('gustar')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ VOWELS ════ -->
+  <div class="section-label">Vowels — Pure Sounds</div>
+
+  <!-- a -->
+  <div class="sound-card" id="sound-a">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">a</span>
+      <span class="sound-title">Vowel: a</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The Spanish a is a pure, open <em>ah</em> — like the a in <em>father</em>. Never <em>ay</em> or <em>uh</em>.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>gracias → [GRAY-see-us]</span> <button class="play-btn" onclick="speak('gracias')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>gracias → [GRA-syas]</span> <button class="play-btn" onclick="speak('gracias')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- e -->
+  <div class="sound-card" id="sound-e">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">e</span>
+      <span class="sound-title">Vowel: e</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The Spanish e is a crisp <em>eh</em> — like in <em>bed</em>. Avoid the English <em>ay</em> glide.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>me → [may]</span> <button class="play-btn" onclick="speak('me')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>me → [meh]</span> <button class="play-btn" onclick="speak('me')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- i -->
+  <div class="sound-card" id="sound-i">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">i</span>
+      <span class="sound-title">Vowel: i</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The Spanish i is a pure <em>ee</em> — shorter and crisper than English.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>sí → [sigh]</span> <button class="play-btn" onclick="speak('sí')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>sí → [see]</span> <button class="play-btn" onclick="speak('sí')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- o -->
+  <div class="sound-card" id="sound-o">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">o</span>
+      <span class="sound-title">Vowel: o</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The Spanish o is a clean <em>oh</em> — no <em>ow</em> glide at the end.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>no → [now]</span> <button class="play-btn" onclick="speak('no')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>no → [noh]</span> <button class="play-btn" onclick="speak('no')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- u -->
+  <div class="sound-card" id="sound-u">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">u</span>
+      <span class="sound-title">Vowel: u</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">The Spanish u is a pure <em>oo</em> — shorter than English. Note: u is silent in que, qui, gue, gui.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>mucho → [MYOO-choh]</span> <button class="play-btn" onclick="speak('mucho')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>mucho → [MOO-choh]</span> <button class="play-btn" onclick="speak('mucho')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ ACCENT MARKS ════ -->
+  <div class="section-label">Accent Marks &amp; Stress</div>
+
+  <!-- accent -->
+  <div class="sound-card" id="sound-accent">
+    <div class="sound-card-hdr">
+      <span class="sound-symbol">á/é/í</span>
+      <span class="sound-title">Accent marks — stressed syllable</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">An accent mark shows which syllable to stress. Without it, stress falls on the second-to-last syllable (words ending in a vowel, n, or s) or the last syllable otherwise. The accent overrides both rules.</p>
+      <div class="ex-block">
+        <div class="ex-row-label">á — stress on marked syllable</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>lápiz → wrong stress</span> <button class="play-btn" onclick="speak('lápiz')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>lápiz → [LA-pees] ✓ stress on LA</span> <button class="play-btn" onclick="speak('lápiz')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">í — stress on marked syllable</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>difícil → wrong stress</span> <button class="play-btn" onclick="speak('difícil')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>difícil → [dee-FEE-seel] ✓ stress on FEE</span> <button class="play-btn" onclick="speak('difícil')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">ó — stress on marked syllable</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>dólar → wrong stress</span> <button class="play-btn" onclick="speak('dólar')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>dólar → [DOH-lar] ✓ stress on DOH</span> <button class="play-btn" onclick="speak('dólar')">▶ Play</button></div>
+        </div>
+        <div class="ex-sep"></div>
+        <div class="ex-row-label">é — accent changes meaning</div>
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>esta → [ES-ta] (this)</span> <button class="play-btn" onclick="speak('esta')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>está → [es-TAH] (is / it is)</span> <button class="play-btn" onclick="speak('está')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- word stress -->
+  <div class="sound-card" id="sound-pron_word_stress">
+    <div class="sound-card-hdr">
+      <span class="sound-title">Incorrect Word Stress</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Words ending in a vowel, n, or s stress the second-to-last syllable. All others stress the last syllable. Accent marks override both rules.</p>
+      <div class="ex-block">
+        <div class="ex-pair">
+          <div class="ex-line wrong">❌ <span>hablo → [ha-BLO]</span> <button class="play-btn" onclick="speak('hablo')">▶ Play</button></div>
+          <div class="ex-line right">✅ <span>hablo → [HA-blo]</span> <button class="play-btn" onclick="speak('hablo')">▶ Play</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ FLUENCY ════ -->
+  <div class="section-label">Fluency &amp; Delivery</div>
+
+  <div class="sound-card" id="sound-pron_pauses">
+    <div class="sound-card-hdr">
+      <span class="sound-title">Long Pauses</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Try to reduce long pauses. Practice speaking sentences aloud before recording to build fluency. Record yourself and listen back — pause points are easy to hear.</p>
+    </div>
+  </div>
+
+  <div class="sound-card" id="sound-pron_robotic">
+    <div class="sound-card-hdr">
+      <span class="sound-title">Robotic / Flat Tone</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Spanish has natural melodic rises and falls. Practice reading sentences aloud with more expressive intonation — try exaggerating at first, then dial it back to sound natural.</p>
+    </div>
+  </div>
+
+  <div class="sound-card" id="sound-pron_rehearsed">
+    <div class="sound-card-hdr">
+      <span class="sound-title">Response Appears Rehearsed</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Your response sounds memorized rather than spontaneous. Try to internalize ideas and speak naturally from memory rather than reciting a script.</p>
+    </div>
+  </div>
+
+  <div class="sound-card" id="sound-pron_english_accent">
+    <div class="sound-card-hdr">
+      <span class="sound-title">Heavy English Accent</span>
+      <span class="pron-tag">Pronunciation</span>
+    </div>
+    <div class="sound-card-body">
+      <p class="sound-rule">Focus on pronouncing Spanish vowels as crisp, pure sounds. Daily listening to Spanish (podcasts, music, TV) will train your ear and naturally improve your accent over time.</p>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+function speak(word) {
+  if (!window.speechSynthesis) {
+    alert('Your browser does not support text-to-speech. Try Chrome or Edge.');
+    return;
+  }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'es-US';
+  u.rate = 0.82;
+  speechSynthesis.speak(u);
+}
+
+// Scroll to anchor on load (for deep links from Brightspace feedback)
+window.addEventListener('load', function() {
+  if (location.hash) {
+    const el = document.querySelector(location.hash);
+    if (el) setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'start'}), 300);
+  }
+});
+</script>
+</body>
+</html>

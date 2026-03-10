@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity 1 — Te Presento a… | SPAN 1001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3A5C;--navy-mid:#2A5A8C;--navy-light:#D8E8F5;
+    --terra:#B34A12;--terra-light:#FAEADE;
+    --gold:#7A4A00;--gold-bg:#FEF3C7;
+    --green:#145232;--green-light:#DCFCE7;
+    --purple:#4A1F80;--purple-light:#EDE9FE;
+    --cream:#F9F7F4;--white:#FFFFFF;
+    --text:#111827;--text-mid:#374151;--text-soft:#6B7280;
+    --border:#D1D5DB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.65}
+
+  /* ── SKIP LINK ── */
+  .skip-link{position:absolute;left:-999px;top:4px;background:var(--navy);color:white;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;z-index:100}
+  .skip-link:focus{left:8px}
+
+  /* ── HEADER ── */
+  .page-header{background:var(--navy);color:white;position:relative;overflow:hidden}
+  .header-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px),repeating-linear-gradient(-45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px);pointer-events:none}
+  .header-inner{position:relative;max-width:860px;margin:auto;padding:40px 28px 34px;display:flex;align-items:flex-start;gap:18px}
+  .chapter-badge{background:var(--terra);color:white;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-top:5px;flex-shrink:0}
+  .header-text h1{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,30px);font-weight:700;line-height:1.2;color:white;margin-bottom:6px}
+  .header-text h1 em{color:#FFDA8A;font-style:italic}
+  .header-meta{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;color:rgba(255,255,255,.75);margin-top:10px}
+
+  /* ── MAIN ── */
+  .main{max-width:860px;margin:auto;padding:32px 20px 60px}
+
+  /* ── OVERVIEW ── */
+  .overview{background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:28px}
+  .overview p{color:var(--text-mid);font-size:15px}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:999px;font-size:13px;font-weight:500}
+  .pill-terra{background:var(--terra-light);color:#8A3008}
+  .pill-navy{background:var(--navy-light);color:var(--navy)}
+  .pill-gold{background:var(--gold-bg);color:var(--gold)}
+
+  /* ── STEPS ── */
+  .steps-track{display:flex;align-items:flex-start;margin-bottom:32px;gap:0}
+  .step-item{flex:1;text-align:center;position:relative}
+  .step-item::before{content:'';position:absolute;top:18px;left:calc(-50% + 20px);right:calc(50% + 20px);height:2px;background:#D1D5DB;z-index:0}
+  .step-item:first-child::before{display:none}
+  .step-circle{width:36px;height:36px;border-radius:50%;background:#D1D5DB;color:white;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;position:relative;z-index:1;transition:background .2s}
+  .step-item.active .step-circle{background:var(--terra)}
+  .step-item.active::before{background:var(--terra)}
+  .step-label{font-size:12px;font-weight:500;color:var(--text-soft);line-height:1.3}
+  .step-item.active .step-label{color:var(--terra);font-weight:600}
+
+  /* ── SECTION CARDS ── */
+  .section-card{background:white;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:26px}
+  .section-header{padding:18px 26px;display:flex;align-items:center;gap:14px;border-bottom:1.5px solid var(--border)}
+  .section-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;aria-hidden:true}
+  .icon-terra{background:var(--terra-light)}
+  .icon-green{background:var(--green-light)}
+  .section-header h2{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--text)}
+  .section-subtitle{font-size:13px;color:var(--text-soft);margin-top:2px}
+  .section-body{padding:22px 26px}
+
+  /* ── CALLOUTS ── */
+  .callout{border-radius:10px;padding:15px 18px;margin-bottom:18px;border-left:4px solid;font-size:15px}
+  .callout-navy{background:var(--navy-light);border-color:var(--navy)}
+  .callout-gold{background:var(--gold-bg);border-color:#B45309}
+  .callout-purple{background:var(--purple-light);border-color:var(--purple)}
+  .callout-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;display:block}
+  .callout-navy .callout-label{color:var(--navy)}
+  .callout-gold .callout-label{color:#7A4A00}
+  .callout-purple .callout-label{color:var(--purple)}
+
+  /* ── CHECKLIST ── */
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin:16px 0}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:var(--cream);border-radius:8px;font-size:15px}
+  .check-num{width:24px;height:24px;border-radius:50%;border:2px solid var(--terra);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;color:var(--terra);font-size:11px;font-weight:700}
+
+  /* ── EXAMPLE ── */
+  .example-block{background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:18px 22px;margin:18px 0;position:relative}
+  .example-label{position:absolute;top:-11px;left:14px;background:white;padding:2px 10px;border-radius:999px;border:1.5px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--text-soft);text-transform:uppercase}
+  .example-block p{font-size:15px;color:var(--text-mid);margin-bottom:4px;font-style:italic}
+  .example-block p:last-child{margin-bottom:0}
+  .hl{font-weight:700;font-style:normal;color:var(--terra)}
+  .hl-n{font-weight:700;font-style:normal;color:var(--navy)}
+
+  /* ── GRAMMAR NOTE ── */
+  .grammar-note{background:var(--purple-light);border:1.5px solid #C4B5FD;border-radius:12px;padding:18px 22px;margin:18px 0}
+  .grammar-note h3{font-family:'Fraunces',serif;font-size:16px;color:var(--purple);margin-bottom:10px}
+  .grammar-note ul{padding-left:20px}
+  .grammar-note li{margin-bottom:7px;font-size:15px}
+  .grammar-note code{background:rgba(74,31,128,.1);color:var(--purple);padding:2px 7px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600}
+
+  /* ── FLIP CARDS ── */
+  .flip-intro{font-size:13px;color:var(--text-soft);margin:6px 0 12px;display:flex;align-items:center;gap:6px}
+  .flip-intro::before{content:'🔊';font-size:15px}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-top:4px}
+  .flip-card{height:84px;perspective:900px;cursor:pointer}
+  .flip-card:focus{outline:3px solid var(--terra);outline-offset:3px;border-radius:10px}
+  .flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+  .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+  .flip-front{background:var(--navy);color:white;border:2px solid transparent}
+  .flip-card:hover .flip-front{border-color:rgba(255,255,255,.35)}
+  .flip-back{background:var(--green);color:white;transform:rotateY(180deg)}
+  .flip-es{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:4px}
+  .flip-hint{font-size:11px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:3px}
+  .flip-en{font-size:13px;font-weight:500;line-height:1.35}
+  .flip-heard{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px}
+
+  /* ── SUBMIT ── */
+  .submit-box{background:var(--green-light);border:1.5px solid #86EFAC;border-radius:14px;padding:22px 26px;margin-top:28px;text-align:center}
+  .submit-box h2{font-family:'Fraunces',serif;font-size:19px;color:var(--green);margin-bottom:8px}
+  .submit-steps{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+  .submit-step{background:white;border:1.5px solid #86EFAC;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--green)}
+  .submit-step .snum{width:22px;height:22px;background:var(--green);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+
+  /* ── TECH NOTE ── */
+  .tech-note{background:#F3F4F6;border:1.5px solid #D1D5DB;border-radius:10px;padding:15px 18px;margin-top:18px;font-size:14px;color:var(--text-mid)}
+  .tech-note h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:7px}
+  .tech-note ul{padding-left:18px}
+  .tech-note li{margin-bottom:4px}
+
+  @media(max-width:600px){.header-inner{flex-direction:column;gap:12px}.section-body,.section-header{padding:16px 18px}.card-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header class="page-header" role="banner">
+  <div class="header-pattern" aria-hidden="true"></div>
+  <div class="header-inner">
+    <div class="chapter-badge" aria-label="Chapter 1">Cap. 1</div>
+    <div class="header-text">
+      <h1>Te Presento a… <em>Videos de Presentación</em></h1>
+      <div class="header-meta" aria-label="Assignment details">
+        <span>🎥 Bongo Video Assignment</span>
+        <span>📅 Due after Week 2</span>
+        <span>🎯 2 Required Parts</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="main-content">
+  <div class="overview" role="region" aria-label="Assignment overview">
+    <p><strong>What you'll practice:</strong> Introducing yourself and others using <em>ser</em>, <em>de</em>, and basic titles and occupations from Chapter 1.</p>
+    <div class="pill-row">
+      <span class="pill pill-terra">🗣 Speaking</span>
+      <span class="pill pill-navy">👥 Peer Interaction</span>
+      <span class="pill pill-gold">📖 Ch. 1 — ser, de, occupations</span>
+    </div>
+  </div>
+
+  <nav class="steps-track" aria-label="Assignment steps">
+    <div class="step-item active"><div class="step-circle" aria-hidden="true">1</div><div class="step-label">Record<br>Yourself</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">2</div><div class="step-label">Watch<br>2 Classmates</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">3</div><div class="step-label">Record<br>Response</div></div>
+    <div class="step-item"><div class="step-circle" aria-hidden="true">✓</div><div class="step-label">Mark<br>Complete</div></div>
+  </nav>
+
+  <!-- PART 1 -->
+  <article class="section-card" aria-labelledby="part1-h">
+    <div class="section-header">
+      <div class="section-icon icon-terra" aria-hidden="true">🎥</div>
+      <div>
+        <h2 id="part1-h">Part 1 — Preséntate</h2>
+        <div class="section-subtitle">Record a 30–60 second video introducing yourself in Spanish</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-navy">
+        <span class="callout-label">📌 How to Access Bongo</span>
+        Open this assignment in D2L and <strong>scroll to the bottom</strong>. Click the <strong>Bongo video link</strong> to start recording.
+      </div>
+      <p style="margin-bottom:14px;font-size:15px">Your video must include all three of the following:</p>
+      <ol class="checklist">
+        <li><span class="check-num" aria-hidden="true">1</span><span><strong>A greeting and your name</strong> — e.g., <em>Hola, me llamo…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">2</span><span><strong>Where you are from</strong> — use <em>Soy de…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">3</span><span><strong>Your title or occupation</strong> — choose one from the Word Bank below</span></li>
+      </ol>
+
+      <div class="example-block">
+        <span class="example-label">Example script</span>
+        <p>Hola. Me llamo Ana.</p>
+        <p>Soy de Georgia.</p>
+        <p>Soy <span class="hl">estudiante de español</span>.</p>
+        <p>Gracias.</p>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-label">💡 Tip</span>
+        Use your real information <em>or</em> invent a persona — be creative! The goal is fluent, natural-sounding Spanish.
+      </div>
+
+      <div class="grammar-note">
+        <h3>📝 Grammar Note: Using <em>de</em> in Spanish</h3>
+        <p style="margin-bottom:10px;font-size:15px">Think of <strong>de</strong> as "of" — it links a noun to a field of study or a place.</p>
+        <ul>
+          <li><strong>Field of study:</strong> <code>estudiante de matemáticas</code> &nbsp;·&nbsp; <code>clase de español</code></li>
+          <li><strong>Place / organization:</strong> <code>mesero de Starbucks</code> &nbsp;·&nbsp; <code>miembro de un club</code></li>
+        </ul>
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-size:17px;margin:22px 0 4px;color:var(--navy)">📚 Word Bank — Titles &amp; Occupations</h3>
+      <p style="font-size:14px;color:var(--text-soft);margin-bottom:0">Choose <em>one</em> — real or invented.</p>
+      <div class="flip-intro" role="note">Click a card to hear the Spanish pronunciation and reveal the English translation.</div>
+      <div class="card-grid" role="list" aria-label="Vocabulary flip cards — titles and occupations">
+        <!-- cards injected by JS -->
+      </div>
+    </div>
+  </article>
+
+  <!-- PART 2 -->
+  <article class="section-card" aria-labelledby="part2-h">
+    <div class="section-header">
+      <div class="section-icon icon-green" aria-hidden="true">💬</div>
+      <div>
+        <h2 id="part2-h">Part 2 — Respond to a Classmate</h2>
+        <div class="section-subtitle">Watch two classmates' videos and introduce one to the other</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-navy">
+        <span class="callout-label">📌 Before You Begin</span>
+        In Bongo, watch at least <strong>two classmates' Part 1 videos</strong>. Choose <strong>one</strong> and record a <strong>video comment</strong>.
+      </div>
+      <ol class="checklist">
+        <li><span class="check-num" aria-hidden="true">1</span><span><strong>Greet the classmate by name</strong> — <em>Hola, Carlos…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">2</span><span><strong>Introduce a third student to them</strong> — <em>Te presento a [name].</em></span></li>
+        <li><span class="check-num" aria-hidden="true">3</span><span><strong>Say where that person is from</strong> — <em>Es de…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">4</span><span><strong>State their occupation or major</strong> — <em>Es estudiante de…</em></span></li>
+        <li><span class="check-num" aria-hidden="true">5</span><span><strong>Share two similarities</strong> using <em>Ustedes son…</em> and <em>Son de…</em></span></li>
+      </ol>
+      <div class="example-block">
+        <span class="example-label">Example response</span>
+        <p>Hola, Carlos.</p>
+        <p>Te presento a Ana.</p>
+        <p>Es de Georgia. Es estudiante de español.</p>
+        <p><span class="hl">Ustedes son estudiantes.</span></p>
+        <p><span class="hl">Son de Georgia.</span></p>
+        <p>¡Chau!</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="submit-box" role="region" aria-label="Submission instructions">
+    <h2>✅ How to Submit</h2>
+    <p style="color:var(--green);font-size:15px">Complete both parts, then mark the assignment done in D2L.</p>
+    <div class="submit-steps">
+      <div class="submit-step"><span class="snum" aria-hidden="true">1</span>Record Part 1 in Bongo</div>
+      <div class="submit-step"><span class="snum" aria-hidden="true">2</span>Watch 2 classmates</div>
+      <div class="submit-step"><span class="snum" aria-hidden="true">3</span>Record Part 2 response</div>
+      <div class="submit-step"><span class="snum" aria-hidden="true">4</span>Mark as Complete in D2L</div>
+    </div>
+  </div>
+
+  <div class="tech-note" role="note">
+    <h3>⚠️ Bongo Troubleshooting</h3>
+    <ul>
+      <li>Use <strong>Google Chrome</strong> on a laptop or desktop for best results.</li>
+      <li>If the recorder is stuck, check your camera/microphone permissions.</li>
+      <li>Try an <strong>Incognito window</strong> in Chrome if issues persist.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+// ── VOCAB DATA ──
+const vocabAct1 = [
+  {es:'estudiante de español',   en:'Spanish student'},
+  {es:'estudiante de matemáticas', en:'Math student'},
+  {es:'estudiante de biología',  en:'Biology student'},
+  {es:'estudiante de ingeniería',en:'Engineering student'},
+  {es:'estudiante de negocios',  en:'Business student'},
+  {es:'estudiante de psicología',en:'Psychology student'},
+  {es:'estudiante de historia',  en:'History student'},
+  {es:'estudiante de arte',      en:'Art student'},
+  {es:'recepcionista',           en:'Receptionist'},
+  {es:'barista',                 en:'Barista'},
+  {es:'mesero / mesera',         en:'Waiter / Waitress'},
+  {es:'empleado / empleada',     en:'Employee'},
+  {es:'voluntario / voluntaria', en:'Volunteer'},
+  {es:'atleta',                  en:'Athlete'},
+  {es:'miembro de un club',      en:'Club member'},
+];
+
+// ── SPEECH ──
+function speakES(text){
+  if(!('speechSynthesis' in window)) return;
+  const utt = new SpeechSynthesisUtterance(text.replace('/',','));
+  utt.lang = 'es-ES';
+  utt.rate = 0.82;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utt);
+}
+
+// ── BUILD CARDS ──
+function buildCards(containerId, vocab){
+  const grid = document.getElementById(containerId);
+  if(!grid) return;
+  vocab.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'flip-card';
+    card.setAttribute('role','listitem');
+    card.setAttribute('tabindex','0');
+    card.setAttribute('aria-label', item.es + ' — ' + item.en + '. Click or press Enter to hear pronunciation and reveal English.');
+    card.innerHTML = `
+      <div class="flip-inner" aria-hidden="true">
+        <div class="flip-front">
+          <div class="flip-es">${item.es}</div>
+          <div class="flip-hint">🔊 tap to reveal</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-en">${item.en}</div>
+          <div class="flip-heard">🔊 ${item.es}</div>
+        </div>
+      </div>`;
+    function toggle(){
+      const wasFlipped = card.classList.contains('flipped');
+      card.classList.toggle('flipped');
+      if(!wasFlipped) speakES(item.es);
+    }
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); }});
+    grid.appendChild(card);
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // rename grid to have an id
+  const grids = document.querySelectorAll('.card-grid');
+  grids.forEach((g,i) => g.id = 'grid-'+i);
+  buildCards('grid-0', vocabAct1);
+});
+</script>
+</body>
+</html>
