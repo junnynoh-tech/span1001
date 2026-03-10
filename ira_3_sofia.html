@@ -113,6 +113,12 @@
   .tech-note{background:#F3F4F6;border:1.5px solid #D1D5DB;border-radius:10px;padding:15px 18px;margin-top:18px;font-size:14px;color:var(--text-mid)}
   .tech-note h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:7px}
   .tech-note ul{padding-left:18px} .tech-note li{margin-bottom:4px}
+
+  /* ── BACK NAV ── */
+  .back-nav{background:rgba(0,0,0,.18);padding:10px 28px;display:flex;align-items:center}
+  .back-nav a{color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px;transition:color .2s}
+  .back-nav a:hover{color:#fff}
+  .back-nav a::before{content:'←';font-size:16px}
   @media(max-width:600px){.header-inner{flex-direction:column;gap:12px}.section-body,.section-header{padding:16px 18px}.card-grid{grid-template-columns:repeat(2,1fr)}.char-card{flex-direction:column}.panorama-items{grid-template-columns:1fr}}
 </style>
 </head>
@@ -133,6 +139,9 @@
     </div>
   </div>
 </header>
+<nav class="back-nav" aria-label="Site navigation">
+  <a href="index.html">Back to SPAN1001 Home</a>
+</nav>
 
 <main class="main" id="main-content">
   <div class="overview">
