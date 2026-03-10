@@ -26,6 +26,11 @@
       margin: 0;
       font-size: 36px;
     }
+    header p {
+      margin: 8px 0 0;
+      font-size: 16px;
+      opacity: 0.85;
+    }
     main {
       margin: 50px 0;
       display: flex;
@@ -38,7 +43,7 @@
       background-color: #f3e8ff;
       color: #4B0082;
       padding: 25px 40px;
-      font-size: 22px;
+      font-size: 20px;
       border: 3px solid #7B3FBF;
       border-radius: 15px;
       text-decoration: none;
@@ -47,12 +52,23 @@
       display: inline-block;
       text-align: center;
       width: 250px;
+      line-height: 1.4;
+    }
+    .chapter-btn .char-name {
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      opacity: 0.75;
+      margin-top: 5px;
     }
     .chapter-btn:hover {
       background-color: #7B3FBF;
       color: #fff;
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+    }
+    .chapter-btn:hover .char-name {
+      opacity: 0.9;
     }
     footer {
       margin-top: 50px;
@@ -64,23 +80,34 @@
   </style>
 </head>
 <body>
-
 <header>
   <h1>Bienvenido a SPAN1001</h1>
-  <p>Haz clic en una lección para comenzar</p>
+  <p>Haz clic en una actividad para comenzar</p>
 </header>
-
 <main>
-  <a href="leccion1.html" class="chapter-btn">Lección 1: Hola, ¿qué tal?</a>
-  <a href="leccion2.html" class="chapter-btn">Lección 2: En la universidad</a>
-  <a href="leccion3.html" class="chapter-btn">Lección 3: La familia</a>
-  <a href="leccion4.html" class="chapter-btn">Lección 4: Los pasatiempos</a>
-  <a href="leccion5.html" class="chapter-btn">Lección 5: Las vacaciones</a>
+  <a href="ira_1_valentina.html" class="chapter-btn">
+    Lección 1: Hola, ¿qué tal?
+    <span class="char-name">con Valentina · Venezuela</span>
+  </a>
+  <a href="ira_2_diego.html" class="chapter-btn">
+    Lección 2: En la universidad
+    <span class="char-name">con Diego · España</span>
+  </a>
+  <a href="ira_3_sofia.html" class="chapter-btn">
+    Lección 3: La familia
+    <span class="char-name">con Sofía · Ecuador</span>
+  </a>
+  <a href="ira_4_marcos.html" class="chapter-btn">
+    Lección 4: Los pasatiempos
+    <span class="char-name">con Marcos · México</span>
+  </a>
+  <a href="ira_5_camila.html" class="chapter-btn">
+    Lección 5: Las vacaciones
+    <span class="char-name">con Camila · Puerto Rico</span>
+  </a>
 </main>
-
 <footer>
   SPAN1001 – Curso de Español para Principiantes
 </footer>
-
 </body>
 </html>
