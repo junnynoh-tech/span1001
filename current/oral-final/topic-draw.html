@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Topic Draw"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#FFFFFF">
+<title>Oral Final Topic Draw — SPAN 1001</title>
+<!-- Instructor tool for the oral final days (built 2026-11-05). Draws two topics per student: one from Chapters 1–3 (A),
+     one from Chapters 4–5 (B), always the least-used ones so every topic gets used about equally; never the same pair twice
+     in a row. Topics and questions = oral_bank.json = the student study guide. Keeps only draw counts (localStorage, today only):
+     no names, nothing about any student. Light navy theme (11-05), same as the grading tool.
+     iPad (11-05): counts + the current pair live in localStorage for today's date only, so a Safari tab reload mid-interview
+     brings the same questions back and a new day starts at zero by itself; big touch targets; Add to Home Screen = full screen. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#F7F7F5; --surf:#FFFFFF; --surf2:#F1F3F6; --teal:#1A3A6B; --text:#1F2937; --muted:#5A6472; --line:rgba(31,41,55,.14); --line2:rgba(31,41,55,.28); }  /* lighter navy theme, same as the grading tool (11-05) */
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%;touch-action:manipulation} button{-webkit-tap-highlight-color:transparent} body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.5;font-size:16px}
+  .skip{position:absolute;left:-999px;top:0;background:var(--teal);color:#fff;padding:8px 12px;font-weight:700}.skip:focus{left:0}
+  header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--surf)}
+  h1{font-family:'Source Serif 4',serif;font-size:22px;margin:0} h1 span{color:var(--muted);font-weight:400;font-size:15px;margin-left:8px}
+  main{max-width:1100px;margin:0 auto;padding:18px 22px 40px}
+  .btn{font:inherit;font-weight:700;min-height:44px;padding:8px 18px;border-radius:8px;border:1px solid var(--line2);background:var(--surf2);color:var(--text);cursor:pointer}
+  .btn.go{background:var(--teal);color:#fff;border-color:var(--teal);font-size:18px;padding:10px 26px}
+  .btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 16px}
+  .count{font-size:15px;color:var(--muted)} .count strong{color:var(--text);font-size:20px}
+  .warm{background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:8px;padding:10px 16px;margin:0 0 16px}
+  .warm p{margin:0} .warm .es{font-size:20px;font-weight:700}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .card{background:var(--surf);border:1px solid var(--line2);border-radius:12px;padding:16px 18px}
+  .card .tag{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+  .card h2{font-family:'Source Serif 4',serif;font-size:26px;margin:2px 0 0} .card .en{color:var(--muted);margin:0 0 10px}
+  .card ol{margin:0 0 12px 22px;padding:0} .card li{font-size:19px;margin:0 0 6px}
+  .listen{border-top:1px solid var(--line);padding-top:8px;font-size:14px;color:var(--muted)} .listen strong{color:var(--text)}
+  .empty{color:var(--muted);padding:30px;text-align:center;border:1px dashed var(--line2);border-radius:12px}
+  details{margin-top:20px;background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:10px 14px} summary{cursor:pointer;font-weight:700;min-height:32px}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px} caption{text-align:left;color:var(--muted);padding-bottom:4px}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)} th{color:var(--muted);font-weight:600}
+  .note{font-size:13px;color:var(--muted)}
+  /* slot machine (Daniel, 11-05): two reels, a lever, ~1.5 s; instant when the system asks for reduced motion */
+  .slot{display:flex;align-items:center;gap:18px;justify-content:center;margin:0 0 18px;padding:18px;background:var(--surf);border:1px solid var(--line2);border-radius:18px}
+  .reel{width:min(38vw,380px);height:92px;overflow:hidden;border-radius:12px;background:#132C52;border:2px solid #8A6D2E;box-shadow:inset 0 10px 18px rgba(0,0,0,.55),inset 0 -10px 18px rgba(0,0,0,.55);position:relative}
+  .reel .lab{position:absolute;top:6px;left:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9B968}
+  .reel .win{height:92px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 12px;font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;color:#FFFFFF}
+  .reel.spin .win{filter:blur(1.2px);animation:jit .08s linear infinite}
+  @keyframes jit{0%{transform:translateY(-6px)}50%{transform:translateY(6px)}100%{transform:translateY(-6px)}}
+  .lever{position:relative;width:60px;height:150px;background:none;border:0;cursor:pointer;padding:0}
+  .lever .base{position:absolute;bottom:0;left:14px;width:32px;height:30px;border-radius:8px;background:var(--surf2);border:1px solid var(--line2)}
+  .lever .arm{position:absolute;bottom:22px;left:26px;width:8px;height:110px;background:linear-gradient(var(--muted),var(--line2));border-radius:4px;transform-origin:bottom center;transition:transform .25s ease}
+  .lever .knob{position:absolute;top:-16px;left:-11px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9b8a,#c0392b);box-shadow:0 2px 6px rgba(0,0,0,.5)}
+  .lever.pulled .arm{transform:rotate(28deg) scaleY(.82)}
+  .lever:focus-visible{outline:3px solid var(--teal);outline-offset:4px;border-radius:10px}
+  @media (hover:none){ .kbd{display:none} .btn{min-height:52px} }
+  @media (max-width:700px){ .slot{flex-wrap:wrap} .reel{width:100%} }
+  @media print{ body{background:#fff;color:#000} header .btn,.bar{display:none} .card,.warm,details{background:#fff;border-color:#888} .card .tag,.card .en,.listen{color:#333} }
+</style></head>
+<body><a class="skip" href="#main">Skip to the topics</a>
+<header><h1>Oral Final · Topic Draw<span>SPAN 1001 · Fall 2026</span></h1>
+<div><button type="button" class="btn" id="fs">⛶ Full Screen</button></div></header>
+<main id="main">
+  <div class="bar">
+    <button type="button" class="btn go" id="next">🎲 Next student</button>
+    <button type="button" class="btn" id="redraw">Re-draw</button>
+    <span class="count">Student <strong id="num">0</strong> today</span>
+    <span class="note kbd">Keyboard: N = next student, R = re-draw</span>
+  </div>
+  <div class="slot" aria-label="Topic draw">
+    <div class="reel" id="reelA"><span class="lab">Chapters 1–3</span><div class="win" lang="es">?</div></div>
+    <div class="reel" id="reelB"><span class="lab">Chapters 4–5</span><div class="win" lang="es">?</div></div>
+    <button type="button" class="lever" id="lever" aria-label="Pull the lever: draw two topics for the next student"><span class="base"></span><span class="arm"><span class="knob"></span></span></button>
+  </div>
+  <div class="warm"><p class="note">Every student starts here · these are 2 of the 8 graded questions</p><p class="es" lang="es">¿Cómo te llamas? ¿De dónde eres?</p></div>
+  <div id="out" aria-live="polite"><div class="empty">Press <strong>Next student</strong>: one topic from Chapters 1–3 and one from Chapters 4–5. Ask two or three questions from each, in any order, plus a follow-up (¿Por qué? ¿Y tu familia?).</div></div>
+  <details><summary>Topic use today</summary><table><caption>How many times each topic has been drawn (balances automatically)</caption><thead><tr><th scope="col">Topic</th><th scope="col">Chapters</th><th scope="col">Drawn</th></tr></thead><tbody id="tally"></tbody></table>
+    <p><button type="button" class="btn" id="reset">Start a new day (reset counts)</button></p>
+    <p class="note">Only today's counts and the current pair are kept, on this device. No names or results are stored. A new day starts at zero by itself.</p></details>
+</main>
+<script>
+var BANK={"exam": "Oral Final", "term": "Fall 2026", "topics": [{"id": "uni", "group": "A", "ch": "Ch. 1–2", "title": "Tu vida en la universidad", "titleEn": "University life", "qs": ["¿Qué estudias?", "¿Cuántas clases tomas este semestre?", "¿Cuál es tu clase favorita? ¿Por qué?", "¿A qué hora es tu clase de español?", "¿Trabajas? ¿Dónde?"], "listen": ["estudio / tomo (-ar, yo)", "es a las ___ (time of a class)", "porque + a reason", "trabajo en ___"]}, {"id": "dia", "group": "A", "ch": "Ch. 1–2, 4", "title": "Tu día", "titleEn": "Your day", "qs": ["¿Qué hora es?", "¿Qué día es hoy?", "¿A qué hora sales de tu casa?", "¿Cuántas horas duermes?", "¿Qué traes a clase?"], "listen": ["son las / es la una", "salgo, traigo (irregular yo)", "duermo (o→ue)", "the time and day said correctly"]}, {"id": "fam", "group": "A", "ch": "Ch. 3", "title": "Tu familia", "titleEn": "Your family", "qs": ["¿Cuántas personas hay en tu familia?", "¿Tienes hermanos? ¿Cómo son?", "¿De dónde es tu familia?", "¿Dónde vive tu familia?", "¿Cuántos años tiene tu madre o tu padre?"], "listen": ["hay ___ personas", "son + adjectives that agree (altos, simpáticas)", "es de / vive en (3rd person)", "tiene ___ años (not es)"]}, {"id": "yo", "group": "A", "ch": "Ch. 3", "title": "Tú y tu mejor amigo", "titleEn": "You and your best friend", "qs": ["¿Cómo eres tú?", "¿Cómo es tu mejor amigo o amiga?", "¿Tienes que trabajar este fin de semana?", "¿Vienes a la universidad todos los días?", "¿Dónde está la biblioteca?"], "listen": ["soy + adjective agreeing with the speaker", "es + adjectives (3rd person)", "tengo que + infinitive", "vengo (irregular yo)", "está for location"]}, {"id": "libre", "group": "B", "ch": "Ch. 4", "title": "Tu tiempo libre", "titleEn": "Free time", "qs": ["¿Qué haces en tu tiempo libre?", "¿Practicas algún deporte?", "¿Prefieres ver películas o leer?", "¿Adónde vas los fines de semana?", "¿Qué te gusta hacer los domingos?"], "listen": ["hago (irregular yo)", "juego al ___ (u→ue) / practico", "prefiero (e→ie)", "voy a + place (al / a la)", "me gusta + infinitive"]}, {"id": "planes", "group": "B", "ch": "Ch. 4", "title": "Tus planes", "titleEn": "Your plans", "qs": ["¿Qué vas a hacer este fin de semana?", "¿Qué quieres hacer después de clase?", "¿Qué pides en un restaurante?"], "listen": ["voy a + infinitive", "quiero + infinitive (e→ie)", "pido (e→i)"]}, {"id": "viaje", "group": "B", "ch": "Ch. 5", "title": "Un viaje", "titleEn": "A trip", "qs": ["¿Adónde quieres viajar? ¿Por qué?", "¿Prefieres ir a la playa o a las montañas?", "¿Tienes pasaporte?", "¿Cuándo haces las maletas?"], "listen": ["quiero viajar a ___ porque ___", "prefiero ir a ___", "sí, lo tengo (direct object pronoun)", "las hago (pronoun) + a time"]}, {"id": "hoy", "group": "B", "ch": "Ch. 5", "title": "Hoy y ahora", "titleEn": "Today and right now", "qs": ["¿Cómo estás hoy? ¿Por qué?", "¿Estás cansado o cansada hoy?", "¿Qué tiempo hace hoy?", "¿Qué estás estudiando este semestre?", "¿Cómo es tu ciudad?", "¿Dónde está tu ciudad?"], "listen": ["estoy + condition, porque ___", "hace / está (weather)", "estoy + -ando / -iendo", "es (what the city is like) vs. está (where it is)"]}]};
+(function(){
+  var T=BANK.topics, KEY='oralDraw_v2', TODAY=new Date().toDateString(), st={day:TODAY,n:0,used:{},last:[]};
+  try{ var s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s && s.day===TODAY) st=s; }catch(e){}
+  T.forEach(function(t){ if(st.used[t.id]==null) st.used[t.id]=0; });
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function pick(group, avoid){
+    var pool=T.filter(function(t){ return t.group===group && avoid.indexOf(t.id)<0; });
+    var min=Math.min.apply(null,pool.map(function(t){ return st.used[t.id]; }));
+    var low=pool.filter(function(t){ return st.used[t.id]===min; });
+    return low[Math.floor(Math.random()*low.length)];
+  }
+  function draw(){
+    var a=pick('A',[]), b=pick('B',[]), tries=0;
+    while(st.last.length && st.last.indexOf(a.id)>=0 && st.last.indexOf(b.id)>=0 && tries<10){ b=pick('B',[b.id]); tries++; }
+    return [a,b];
+  }
+  function show(pair){
+    document.getElementById('out').innerHTML='<div class="cards">'+pair.map(function(t){
+      return '<section class="card" aria-label="'+esc(t.title)+'"><div class="tag">'+esc(t.ch)+'</div><h2 lang="es">'+esc(t.title)+'</h2><p class="en">'+esc(t.titleEn)+'</p>'
+        +'<ol lang="es">'+t.qs.map(function(q){ return '<li>'+esc(q)+'</li>'; }).join('')+'</ol>'
+        +'<div class="listen"><strong>Listen for:</strong> '+t.listen.map(esc).join(' · ')+'</div></section>';
+    }).join('')+'</div>';
+    document.getElementById('num').textContent=st.n;
+    document.getElementById('tally').innerHTML=T.map(function(t){ return '<tr><td lang="es">'+esc(t.title)+'</td><td>'+esc(t.ch)+'</td><td>'+st.used[t.id]+'</td></tr>'; }).join('');
+  }
+  var busy=false, RM=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function spin(pair, done){
+    var ra=document.getElementById('reelA'), rb=document.getElementById('reelB'), lv=document.getElementById('lever');
+    var A=T.filter(function(t){ return t.group==='A'; }), B=T.filter(function(t){ return t.group==='B'; });
+    function land(r,t){ r.classList.remove('spin'); r.querySelector('.win').textContent=t.title; }
+    if(RM){ land(ra,pair[0]); land(rb,pair[1]); done(); return; }
+    busy=true; lv.classList.add('pulled'); setTimeout(function(){ lv.classList.remove('pulled'); },350);
+    ra.classList.add('spin'); rb.classList.add('spin'); var i=0;
+    var tick=setInterval(function(){ i++; if(ra.classList.contains('spin')) ra.querySelector('.win').textContent=A[i%A.length].title; if(rb.classList.contains('spin')) rb.querySelector('.win').textContent=B[(i+2)%B.length].title; },70);
+    setTimeout(function(){ land(ra,pair[0]); },1000);
+    setTimeout(function(){ land(rb,pair[1]); clearInterval(tick); busy=false; done(); },1500);
+  }
+  function next(){ if(busy) return; var p=draw(); p.forEach(function(t){ st.used[t.id]++; }); st.n++; st.last=p.map(function(t){ return t.id; }); save(); spin(p, function(){ show(p); }); }
+  function redraw(){ if(busy) return; if(!st.n){ next(); return; } st.last.forEach(function(id){ st.used[id]=Math.max(0,st.used[id]-1); }); var prev=st.last.slice();
+    var a=pick('A',[prev[0]]), b=pick('B',[prev[1]]); [a,b].forEach(function(t){ st.used[t.id]++; }); st.last=[a.id,b.id]; save(); spin([a,b], function(){ show([a,b]); }); }
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('lever').addEventListener('click', next);
+  document.getElementById('redraw').addEventListener('click', redraw);
+  document.getElementById('reset').addEventListener('click', function(){ if(!confirm('Reset the counts for a new day?')) return; st={day:TODAY,n:0,used:{},last:[]}; T.forEach(function(t){ st.used[t.id]=0; }); save(); show([]); document.getElementById('out').innerHTML='<div class="empty">Counts reset. Press <strong>Next student</strong>.</div>'; });
+  document.addEventListener('keydown', function(e){ if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return; if(e.key==='n'||e.key==='N') next(); if(e.key==='r'||e.key==='R') redraw(); });
+  var de=document.documentElement, fsb=document.getElementById('fs');
+  if(!(de.requestFullscreen||de.webkitRequestFullscreen)) fsb.hidden=true;  /* iPhone: no full screen API; use Add to Home Screen */
+  fsb.addEventListener('click', function(){ var d=document; if(!(d.fullscreenElement||d.webkitFullscreenElement)){ var f=de.requestFullscreen||de.webkitRequestFullscreen; var r=f&&f.call(de); if(r&&r.catch) r.catch(function(){}); } else (d.exitFullscreen||d.webkitExitFullscreen).call(d); });
+  document.getElementById('tally').innerHTML=T.map(function(t){ return '<tr><td lang="es">'+esc(t.title)+'</td><td>'+esc(t.ch)+'</td><td>'+st.used[t.id]+'</td></tr>'; }).join('');
+  document.getElementById('num').textContent=st.n;
+  /* back after a reload: show the current student's pair again */
+  var byId={}; T.forEach(function(t){ byId[t.id]=t; });
+  var lastPair=st.last.map(function(id){ return byId[id]; }).filter(Boolean);
+  if(st.n && lastPair.length===2){ document.querySelector('#reelA .win').textContent=lastPair[0].title; document.querySelector('#reelB .win').textContent=lastPair[1].title; show(lastPair); }
+})();
+</script></body></html>

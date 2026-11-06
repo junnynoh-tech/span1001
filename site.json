@@ -1,0 +1,35 @@
+{
+  "course": {
+    "code": "SPAN 1001",
+    "title": "Elementary Spanish I",
+    "titleEs": "Español elemental I",
+    "institution": "University of North Georgia"
+  },
+  "current": {
+    "id": "fall-2026-tr",
+    "term": "Fall 2026",
+    "schedule": "TR",
+    "scheduleLong": "Tuesday & Thursday",
+    "sections": [
+      {
+        "id": "oral-final",
+        "title": "Oral Final",
+        "titleEs": "Examen oral",
+        "when": {
+          "month": "Nov",
+          "days": "17 · 19"
+        },
+        "items": [
+          {
+            "title": "Topic draw",
+            "path": "oral-final/topic-draw.html",
+            "kind": "Tool",
+            "audience": "instructor",
+            "desc": "Spin two topics per student (Ch. 1–3 + Ch. 4–5) and read the questions from an iPad."
+          }
+        ]
+      }
+    ]
+  },
+  "archive": []
+}
