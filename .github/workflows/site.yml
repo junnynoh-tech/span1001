@@ -1,0 +1,31 @@
+# After any save from the website editor (Pages CMS) or a push: start a new semester if the form asks,
+# rebuild the menu pages from site.json, run the safety check, and commit the result.
+name: Rebuild site
+on:
+  push:
+    branches: [main]
+    paths: ["site.json", "admin/new-semester.json", "current/**", "archive/**"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rebuild-site
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Start a new semester (only if the form asks)
+        run: python3 tools/admin_request.py
+      - name: Rebuild menus and check the site
+        run: python3 tools/site.py build
+      - name: Save the result
+        run: |
+          git config user.name "site-rebuild"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || { git commit -m "Rebuild site menus"; git push; }
