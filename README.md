@@ -47,3 +47,9 @@ Student names, IDs, emails, scores or work · exams, answer keys, correction key
 
 Before the November 2026 cleanup the site held Spring 2026 pages (IRA readings, video rubric, pronunciation reference, Lección 1, vocabulary photos). They're all preserved in the git tag `spring-2026-snapshot`:
 `git checkout spring-2026-snapshot -- <file>` brings any of them back.
+
+## Email signature images (keep)
+`images/ung-langlab-logo.png`, `images/ung-logo.png` and `images/instagram-logo.png` are loaded by Daniel's Outlook email signatures
+(Documents/email signature/: spring-2026.html, Language_Lab_GVL/CMG/OCN.htm, Fall 2025_v3.html). Nothing on this site uses them,
+but don't move, rename or delete them: every signature already sent or installed points to these exact URLs.
+They were deleted once in the 2026-11-06 restructure and restored 2026-11-09.
