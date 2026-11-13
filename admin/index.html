@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SPAN 1001 Site Help</title>
+<!-- Staff start page for the website editor (Pages CMS). Holds no data: every button opens the editor or the live site.
+     Built 2026-11-06. Edits to the editor forms: labs/class-pages/src/make_pages_cms.py. Workflow: labs/EVENTS_WORKFLOW.md. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+/* Canonical tokens (design-system skill, student theme). Dark mode re-maps the same tokens. */
+:root {
+  --navy: #1A3A6B; --navy-dark: #132C52; --gold: #B08D3F; --offwhite: #F7F7F5; --white: #FFFFFF; --ink: #1F2937; --muted: #5A6472;
+  --bg: var(--offwhite); --surface: var(--white); --text: var(--ink); --sub: var(--muted); --line: #DCDDD8;
+  --accent: var(--navy); --accent-ink: var(--white); --rail: var(--white); --chip: #EEF0F3;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-mode="light"]) {
+  --bg: #0E1F3A; --surface: var(--navy-dark); --text: var(--offwhite); --sub: #C9CFD8; --line: #2B4670;
+  --accent: var(--offwhite); --accent-ink: var(--navy-dark); --rail: #102443; --chip: #1C3864; color-scheme: dark; } }
+:root[data-mode="dark"] {
+  --bg: #0E1F3A; --surface: var(--navy-dark); --text: var(--offwhite); --sub: #C9CFD8; --line: #2B4670;
+  --accent: var(--offwhite); --accent-ink: var(--navy-dark); --rail: #102443; --chip: #1C3864; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--text); font: 400 16px/1.55 "DM Sans", sans-serif; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+h1[tabindex="-1"]:focus { outline: none; } /* focus moves here on topic change for screen readers; no ring on a heading */
+.skip { position: absolute; left: 12px; top: -48px; background: var(--surface); color: var(--text); padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; z-index: 9; }
+.skip:focus { top: 12px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.shell { display: grid; grid-template-columns: 272px 1fr; min-height: 100vh; }
+.rail { background: var(--rail); border-right: 1px solid var(--line); padding: 24px 16px; display: flex; flex-direction: column; gap: 24px; position: sticky; top: 0; height: 100vh; overflow: auto; }
+.brand { padding: 0 8px; }
+.brand small { display: block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--sub); }
+.brand b { font: 700 24px/1.2 "Source Serif 4", serif; }
+nav h2 { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sub); margin: 0 8px 8px; }
+nav ul { list-style: none; margin: 0 0 16px; padding: 0; }
+nav a { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 8px; text-decoration: none; font-weight: 500; }
+nav a svg { flex: none; width: 20px; height: 20px; color: var(--sub); }
+nav a:hover { background: var(--chip); }
+nav a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+nav a[aria-current="page"] svg { color: currentColor; }
+.rail-foot { margin-top: auto; display: grid; gap: 8px; padding: 0 8px; }
+.ghost { font: 500 14px "DM Sans", sans-serif; background: transparent; color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; text-align: left; }
+.ghost:hover { background: var(--chip); }
+
+main { padding: 32px clamp(16px, 4vw, 56px); max-width: 860px; }
+.topic[hidden] { display: none; }
+.topic { scroll-margin-top: 140px; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sub); margin: 0 0 8px; }
+h1 { font: 700 clamp(28px, 3.4vw, 38px)/1.15 "Source Serif 4", serif; margin: 0 0 12px; }
+.lede { font-size: 18px; color: var(--sub); margin: 0 0 24px; max-width: 60ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 32px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.12); }
+.btn.secondary { background: transparent; color: var(--text); border-color: var(--line); }
+.btn.secondary:hover { background: var(--chip); }
+.btn svg { width: 18px; height: 18px; }
+.btn .ext { font-weight: 400; font-size: 13px; opacity: .85; }
+
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 12px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--gold); font-weight: 600; font-size: 14px; }
+.steps b { font-weight: 600; }
+.note { display: grid; grid-template-columns: 20px 1fr; gap: 12px; padding: 12px 16px; border-left: 3px solid var(--gold); background: var(--surface); border-radius: 0 10px 10px 0; color: var(--text); margin: 0 0 12px; }
+.note svg { width: 20px; height: 20px; margin-top: 2px; color: var(--gold); }
+.note p { margin: 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 24px; }
+.card { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; text-decoration: none; }
+.card:hover { border-color: var(--sub); }
+.card b { display: block; font: 600 18px/1.3 "Source Serif 4", serif; margin-bottom: 4px; }
+.card span { color: var(--sub); font-size: 15px; }
+kbd, code { font: 500 14px ui-monospace, Menlo, Consolas, monospace; background: var(--chip); border-radius: 4px; padding: 1px 6px; }
+dl.faq { margin: 0; display: grid; gap: 16px; }
+dl.faq dt { font-weight: 600; }
+dl.faq dd { margin: 4px 0 0; color: var(--sub); }
+
+@media (max-width: 820px) {
+  .shell { grid-template-columns: 1fr; }
+  .rail { position: sticky; top: 0; z-index: 2; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 12px 16px 8px; gap: 8px;
+          display: grid; grid-template-columns: 1fr auto; align-items: center; }
+  .brand b { font-size: 20px; }
+  .rail-foot { margin: 0; grid-column: 2; grid-row: 1; }
+  nav { grid-column: 1 / -1; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px 4px; scroll-padding: 16px; }
+  nav::-webkit-scrollbar { display: none; }
+  nav h2 { display: none; }
+  nav ul { display: contents; }
+  nav a { white-space: nowrap; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 15px; }
+  nav a svg { display: none; }
+  main { padding-top: 24px; }
+}
+@media (prefers-reduced-motion: no-preference) { .topic:not([hidden]) { animation: in .18s ease-out; } @keyframes in { from { opacity: 0; transform: translateY(4px); } } }
+@page { size: letter; margin: 0.65in; }
+@media print {
+  .rail, .skip, .actions { display: none !important; }
+  .shell { display: block; } body { background: #fff !important; color: #000 !important; }
+  .topic[hidden] { display: block !important; } .topic { break-after: page; }
+  * { box-shadow: none !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the instructions</a>
+<div class="shell">
+  <header class="rail">
+    <div class="brand"><small>Prof. Noh · editing help</small><b>SPAN 1001 site</b></div>
+    <nav aria-label="Topics">
+      <h2>SPAN 1001 site</h2>
+      <ul>
+        <li><a href="#start">Start here</a></li>
+        <li><a href="#semester">This semester's pages</a></li>
+        <li><a href="#new-semester">Start a new semester</a></li>
+        <li><a href="#calendar">Class calendar</a></li>
+      </ul>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#people">Who can edit</a></li>
+        <li><a href="#help">If something looks wrong</a></li>
+      </ul>
+    </nav>
+    <div class="rail-foot">
+      <button class="ghost" type="button" id="mode-btn" aria-pressed="false">Dark mode</button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="topic" id="start" aria-labelledby="h-start">
+      <p class="eyebrow">Start here</p>
+      <h1 id="h-start">Change the SPAN 1001 site without touching code</h1>
+      <p class="lede">Pick what you want to change on the left. Each page gives you one button that opens the right form. Saving puts your change on the site in about a minute.</p>
+      <div class="actions"><a class="btn primary" href="https://app.pagescms.org/junnynoh-tech/span1001/main/file/semester" target="_blank" rel="noopener">Edit this semester's pages <span class="ext">(new tab)</span></a><a class="btn secondary" href="../" target="_blank" rel="noopener">See the site <span class="ext">(new tab)</span></a></div>
+    </section>
+
+    <!-- SEMESTER -->
+    <section class="topic" id="semester" aria-labelledby="h-semester" hidden>
+      <p class="eyebrow">SPAN 1001 site</p>
+      <h1 id="h-semester">This semester's pages</h1>
+      <p class="lede">The SPAN 1001 site lists this semester's pages in sections, for example "Oral Final". Rename a section, change its dates, or add a page to it.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://app.pagescms.org/junnynoh-tech/span1001/main/file/semester" target="_blank" rel="noopener">Edit this semester <span class="ext">(new tab)</span></a>
+        <a class="btn secondary" href="https://junnynoh-tech.github.io/span1001/" target="_blank" rel="noopener">See the SPAN 1001 site</a>
+      </div>
+      <ol class="steps">
+        <li><span><b>Open a section</b> to change its name or dates, or add a new one at the bottom.</span></li>
+        <li><span><b>To list a page,</b> add it under <b>Pages in this section</b> with its name, file and a one-line description.</span></li>
+        <li><span><b>Press Save.</b> The site rebuilds its menus in about a minute.</span></li>
+      </ol>
+      <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.2"/></svg>
+        <p>The page file itself has to be on the site already; this list only adds it to the menu. Exams, answer keys, grades and student work never go on this site.</p></div>
+    </section>
+    <!-- NEW SEMESTER -->
+    <section class="topic" id="new-semester" aria-labelledby="h-new-semester" hidden>
+      <p class="eyebrow">SPAN 1001 site</p>
+      <h1 id="h-new-semester">Start a new semester</h1>
+      <p class="lede">This moves this semester's pages to the archive (they keep working) and starts an empty semester. Do it once, after final grades are in.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://app.pagescms.org/junnynoh-tech/span1001/main/file/new-semester" target="_blank" rel="noopener">Start a new semester <span class="ext">(new tab)</span></a>
+      </div>
+      <ol class="steps">
+        <li><span><b>Pick the season, year and class days.</b></span></li>
+        <li><span><b>Turn on "Start it now?"</b> and press <b>Save</b>.</span></li>
+        <li><span><b>Wait about a minute.</b> The old semester appears under past semesters on the site, and the new one is ready for pages.</span></li>
+      </ol>
+      <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.2"/></svg>
+        <p>D2L links point to the current semester. Update them in the new D2L course after you start the new semester.</p></div>
+    </section>
+    <!-- CALENDAR -->
+    <section class="topic" id="calendar" aria-labelledby="h-calendar" hidden>
+      <p class="eyebrow">SPAN 1001 site</p>
+      <h1 id="h-calendar">Class calendar</h1>
+      <p class="lede">The class calendar still lives in D2L. It moves here next, as a form like the others: one row per class day.</p>
+      <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.2"/></svg>
+        <p>Until then, send calendar changes to Daniel. Exam and composition dates follow the syllabus and are never changed here.</p></div>
+    </section>
+    <!-- PEOPLE -->
+    <section class="topic" id="people" aria-labelledby="h-people" hidden>
+      <p class="eyebrow">Help</p>
+      <h1 id="h-people">Who can edit</h1>
+      <p class="lede">Only people Daniel invites can save changes. Anyone can read this help page, but the editor stays locked to everyone else.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://app.pagescms.org/junnynoh-tech/span1001/main/collaborators" target="_blank" rel="noopener">Invite an editor <span class="ext">(new tab)</span></a>
+      </div>
+      <ol class="steps">
+        <li><span><b>Type their email</b> and send the invite. They don't need a GitHub account.</span></li>
+        <li><span><b>Send them this page.</b> It's all they need.</span></li>
+        <li><span><b>To remove someone,</b> open the same list and delete their email.</span></li>
+      </ol>
+      <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.2"/></svg>
+        <p>Invited editors can change content and upload files. Only Daniel can change how the forms work or who is invited.</p></div>
+    </section>
+    <!-- HELP -->
+    <section class="topic" id="help" aria-labelledby="h-help" hidden>
+      <p class="eyebrow">Help</p>
+      <h1 id="h-help">If something looks wrong</h1>
+      <p class="lede">Most problems fix themselves with a refresh. If not, check these.</p>
+      <dl class="faq">
+        <div><dt>I saved, but the site hasn't changed.</dt><dd>Wait a minute, then refresh the page. Your browser may be showing an older copy; a private window always shows the newest.</dd></div>
+        <div><dt>I changed something by mistake.</dt><dd>Every save is kept. Tell Daniel what you changed and when; he can put the old version back in a minute.</dd></div>
+        <div><dt>The editor shows an error when I save.</dt><dd>It names the field to fix, for example a color code or an event code in the wrong format. Fix that field and save again.</dd></div>
+      </dl>
+    </section>
+  </main>
+</div>
+<script>
+/* One topic per screen; the address (#events) keeps the place, so links can be shared. No data here. */
+const topics = [...document.querySelectorAll('.topic')].map(s => s.id);
+function show(id, focus) {
+  if (!topics.includes(id)) id = 'start';
+  document.querySelectorAll('.topic').forEach(s => { s.hidden = s.id !== id; });
+  document.querySelectorAll('nav a').forEach(a => { if (a.hash === '#' + id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  const h = document.getElementById('h-' + id);
+  document.title = (id === 'start' ? '' : h.textContent + ' · ') + 'SPAN 1001 Site Help';
+  if (focus) { h.setAttribute('tabindex', '-1'); h.focus(); }
+  document.querySelector('nav a[aria-current]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+addEventListener('hashchange', () => show(location.hash.slice(1), true));
+show(location.hash.slice(1), false);
+
+/* light/dark (per-viewer convenience only) */
+const root = document.documentElement, mb = document.getElementById('mode-btn');
+const isDark = () => root.dataset.mode ? root.dataset.mode === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+function paint() { mb.textContent = isDark() ? 'Light mode' : 'Dark mode'; mb.setAttribute('aria-pressed', isDark()); }
+try { const m = localStorage.getItem('span1001AdminMode'); if (m) root.dataset.mode = m; } catch (e) {}
+mb.onclick = () => { root.dataset.mode = isDark() ? 'light' : 'dark'; try { localStorage.setItem('span1001AdminMode', root.dataset.mode); } catch (e) {} paint(); };
+paint();
+</script>
+</body>
+</html>
