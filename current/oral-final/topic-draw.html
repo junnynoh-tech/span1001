@@ -9,7 +9,9 @@
      in a row. Topics and questions = oral_bank.json = the student study guide. Keeps only draw counts (localStorage, today only):
      no names, nothing about any student. Light navy theme (11-05), same as the grading tool.
      iPad (11-05): counts + the current pair live in localStorage for today's date only, so a Safari tab reload mid-interview
-     brings the same questions back and a new day starts at zero by itself; big touch targets; Add to Home Screen = full screen. -->
+     brings the same questions back and a new day starts at zero by itself; big touch targets; Add to Home Screen = full screen.
+     Timer (11-17): countdown per interview, starts on Next student (not on Re-draw), length menu remembered, start time in
+     localStorage so a reload keeps counting; gold in the last 2 minutes, red and counting up over time; keeps the screen awake. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -50,9 +52,18 @@
   .lever .knob{position:absolute;top:-16px;left:-11px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9b8a,#c0392b);box-shadow:0 2px 6px rgba(0,0,0,.5)}
   .lever.pulled .arm{transform:rotate(28deg) scaleY(.82)}
   .lever:focus-visible{outline:3px solid var(--teal);outline-offset:4px;border-radius:10px}
+  /* interview timer (11-17): starts on Next student; gold in the last 2 minutes, red over time */
+  .timer{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 16px;padding:10px 16px;background:var(--surf);border:1px solid var(--line2);border-radius:12px}
+  .timer .clock{font-family:'Source Serif 4',serif;font-size:44px;font-weight:700;line-height:1;min-width:150px;font-variant-numeric:tabular-nums;color:var(--teal)}
+  .timer .prog{flex:1 1 200px;height:12px;border-radius:6px;background:var(--surf2);border:1px solid var(--line);overflow:hidden}
+  .timer .prog i{display:block;height:100%;width:0;background:var(--teal)}
+  .timer.warn{border-color:#8A6D2E;background:#FBF6EA} .timer.warn .clock{color:#8A6D2E} .timer.warn .prog i{background:#8A6D2E}
+  .timer.over{border-color:#B91C1C;background:#FDF0F0} .timer.over .clock{color:#B91C1C} .timer.over .prog i{background:#B91C1C}
+  .timer select{font:inherit;font-size:16px;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--text)}
+  .timer .msg{font-size:14px;color:var(--muted);flex-basis:100%}
   @media (hover:none){ .kbd{display:none} .btn{min-height:52px} }
   @media (max-width:700px){ .slot{flex-wrap:wrap} .reel{width:100%} }
-  @media print{ body{background:#fff;color:#000} header .btn,.bar{display:none} .card,.warm,details{background:#fff;border-color:#888} .card .tag,.card .en,.listen{color:#333} }
+  @media print{ body{background:#fff;color:#000} header .btn,.bar,.timer{display:none} .card,.warm,details{background:#fff;border-color:#888} .card .tag,.card .en,.listen{color:#333} }
 </style></head>
 <body><a class="skip" href="#main">Skip to the topics</a>
 <header><h1>Oral Final · Topic Draw<span>SPAN 1001 · Fall 2026</span></h1>
@@ -62,7 +73,16 @@
     <button type="button" class="btn go" id="next">🎲 Next student</button>
     <button type="button" class="btn" id="redraw">Re-draw</button>
     <span class="count">Student <strong id="num">0</strong> today</span>
-    <span class="note kbd">Keyboard: N = next student, R = re-draw</span>
+    <span class="note kbd">Keyboard: N = next student, R = re-draw, Space = pause/resume timer</span>
+  </div>
+  <div class="timer" id="timer">
+    <div class="clock" id="clock" role="timer" aria-label="Time left in this interview">--:--</div>
+    <div class="prog" aria-hidden="true"><i id="prog"></i></div>
+    <label class="note" for="len">Length</label>
+    <select id="len"><option value="4">4 min</option><option value="5">5 min</option><option value="6">6 min</option><option value="7">7 min</option><option value="8">8 min</option><option value="10">10 min</option><option value="12">12 min</option><option value="15">15 min</option></select>
+    <button type="button" class="btn" id="tgo">Start</button>
+    <button type="button" class="btn" id="treset">Reset</button>
+    <p class="msg" id="tmsg">Starts by itself when you press Next student. Pace: warm-up by 1 minute, Topic A by about halfway.</p>
   </div>
   <div class="slot" aria-label="Topic draw">
     <div class="reel" id="reelA"><span class="lab">Chapters 1–3</span><div class="win" lang="es">?</div></div>
@@ -115,14 +135,40 @@ var BANK={"exam": "Oral Final", "term": "Fall 2026", "topics": [{"id": "uni", "g
     setTimeout(function(){ land(ra,pair[0]); },1000);
     setTimeout(function(){ land(rb,pair[1]); clearInterval(tick); busy=false; done(); },1500);
   }
-  function next(){ if(busy) return; var p=draw(); p.forEach(function(t){ st.used[t.id]++; }); st.n++; st.last=p.map(function(t){ return t.id; }); save(); spin(p, function(){ show(p); }); }
+  /* ---- interview timer: start time kept in localStorage so a reload keeps counting ---- */
+  var TK='oralTimer_v1', tm={len:7,start:null,paused:null}, wl=null;
+  try{ var ts=JSON.parse(localStorage.getItem(TK)||'null'); if(ts) tm=ts; }catch(e){}
+  if(tm.day!==TODAY){ tm.start=null; tm.paused=null; tm.day=TODAY; }  /* a timer left running on another day doesn't carry over */
+  function tsave(){ try{ localStorage.setItem(TK, JSON.stringify(tm)); }catch(e){} }
+  function fmt(sec){ var a=Math.abs(sec), m=Math.floor(a/60), s=a%60; return (sec<0?'+':'')+m+':'+(s<10?'0':'')+s; }
+  function wake(on){ try{ if(on && !wl && navigator.wakeLock) navigator.wakeLock.request('screen').then(function(w){ wl=w; w.addEventListener('release',function(){ wl=null; }); }).catch(function(){});
+    if(!on && wl){ wl.release(); wl=null; } }catch(e){} }
+  function tpaint(){
+    var total=tm.len*60, box=document.getElementById('timer'), msg=document.getElementById('tmsg'), go=document.getElementById('tgo');
+    if(tm.start==null){ document.getElementById('clock').textContent=fmt(total); document.getElementById('prog').style.width='0'; box.className='timer'; go.textContent='Start'; msg.textContent='Starts by itself when you press Next student. Pace: warm-up by 1 minute, Topic A by about halfway.'; return; }
+    var el=Math.floor(((tm.paused||Date.now())-tm.start)/1000), left=total-el;
+    document.getElementById('clock').textContent=fmt(left);
+    document.getElementById('prog').style.width=Math.min(100,100*el/total)+'%';
+    box.className='timer'+(left<0?' over':left<=120?' warn':'');
+    go.textContent=tm.paused?'Resume':'Pause';
+    msg.textContent= tm.paused ? 'Paused.' : left<0 ? 'Over time: finish this answer and close.' : left<=120 ? 'Last 2 minutes: move to the last question you need.' : el<60 ? 'Warm-up: ¿Cómo te llamas? ¿De dónde eres?' : el<total/2 ? 'Topic A (3 questions).' : 'Topic B (3 questions).';
+  }
+  function tstart(){ tm.start=Date.now(); tm.paused=null; tsave(); wake(true); tpaint(); }
+  function ttoggle(){ if(tm.start==null){ tstart(); return; } if(tm.paused){ tm.start+=Date.now()-tm.paused; tm.paused=null; wake(true); } else { tm.paused=Date.now(); } tsave(); tpaint(); }
+  document.getElementById('len').value=String(tm.len);
+  document.getElementById('len').addEventListener('change', function(){ tm.len=Number(this.value); tsave(); tpaint(); });
+  document.getElementById('tgo').addEventListener('click', ttoggle);
+  document.getElementById('treset').addEventListener('click', function(){ tm.start=null; tm.paused=null; tsave(); wake(false); tpaint(); });
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden && tm.start!=null && !tm.paused) wake(true); });
+  setInterval(tpaint, 250); tpaint(); if(tm.start!=null && !tm.paused) wake(true);
+  function next(){ if(busy) return; tstart(); var p=draw(); p.forEach(function(t){ st.used[t.id]++; }); st.n++; st.last=p.map(function(t){ return t.id; }); save(); spin(p, function(){ show(p); }); }
   function redraw(){ if(busy) return; if(!st.n){ next(); return; } st.last.forEach(function(id){ st.used[id]=Math.max(0,st.used[id]-1); }); var prev=st.last.slice();
     var a=pick('A',[prev[0]]), b=pick('B',[prev[1]]); [a,b].forEach(function(t){ st.used[t.id]++; }); st.last=[a.id,b.id]; save(); spin([a,b], function(){ show([a,b]); }); }
   document.getElementById('next').addEventListener('click', next);
   document.getElementById('lever').addEventListener('click', next);
   document.getElementById('redraw').addEventListener('click', redraw);
   document.getElementById('reset').addEventListener('click', function(){ if(!confirm('Reset the counts for a new day?')) return; st={day:TODAY,n:0,used:{},last:[]}; T.forEach(function(t){ st.used[t.id]=0; }); save(); show([]); document.getElementById('out').innerHTML='<div class="empty">Counts reset. Press <strong>Next student</strong>.</div>'; });
-  document.addEventListener('keydown', function(e){ if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return; if(e.key==='n'||e.key==='N') next(); if(e.key==='r'||e.key==='R') redraw(); });
+  document.addEventListener('keydown', function(e){ if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return; if(e.key==='n'||e.key==='N') next(); if(e.key==='r'||e.key==='R') redraw(); if(e.key===' ' && e.target.tagName!=='BUTTON' && e.target.tagName!=='SELECT'){ e.preventDefault(); ttoggle(); } });
   var de=document.documentElement, fsb=document.getElementById('fs');
   if(!(de.requestFullscreen||de.webkitRequestFullscreen)) fsb.hidden=true;  /* iPhone: no full screen API; use Add to Home Screen */
   fsb.addEventListener('click', function(){ var d=document; if(!(d.fullscreenElement||d.webkitFullscreenElement)){ var f=de.requestFullscreen||de.webkitRequestFullscreen; var r=f&&f.call(de); if(r&&r.catch) r.catch(function(){}); } else (d.exitFullscreen||d.webkitExitFullscreen).call(d); });
