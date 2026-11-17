@@ -23,6 +23,7 @@
   main{max-width:1100px;margin:0 auto;padding:18px 22px 40px}
   .btn{font:inherit;font-weight:700;min-height:44px;padding:8px 18px;border-radius:8px;border:1px solid var(--line2);background:var(--surf2);color:var(--text);cursor:pointer}
   .btn.go{background:var(--teal);color:#fff;border-color:var(--teal);font-size:18px;padding:10px 26px}
+  .btn.danger{background:#B91C1C;color:#fff;border-color:#B91C1C} .btn.danger:hover{background:#991B1B;border-color:#991B1B}  /* white on #B91C1C = 6.5:1 */
   .btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
   .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 16px}
   .count{font-size:15px;color:var(--muted)} .count strong{color:var(--text);font-size:20px}
@@ -74,6 +75,7 @@
     <button type="button" class="btn go" id="next">🎲 Next student</button>
     <button type="button" class="btn" id="redraw">Re-draw</button>
     <span class="count">Student <strong id="num">0</strong> today</span>
+    <button type="button" class="btn danger" id="reset2">Reset student count</button>
     <span class="note kbd">Keyboard: N = next student, R = re-draw, Space = pause/resume timer</span>
   </div>
   <div class="timer" id="timer">
@@ -170,7 +172,9 @@ var BANK={"exam": "Oral Final", "term": "Fall 2026", "topics": [{"id": "uni", "g
   document.getElementById('next').addEventListener('click', next);
   document.getElementById('lever').addEventListener('click', next);
   document.getElementById('redraw').addEventListener('click', redraw);
-  document.getElementById('reset').addEventListener('click', function(){ if(!confirm('Reset the counts for a new day?')) return; st={day:TODAY,n:0,used:{},last:[]}; T.forEach(function(t){ st.used[t.id]=0; }); save(); show([]); document.getElementById('out').innerHTML='<div class="empty">Counts reset. Press <strong>Next student</strong>.</div>'; });
+  function resetCounts(){ if(!confirm('Reset the student count and topic counts to 0?')) return; st={day:TODAY,n:0,used:{},last:[]}; T.forEach(function(t){ st.used[t.id]=0; }); save(); show([]); document.getElementById('out').innerHTML='<div class="empty">Counts reset. Press <strong>Next student</strong>.</div>'; }
+  document.getElementById('reset').addEventListener('click', resetCounts);
+  document.getElementById('reset2').addEventListener('click', resetCounts);
   document.addEventListener('keydown', function(e){ if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return; if(e.key==='n'||e.key==='N') next(); if(e.key==='r'||e.key==='R') redraw(); if(e.key===' ' && e.target.tagName!=='BUTTON' && e.target.tagName!=='SELECT'){ e.preventDefault(); ttoggle(); } });
   var de=document.documentElement, fsb=document.getElementById('fs');
   if(!(de.requestFullscreen||de.webkitRequestFullscreen)) fsb.hidden=true;  /* iPhone: no full screen API; use Add to Home Screen */
