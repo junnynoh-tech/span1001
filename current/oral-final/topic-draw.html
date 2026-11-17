@@ -10,7 +10,7 @@
      no names, nothing about any student. Light navy theme (11-05), same as the grading tool.
      iPad (11-05): counts + the current pair live in localStorage for today's date only, so a Safari tab reload mid-interview
      brings the same questions back and a new day starts at zero by itself; big touch targets; Add to Home Screen = full screen.
-     Timer (11-17): countdown per interview, starts on Next student (not on Re-draw), length menu remembered, start time in
+     Timer (11-17): countdown per interview (default 4:30, then a 1:30 tally countdown = the 6-minute slot), starts on Next student (not on Re-draw), length menu remembered, start time in
      localStorage so a reload keeps counting; gold in the last 2 minutes, red and counting up over time; keeps the screen awake. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -58,6 +58,7 @@
   .timer .prog{flex:1 1 200px;height:12px;border-radius:6px;background:var(--surf2);border:1px solid var(--line);overflow:hidden}
   .timer .prog i{display:block;height:100%;width:0;background:var(--teal)}
   .timer.warn{border-color:#8A6D2E;background:#FBF6EA} .timer.warn .clock{color:#8A6D2E} .timer.warn .prog i{background:#8A6D2E}
+  .timer.tally{border-color:var(--teal);background:var(--surf2)} .timer.tally .clock{color:var(--teal)}
   .timer.over{border-color:#B91C1C;background:#FDF0F0} .timer.over .clock{color:#B91C1C} .timer.over .prog i{background:#B91C1C}
   .timer select{font:inherit;font-size:16px;min-height:44px;padding:6px 10px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--text)}
   .timer .msg{font-size:14px;color:var(--muted);flex-basis:100%}
@@ -78,11 +79,11 @@
   <div class="timer" id="timer">
     <div class="clock" id="clock" role="timer" aria-label="Time left in this interview">--:--</div>
     <div class="prog" aria-hidden="true"><i id="prog"></i></div>
-    <label class="note" for="len">Length</label>
-    <select id="len"><option value="4">4 min</option><option value="5">5 min</option><option value="6">6 min</option><option value="7">7 min</option><option value="8">8 min</option><option value="10">10 min</option><option value="12">12 min</option><option value="15">15 min</option></select>
+    <label class="note" for="len">Interview</label>
+    <select id="len"><option value="4.5">4:30 + 1:30 tally</option><option value="4">4 min</option><option value="5">5 min</option><option value="6">6 min</option><option value="7">7 min</option><option value="8">8 min</option><option value="10">10 min</option><option value="12">12 min</option><option value="15">15 min</option></select>
     <button type="button" class="btn" id="tgo">Start</button>
     <button type="button" class="btn" id="treset">Reset</button>
-    <p class="msg" id="tmsg">Starts by itself when you press Next student. Pace: warm-up by 1 minute, Topic A by about halfway.</p>
+    <p class="msg" id="tmsg">Starts by itself when you press Next student. Then 1:30 to tally before the next student.</p>
   </div>
   <div class="slot" aria-label="Topic draw">
     <div class="reel" id="reelA"><span class="lab">Chapters 1–3</span><div class="win" lang="es">?</div></div>
@@ -136,7 +137,7 @@ var BANK={"exam": "Oral Final", "term": "Fall 2026", "topics": [{"id": "uni", "g
     setTimeout(function(){ land(rb,pair[1]); clearInterval(tick); busy=false; done(); },1500);
   }
   /* ---- interview timer: start time kept in localStorage so a reload keeps counting ---- */
-  var TK='oralTimer_v1', tm={len:7,start:null,paused:null}, wl=null;
+  var TK='oralTimer_v2', TALLY=90, tm={len:4.5,start:null,paused:null}, wl=null;  /* 6-minute slots: 4:30 interview + 1:30 tally */
   try{ var ts=JSON.parse(localStorage.getItem(TK)||'null'); if(ts) tm=ts; }catch(e){}
   if(tm.day!==TODAY){ tm.start=null; tm.paused=null; tm.day=TODAY; }  /* a timer left running on another day doesn't carry over */
   function tsave(){ try{ localStorage.setItem(TK, JSON.stringify(tm)); }catch(e){} }
@@ -145,13 +146,15 @@ var BANK={"exam": "Oral Final", "term": "Fall 2026", "topics": [{"id": "uni", "g
     if(!on && wl){ wl.release(); wl=null; } }catch(e){} }
   function tpaint(){
     var total=tm.len*60, box=document.getElementById('timer'), msg=document.getElementById('tmsg'), go=document.getElementById('tgo');
-    if(tm.start==null){ document.getElementById('clock').textContent=fmt(total); document.getElementById('prog').style.width='0'; box.className='timer'; go.textContent='Start'; msg.textContent='Starts by itself when you press Next student. Pace: warm-up by 1 minute, Topic A by about halfway.'; return; }
-    var el=Math.floor(((tm.paused||Date.now())-tm.start)/1000), left=total-el;
-    document.getElementById('clock').textContent=fmt(left);
-    document.getElementById('prog').style.width=Math.min(100,100*el/total)+'%';
-    box.className='timer'+(left<0?' over':left<=120?' warn':'');
+    if(tm.start==null){ document.getElementById('clock').textContent=fmt(total); document.getElementById('prog').style.width='0'; box.className='timer'; go.textContent='Start'; msg.textContent='Starts by itself when you press Next student. Then 1:30 to tally before the next student.'; return; }
+    var el=Math.floor(((tm.paused||Date.now())-tm.start)/1000), left=total-el, warn=Math.min(120,Math.round(total/4)), tl=TALLY+left;
+    var ph= left>0 ? (left<=warn?'warn':'') : tl>0 ? 'tally' : 'over';
+    document.getElementById('clock').textContent= ph==='tally' ? fmt(tl) : ph==='over' ? fmt(tl) : fmt(left);
+    document.getElementById('prog').style.width= ph==='tally'||ph==='over' ? Math.min(100,100*(-left)/TALLY)+'%' : Math.min(100,100*el/total)+'%';
+    box.className='timer'+(ph?' '+ph:'');
     go.textContent=tm.paused?'Resume':'Pause';
-    msg.textContent= tm.paused ? 'Paused.' : left<0 ? 'Over time: finish this answer and close.' : left<=120 ? 'Last 2 minutes: move to the last question you need.' : el<60 ? 'Warm-up: ¿Cómo te llamas? ¿De dónde eres?' : el<total/2 ? 'Topic A (3 questions).' : 'Topic B (3 questions).';
+    msg.textContent= tm.paused ? 'Paused.' : ph==='over' ? 'Tally time is up: the next student is due. Press Next student.' : ph==='tally' ? 'Interview over. Tally the grades: count the rows, add the ✗s, tick the levels, write the total.'
+      : ph==='warn' ? 'Last '+(warn>=120?'2 minutes':'minute')+': ask the last question you need.' : el<total*0.12 ? 'Warm-up: ¿Cómo te llamas? ¿De dónde eres?' : el<total*0.55 ? 'Topic A (3 questions).' : 'Topic B (3 questions).';
   }
   function tstart(){ tm.start=Date.now(); tm.paused=null; tsave(); wake(true); tpaint(); }
   function ttoggle(){ if(tm.start==null){ tstart(); return; } if(tm.paused){ tm.start+=Date.now()-tm.paused; tm.paused=null; wake(true); } else { tm.paused=Date.now(); } tsave(); tpaint(); }
