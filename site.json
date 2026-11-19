@@ -21,6 +21,18 @@
         },
         "items": [
           {
+            "title": "How it's graded",
+            "path": "oral-final/rubric.html",
+            "kind": "Rubric",
+            "desc": "The five things counted, the points for each count, and a score calculator with examples."
+          },
+          {
+            "title": "Practice questions",
+            "path": "oral-final/practice-questions.html",
+            "kind": "Study guide",
+            "desc": "The 40 practice questions with English, how to practice in the Language Lab, and a PDF to bring."
+          },
+          {
             "title": "Topic draw",
             "path": "oral-final/topic-draw.html",
             "kind": "Tool",

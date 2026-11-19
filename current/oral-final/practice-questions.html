@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Oral Final Practice Questions · SPAN 1001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Tokens embedded directly (D2L content items can't reliably
+     fetch an external theme.json at runtime) -- every value below
+     traces 1:1 to design/theme.json, matching the Welcome and
+     Required Textbook pages so this reads as the same product.
+     ============================================================ */
+  :root{
+    --bg:#F7F7F5; --surface:#FFFFFF; --surface-raised:#FFFFFF;
+    --ink:#1F2937; --ink-muted:#5A6472; --ink-faint:#657081;
+    --navy:#1A3A6B; --navy-dark:#132C52; --gold:#8A6D2E;
+    --navy-btn-text:#FFFFFF;
+    --border:rgba(31,41,55,0.14); --border-strong:rgba(31,41,55,0.28);
+    --focus-ring:#1A3A6B;
+    --note-bg:#FEF3C7; --note-tx:#7A5D14;
+  }
+  [data-mode="dark"]{
+    --bg:#0F1115; --surface:#181B22; --surface-raised:#20242D;
+    --ink:#F1F3F6; --ink-muted:#B8C0CE; --ink-faint:#7A8496;
+    --navy:#7B9FE0; --navy-dark:#5C7FC4; --gold:#D9B968;
+    --navy-btn-text:#0F1115;
+    --border:rgba(241,243,246,0.14); --border-strong:rgba(241,243,246,0.28);
+    --focus-ring:#D9B968;
+    --note-bg:rgba(251,191,36,0.16); --note-tx:#FCD34D;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.6; margin:0; padding:0; font-size:16px;
+    transition:background 0.2s,color 0.2s;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:32px 24px 64px;}
+
+  .skip-link{
+    position:absolute; left:-999px; top:0; background:var(--navy); color:var(--navy-btn-text);
+    padding:10px 16px; z-index:100; border-radius:0 0 8px 0; font-weight:600;
+  }
+  .skip-link:focus{left:0;}
+
+  .mode-toggle{display:flex; justify-content:flex-end; gap:8px; margin-bottom:8px;}
+  .mode-btn{
+    display:inline-flex; align-items:center; gap:6px; background:var(--surface);
+    border:1px solid var(--border-strong); color:var(--ink); font-family:'DM Sans',sans-serif;
+    font-size:13px; font-weight:600; padding:8px 14px; border-radius:999px; cursor:pointer;
+    min-height:44px;
+  }
+  .mode-btn:focus-visible{outline:2px solid var(--focus-ring); outline-offset:2px;}
+  .mode-btn:hover{border-color:var(--navy);}
+
+  @page{size:letter; margin:0.75in;}
+  @media print{
+    .no-print{display:none !important;}
+    body{background:#fff !important; font-size:11pt;}
+    .wrap{max-width:100% !important; padding:0 !important; margin:0 !important;}
+  }
+
+  .kicker{
+    font-size:13px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:8px;
+  }
+  h1{
+    font-family:'Source Serif 4',serif; font-weight:600; font-size:32px; line-height:1.15;
+    color:var(--navy); margin:0 0 6px;
+  }
+  .subtitle{font-size:16px; color:var(--ink-muted); margin:0 0 24px;}
+  p{font-size:16px; line-height:1.65; margin:0 0 16px; color:var(--ink);}
+
+  .callout{
+    background:var(--note-bg); border-left:4px solid var(--gold); border-radius:0 8px 8px 0;
+    padding:16px 20px; margin:0 0 24px;
+  }
+  .callout p{margin:0; font-size:15px; line-height:1.6; color:var(--note-tx);}
+
+  .btn-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:8px;}
+  .btn-primary{
+    display:inline-flex; align-items:center; gap:8px; background:var(--navy); color:var(--navy-btn-text);
+    font-family:'DM Sans',sans-serif; font-weight:600; font-size:15px; text-decoration:none;
+    padding:12px 22px; border-radius:8px; min-height:44px; flex:1 1 220px; justify-content:center;
+  }
+  .btn-primary:hover{background:var(--navy-dark);}
+  .btn-primary:focus-visible{outline:2px solid var(--focus-ring); outline-offset:2px;}
+  .btn-primary.secondary{background:var(--surface); color:var(--navy); border:1.5px solid var(--border-strong);}
+  .btn-primary.secondary:hover{border-color:var(--navy);}
+
+  .signoff{margin-top:28px;}
+  .signoff p{margin:0 0 2px;}
+  .signoff .name{
+    font-family:'Source Serif 4',serif; font-weight:600; font-size:18px; color:var(--navy);
+  }
+  @media (max-width:480px){ .btn-primary{flex:1 1 100%;} }
+  h2{
+    font-family:'Source Serif 4',serif; font-weight:600; font-size:22px; line-height:1.25;
+    color:var(--navy); margin:28px 0 8px;
+  }
+  ol,ul{margin:0 0 16px; padding-left:24px;}
+  li{font-size:16px; line-height:1.6; margin:0 0 8px; color:var(--ink);}
+  .tool-btn{margin:4px 0 8px;}
+  a{color:var(--navy);}
+  a:focus-visible{outline:2px solid var(--focus-ring); outline-offset:2px;}
+  table.qt{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:15px;}
+  table.qt caption{text-align:left;font-family:'Source Serif 4',serif;font-weight:600;font-size:19px;color:var(--navy);padding:0 0 6px;}
+  table.qt th{text-align:left;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);border-bottom:1.5px solid var(--border-strong);padding:6px 8px;}
+  table.qt td{border-bottom:1px solid var(--border);padding:8px;vertical-align:top;}
+  table.qt td.n{width:2.2em;color:var(--ink-muted);font-weight:600;}
+  table.qt td.es{font-weight:600;color:var(--ink);}
+  table.qt td.en{color:var(--ink-muted);}
+  table.qt td.ck{width:3em;text-align:center;}
+  .box{display:inline-block;width:18px;height:18px;border:1.5px solid var(--border-strong);border-radius:3px;}
+  @media print{ table.qt{font-size:10pt;margin:0 0 10px;} table.qt td,table.qt th{padding:3px 6px;} table.qt caption{font-size:13pt;} table.qt tr{break-inside:avoid;} h1{font-size:22pt;} h2{font-size:15pt;margin:12px 0 4px;break-after:avoid;} .subtitle,.callout,ol{margin-bottom:8px;} li{margin:0 0 3px;} .signoff{margin-top:10px;} }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+</style>
+</head><body data-mode="light"><p><a href="#main" class="skip-link">Skip to main content</a></p>
+<div class="wrap">
+<div class="mode-toggle no-print"><a class="mode-btn" href="practice-questions.pdf" download style="text-decoration:none;display:inline-block">Download the PDF</a> <button class="mode-btn" type="button" id="fs-btn" onclick="toggleFS()">⛶ Full Screen</button> <button class="mode-btn" id="modeToggle" aria-pressed="false" onclick="toggleMode()"> <span id="modeLabel">Dark mode</span> </button></div>
+<main id="main">
+<div class="kicker">SPAN 1001 &middot; Examen Oral</div>
+<h1>Oral Final: Practice Questions</h1>
+<p class="subtitle">A one-on-one conversation in Spanish with your instructor, at your sign-up time (the dates are on the course calendar). Topics come from Chapters 1&ndash;5. These are possible questions: practice answering them <strong>aloud</strong>.</p>
+<div class="callout"><p><strong>Download the PDF, bring it to the Language Lab</strong> and practice with a lab assistant. How it&rsquo;s graded: <a href="rubric.html">the Oral Final rubric</a>, with a score calculator.</p></div>
+<h2>How to practice with a lab assistant</h2>
+<ol>
+<li>The lab assistant asks questions <strong>in any order</strong>, mixing the chapters. On the oral final, they won&rsquo;t come in order either.</li>
+<li>Answer in a <strong>full sentence</strong>, then add one more thing with <span lang="es"><em>y, pero, porque</em></span> or <span lang="es"><em>tambi&eacute;n</em></span>.</li>
+<li>The lab assistant asks a follow-up: <span lang="es"><em>&iquest;Por qu&eacute;? &iquest;Y tu familia? &iquest;Y tu mejor amigo?</em></span> Answer that too.</li>
+<li>Do a second round with no notes. Tick &#10003; each question you can answer without looking.</li>
+<li>Don&rsquo;t memorize a script. Practice answering, so new questions don&rsquo;t surprise you.</li>
+</ol>
+<table class="qt"><caption>If you get stuck, say it in Spanish</caption><thead><tr><th scope="col">Spanish</th><th scope="col">English</th></tr></thead><tbody><tr><td class="es" lang="es">¿Puede repetir, por favor?</td><td class="en">Can you repeat, please?</td></tr><tr><td class="es" lang="es">Más despacio, por favor.</td><td class="en">Slower, please.</td></tr><tr><td class="es" lang="es">¿Cómo se dice ___ en español?</td><td class="en">How do you say ___ in Spanish?</td></tr><tr><td class="es" lang="es">No sé.</td><td class="en">I don't know.</td></tr><tr><td class="es" lang="es">No entiendo.</td><td class="en">I don't understand.</td></tr></tbody></table>
+<h2>Possible questions</h2>
+<table class="qt"><caption>Chapters 1–2 · About you and your day</caption><thead><tr><th scope="col">#</th><th scope="col">Pregunta</th><th scope="col">English</th><th scope="col">&#10003;</th></tr></thead><tbody><tr><td class="n">1.</td><td class="es" lang="es">¿Cómo te llamas?</td><td class="en">What's your name?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">2.</td><td class="es" lang="es">¿De dónde eres?</td><td class="en">Where are you from?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">3.</td><td class="es" lang="es">¿Qué estudias?</td><td class="en">What are you studying?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">4.</td><td class="es" lang="es">¿Cuántas clases tomas este semestre?</td><td class="en">How many classes are you taking this semester?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">5.</td><td class="es" lang="es">¿Cuál es tu clase favorita? ¿Por qué?</td><td class="en">What's your favorite class? Why?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">6.</td><td class="es" lang="es">¿Qué hora es?</td><td class="en">What time is it?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">7.</td><td class="es" lang="es">¿A qué hora es tu clase de español?</td><td class="en">What time is your Spanish class?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">8.</td><td class="es" lang="es">¿Qué día es hoy?</td><td class="en">What day is today?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">9.</td><td class="es" lang="es">¿Dónde está la biblioteca?</td><td class="en">Where is the library?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">10.</td><td class="es" lang="es">¿Trabajas? ¿Dónde?</td><td class="en">Do you work? Where?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">11.</td><td class="es" lang="es">¿Qué te gusta hacer los domingos?</td><td class="en">What do you like to do on Sundays?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr></tbody></table>
+<table class="qt"><caption>Chapter 3 · Family and friends</caption><thead><tr><th scope="col">#</th><th scope="col">Pregunta</th><th scope="col">English</th><th scope="col">&#10003;</th></tr></thead><tbody><tr><td class="n">12.</td><td class="es" lang="es">¿Cuántas personas hay en tu familia?</td><td class="en">How many people are in your family?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">13.</td><td class="es" lang="es">¿Tienes hermanos? ¿Cómo son?</td><td class="en">Do you have brothers or sisters? What are they like?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">14.</td><td class="es" lang="es">¿Cómo es tu mejor amigo o amiga?</td><td class="en">What is your best friend like?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">15.</td><td class="es" lang="es">¿De dónde es tu familia?</td><td class="en">Where is your family from?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">16.</td><td class="es" lang="es">¿Dónde vive tu familia?</td><td class="en">Where does your family live?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">17.</td><td class="es" lang="es">¿Cuántos años tiene tu madre o tu padre?</td><td class="en">How old is your mother or father?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">18.</td><td class="es" lang="es">¿Cómo eres tú?</td><td class="en">What are you like?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">19.</td><td class="es" lang="es">¿Tienes que trabajar este fin de semana?</td><td class="en">Do you have to work this weekend?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">20.</td><td class="es" lang="es">¿Vienes a la universidad todos los días?</td><td class="en">Do you come to the university every day?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr></tbody></table>
+<table class="qt"><caption>Chapter 4 · Free time and plans</caption><thead><tr><th scope="col">#</th><th scope="col">Pregunta</th><th scope="col">English</th><th scope="col">&#10003;</th></tr></thead><tbody><tr><td class="n">21.</td><td class="es" lang="es">¿Qué haces en tu tiempo libre?</td><td class="en">What do you do in your free time?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">22.</td><td class="es" lang="es">¿Practicas algún deporte?</td><td class="en">Do you play any sports?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">23.</td><td class="es" lang="es">¿Adónde vas los fines de semana?</td><td class="en">Where do you go on weekends?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">24.</td><td class="es" lang="es">¿Qué vas a hacer este fin de semana?</td><td class="en">What are you going to do this weekend?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">25.</td><td class="es" lang="es">¿Qué quieres hacer después de clase?</td><td class="en">What do you want to do after class?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">26.</td><td class="es" lang="es">¿Prefieres ver películas o leer?</td><td class="en">Do you prefer watching movies or reading?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">27.</td><td class="es" lang="es">¿A qué hora sales de tu casa?</td><td class="en">What time do you leave home?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">28.</td><td class="es" lang="es">¿Cuántas horas duermes?</td><td class="en">How many hours do you sleep?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">29.</td><td class="es" lang="es">¿Qué pides en un restaurante?</td><td class="en">What do you order in a restaurant?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">30.</td><td class="es" lang="es">¿Qué traes a clase?</td><td class="en">What do you bring to class?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr></tbody></table>
+<table class="qt"><caption>Chapter 5 · Travel, how you are, right now</caption><thead><tr><th scope="col">#</th><th scope="col">Pregunta</th><th scope="col">English</th><th scope="col">&#10003;</th></tr></thead><tbody><tr><td class="n">31.</td><td class="es" lang="es">¿Cómo estás hoy? ¿Por qué?</td><td class="en">How are you today? Why?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">32.</td><td class="es" lang="es">¿Qué tiempo hace hoy?</td><td class="en">What's the weather like today?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">33.</td><td class="es" lang="es">¿Adónde quieres viajar? ¿Por qué?</td><td class="en">Where do you want to travel? Why?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">34.</td><td class="es" lang="es">¿Prefieres ir a la playa o a las montañas?</td><td class="en">Do you prefer to go to the beach or the mountains?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">35.</td><td class="es" lang="es">¿Tienes pasaporte?</td><td class="en">Do you have a passport?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">36.</td><td class="es" lang="es">¿Cuándo haces las maletas?</td><td class="en">When do you pack?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">37.</td><td class="es" lang="es">¿Estás cansado o cansada hoy?</td><td class="en">Are you tired today?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">38.</td><td class="es" lang="es">¿Qué estás estudiando este semestre?</td><td class="en">What are you studying this semester?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">39.</td><td class="es" lang="es">¿Cómo es tu ciudad?</td><td class="en">What is your city like?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr><tr><td class="n">40.</td><td class="es" lang="es">¿Dónde está tu ciudad?</td><td class="en">Where is your city?</td><td class="ck"><span class="box" aria-hidden="true"></span><span class="sr-only">practiced</span></td></tr></tbody></table>
+<p>On the day, you may also get follow-up questions that aren&rsquo;t on this list. If you can answer these with a full sentence and one more detail, you&rsquo;re ready for them. A follow-up you answer that way counts as saying more.</p>
+<div class="signoff"><p>Questions? Ask me in class, in office hours, or by email.</p><p class="name">-- Daniel Noh</p></div>
+</main></div>
+<p><script>
+function toggleMode(){
+  const body = document.body;
+  const isDark = body.getAttribute('data-mode') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  body.setAttribute('data-mode', next);
+  document.getElementById('modeToggle').setAttribute('aria-pressed', String(!isDark));
+  document.getElementById('modeLabel').textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
+}
+function toggleFS(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+document.addEventListener('fullscreenchange', () => {
+  const b = document.getElementById('fs-btn');
+  if(b) b.textContent = document.fullscreenElement ? '⛶ Exit Full Screen' : '⛶ Full Screen';
+});
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.body.setAttribute('data-mode', 'dark');
+  document.getElementById('modeLabel').textContent = 'Light mode';
+  document.getElementById('modeToggle').setAttribute('aria-pressed', 'true');
+}
+</script></p></body></html>

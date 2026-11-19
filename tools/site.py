@@ -46,7 +46,7 @@ def head(title, desc, depth):
 """
 
 
-def mast(course, crumbs, kicker, h1, sub, card):
+def mast(course, crumbs, kicker, h1, sub, card, sub_lang=None):
     cr = ' <span aria-hidden="true">/</span> '.join(
         f'<a href="{e(h)}">{e(t)}</a>' if h else f'<span aria-current="page">{e(t)}</span>' for t, h in crumbs)
     dl = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k, v in card)
@@ -62,7 +62,7 @@ def mast(course, crumbs, kicker, h1, sub, card):
     <div>
       <p class="kicker">{e(kicker)}</p>
       <h1>{e(h1)}</h1>
-      <p class="sub" lang="es">{e(sub)}</p>
+      <p class="sub"{f' lang="{sub_lang}"' if sub_lang else ""}>{e(sub)}</p>
     </div>
     <dl class="term-card">{dl}</dl>
   </div>
@@ -135,7 +135,7 @@ def term_page(site, term, depth, is_current, root_page=False):
         card.append(("Status", "Archived"))
     title = f"{c['code']} · {label}"
     return (head(title, f"{c['code']} {c['title']}: pages and tools for {label}.", depth)
-            + mast(c, crumbs, kicker, c["code"], c["titleEs"], card)
+            + mast(c, crumbs, kicker, c["code"], c["title"], card)  # Daniel 11-19: English course title, not "Español elemental I"
             + f'<main id="main"><div class="wrap layout">\n<div>\n{sections_html(term, prefix)}\n</div>\n'
             + aside(site, depth, term["id"]) + "\n</div></main>\n" + footer(site))
 
@@ -143,7 +143,7 @@ def term_page(site, term, depth, is_current, root_page=False):
 def page_404(site):
     c = site["course"]
     return (head(f"Page not found · {c['code']}", "This page moved or no longer exists.", 0).replace('href="assets/', 'href="/span1001/assets/').replace('src="assets/', 'src="/span1001/assets/')
-            + mast(c, [(c["code"], "/span1001/"), ("Not found", None)], "404", "Page not found", "Esta página no existe.", [("Course", c["code"])])
+            + mast(c, [(c["code"], "/span1001/"), ("Not found", None)], "404", "Page not found", "Esta página no existe.", [("Course", c["code"])], sub_lang="es")
             + '<main id="main"><div class="wrap"><p>This page moved or was removed at the end of a term. '
             + '<a href="/span1001/">Go to the course home</a> for the current pages.</p></div></main>\n' + footer(site))
 
