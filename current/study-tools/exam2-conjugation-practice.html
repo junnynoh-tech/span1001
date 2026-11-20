@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPAN 1001 · Exam 2 Conjugation Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Tokens: design-system skill, student-facing theme */
+  :root{
+    --navy:#1A3A6B; --navy-dark:#132C52; --gold:#B08D3F; --gold-dk:#7A5D14;
+    --offwhite:#F7F7F5; --white:#FFFFFF; --ink:#1F2937; --muted:#5A6472;
+    --border:rgba(31,41,55,0.16); --border-strong:rgba(31,41,55,0.32);
+    --surface:#FFFFFF; --bg:#F7F7F5; --focus:#1A3A6B; --hl:#FEF3C7; --hl-tx:#78350F;
+    --ok-bg:#E6F4EA; --ok-tx:#14532D; --no-bg:#FDECEA; --no-tx:#8B2520; --mid-bg:#FFF4E0; --mid-tx:#7A3805;
+  }
+  [data-mode="dark"]{
+    --navy:#9DB8EA; --navy-dark:#7B9FE0; --ink:#F1F3F6; --muted:#B8C0CE;
+    --border:rgba(241,243,246,0.16); --border-strong:rgba(241,243,246,0.32);
+    --surface:#181B22; --bg:#0F1115; --offwhite:#20242D; --focus:#D9B968; --hl:rgba(251,191,36,.18); --hl-tx:#FCD34D;
+    --ok-bg:rgba(74,222,128,.14); --ok-tx:#86EFAC; --no-bg:rgba(248,113,113,.14); --no-tx:#FCA5A5; --mid-bg:rgba(251,191,36,.14); --mid-tx:#FCD34D;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0; font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; font-size:16px;}
+  .skip-link{position:absolute; left:-9999px; top:0; background:var(--navy-dark); color:#fff; padding:10px 16px; font-weight:700; z-index:100;}
+  .skip-link:focus{left:0;}
+  .wrap{max-width:900px; margin:0 auto; padding:16px 16px 56px;}
+  .page-toolbar{display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; margin-bottom:8px;}
+  .page-toolbar button, .btn{font:600 14px 'DM Sans',sans-serif; color:var(--navy); background:var(--surface); border:1.5px solid var(--border-strong);
+    border-radius:8px; padding:9px 14px; min-height:44px; cursor:pointer;}
+  .btn.primary{background:var(--navy-dark); color:#fff; border-color:var(--navy-dark);}
+  [data-mode="dark"] .btn.primary{color:#0F1115; background:var(--navy); border-color:var(--navy);}
+  button:focus-visible, select:focus-visible, input:focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  h1{font-family:'Source Serif 4',serif; font-size:30px; color:var(--navy); margin:4px 0 4px;}
+  .lede{color:var(--muted); margin:0 0 16px;}
+  h2{font-family:'Source Serif 4',serif; font-size:20px; color:var(--navy); margin:0 0 10px;}
+  .tabs{display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap;}
+  .tab{font:700 15px 'DM Sans',sans-serif; border:1.5px solid var(--border-strong); background:var(--surface); color:var(--ink); border-radius:999px; padding:8px 16px; min-height:44px; cursor:pointer;}
+  .tab[aria-selected="true"]{background:var(--navy-dark); color:#fff; border-color:var(--navy-dark);}
+  [data-mode="dark"] .tab[aria-selected="true"]{background:var(--navy); color:#0F1115;}
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:16px;}
+  fieldset{border:0; margin:0 0 12px; padding:0;}
+  legend{font-weight:700; font-size:14px; margin-bottom:6px; padding:0;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--border-strong); border-radius:999px; padding:6px 12px; min-height:40px; cursor:pointer; font-size:15px;}
+  .chip input{width:18px; height:18px; accent-color:var(--navy); margin:0;}
+  .row{display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end;}
+  label.sel{display:flex; flex-direction:column; font-weight:700; font-size:14px; gap:4px; min-width:0; max-width:100%;}
+  select{font:500 15px 'DM Sans',sans-serif; color:var(--ink); background:var(--surface); border:1.5px solid var(--border-strong); border-radius:8px; padding:8px 10px; min-height:44px; max-width:100%;}
+
+  .q{text-align:center; padding:8px 0 4px;}
+  .q .count{font-size:14px; color:var(--muted);}
+  .q .prompt{font-family:'Source Serif 4',serif; font-size:30px; color:var(--navy); margin:8px 0 2px;}
+  .q .prompt .subj{font-weight:700;}
+  .q .gloss{color:var(--muted); font-size:15px;}
+  .answer{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:14px 0 8px;}
+  .answer input{font:500 22px 'DM Sans',sans-serif; padding:8px 12px; min-height:48px; width:min(320px,100%); border:2px solid var(--border-strong); border-radius:10px; background:var(--surface); color:var(--ink); text-align:center;}
+  .accents{display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin-bottom:10px;}
+  .accents button{font:600 18px 'DM Sans',sans-serif; min-width:44px; min-height:44px; border:1.5px solid var(--border-strong); background:var(--offwhite); color:var(--ink); border-radius:8px; cursor:pointer;}
+  .fb{border-radius:10px; padding:12px 16px; margin:10px auto 0; max-width:560px;}
+  .fb.ok{background:var(--ok-bg); color:var(--ok-tx);}
+  .fb.no{background:var(--no-bg); color:var(--no-tx);}
+  .fb.mid{background:var(--mid-bg); color:var(--mid-tx);}
+  .fb p{margin:0 0 4px;}
+  .fb .note{color:inherit; font-size:15px;}
+  table.conj{border-collapse:collapse; margin:10px auto 0; width:100%; max-width:520px; background:var(--surface);}
+  table.conj caption{font-weight:700; padding-bottom:6px; color:var(--ink); text-align:left;}
+  table.conj th{background:var(--navy-dark); color:#fff; padding:6px 10px; font-weight:600; text-align:center;}
+  [data-mode="dark"] table.conj th{background:#2A3C5E;}
+  table.conj td{border:1px solid var(--border); padding:6px 10px; color:var(--ink); background:var(--surface);}
+  table.conj td .p{display:block; font-size:13px; color:var(--muted);}
+  table.conj td.hit{background:var(--hl); color:var(--hl-tx); font-weight:700;}
+  table.conj td.hit .p{color:var(--hl-tx);}
+  table.conj td.vos{color:var(--muted); font-style:italic;}
+  .summary ul{padding-left:20px;}
+  .summary li{margin:4px 0;}
+  .ref-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;}
+  .ref-grid table.conj{margin:0; max-width:none;}
+  .ref-note{font-size:14px; color:var(--muted); margin:4px 0 0;}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;}
+  .muted{color:var(--muted);}
+  [hidden]{display:none !important;}
+
+  @page{size:letter; margin:0.6in;}
+  @media print{
+    body{background:#fff !important; color:#000 !important;}
+    .no-print, .skip-link, #quizPanel{display:none !important;}
+    #refPanel{display:block !important;}
+    .wrap{max-width:100% !important; padding:0 !important;}
+    .panel{border:0; padding:0;}
+    .ref-grid{grid-template-columns:repeat(2,1fr);}
+    .ref-item{break-inside:avoid; page-break-inside:avoid;}
+    table.conj th{background:#e5e7eb !important; color:#000 !important;}
+    table.conj td{background:#fff !important; color:#000 !important;}
+    h2.group{break-after:avoid;}
+  }
+</style>
+</head>
+<body data-mode="light">
+<a class="skip-link" href="#main">Skip to the practice</a>
+<div class="wrap">
+  <div class="page-toolbar no-print">
+    <button type="button" onclick="printRef()">🖨 Print verb tables</button>
+    <button type="button" id="fs-btn" onclick="toggleFS()">⛶ Full Screen</button>
+    <button type="button" id="modeToggle" aria-pressed="false" onclick="toggleMode()"><span id="modeLabel">Dark mode</span></button>
+  </div>
+  <main id="main">
+    <h1>Exam 2 Conjugation Practice</h1>
+    <p class="lede">Present tense, Chapters 3–4: -er/-ir verbs, tener and venir, ir, stem-changing verbs and irregular yo forms. Type the form, check it, and see the whole verb.</p>
+
+    <div class="tabs no-print" role="tablist" aria-label="Sections">
+      <button type="button" class="tab" role="tab" id="t-quiz" aria-controls="quizPanel" aria-selected="true" onclick="showTab('quiz')">Practice</button>
+      <button type="button" class="tab" role="tab" id="t-ref" aria-controls="refPanel" aria-selected="false" tabindex="-1" onclick="showTab('ref')">Verb tables</button>
+    </div>
+
+    <section class="panel no-print" aria-labelledby="setH">
+      <h2 id="setH">Choose what to practice</h2>
+      <fieldset>
+        <legend>Verb groups</legend>
+        <div class="chips" id="groupChips"></div>
+      </fieldset>
+      <div class="row">
+        <label class="sel" for="subjSel">Subjects
+          <select id="subjSel">
+            <option value="pron">Pronouns only (yo, tú, ella...)</option>
+            <option value="all">Pronouns, names and people (Ana y yo, mis padres...)</option>
+          </select>
+        </label>
+        <label class="sel" for="lenSel">Questions
+          <select id="lenSel">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="40">40</option>
+          </select>
+        </label>
+        <button type="button" class="btn primary" onclick="startQuiz()">Start a new round</button>
+      </div>
+    </section>
+
+    <section class="panel" id="quizPanel" role="tabpanel" aria-labelledby="t-quiz">
+      <div id="quizBody"></div>
+    </section>
+
+    <section class="panel" id="refPanel" role="tabpanel" aria-labelledby="t-ref" hidden>
+      <p class="ref-note no-print">Showing the verb groups you chose above. “Print verb tables” prints exactly these.</p>
+      <div id="refBody"></div>
+    </section>
+  </main>
+</div>
+<div id="status" class="sr-only" role="status" aria-live="polite"></div>
+
+<script>
+var VERBS = [["aprender", "to learn", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["aprendo", "aprendes", "aprende", "aprendemos", "aprenden"]], ["beber", "to drink", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["bebo", "bebes", "bebe", "bebemos", "beben"]], ["comer", "to eat", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["como", "comes", "come", "comemos", "comen"]], ["comprender", "to understand", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["comprendo", "comprendes", "comprende", "comprendemos", "comprenden"]], ["correr", "to run", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["corro", "corres", "corre", "corremos", "corren"]], ["creer", "to believe", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["creo", "crees", "cree", "creemos", "creen"]], ["deber", "should; ought to", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["debo", "debes", "debe", "debemos", "deben"]], ["leer", "to read", "erir", "Regular -er: drop -er, add -o, -es, -e, -emos, -en.", ["leo", "lees", "lee", "leemos", "leen"]], ["abrir", "to open", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["abro", "abres", "abre", "abrimos", "abren"]], ["asistir", "to attend", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["asisto", "asistes", "asiste", "asistimos", "asisten"]], ["compartir", "to share", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["comparto", "compartes", "comparte", "compartimos", "comparten"]], ["decidir", "to decide", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["decido", "decides", "decide", "decidimos", "deciden"]], ["describir", "to describe", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["describo", "describes", "describe", "describimos", "describen"]], ["escribir", "to write", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["escribo", "escribes", "escribe", "escribimos", "escriben"]], ["recibir", "to receive", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["recibo", "recibes", "recibe", "recibimos", "reciben"]], ["vivir", "to live", "erir", "Regular -ir: like -er everywhere except nosotros (-imos).", ["vivo", "vives", "vive", "vivimos", "viven"]], ["tener", "to have", "tenerVenir", "Yo adds a g (tengo); e→ie in tú, él/ella, ellos; nosotros stays regular.", ["tengo", "tienes", "tiene", "tenemos", "tienen"]], ["venir", "to come", "tenerVenir", "Same pattern as tener: vengo; e→ie except nosotros (venimos, an -ir ending).", ["vengo", "vienes", "viene", "venimos", "vienen"]], ["ir", "to go", "ir", "Irregular: voy, vas, va, vamos, van. Ir a + place / ir a + infinitive.", ["voy", "vas", "va", "vamos", "van"]], ["cerrar", "to close", "eie", "Stem change e→ie in every form except nosotros.", ["cierro", "cierras", "cierra", "cerramos", "cierran"]], ["comenzar", "to begin", "eie", "Stem change e→ie in every form except nosotros.", ["comienzo", "comienzas", "comienza", "comenzamos", "comienzan"]], ["empezar", "to begin", "eie", "Stem change e→ie in every form except nosotros.", ["empiezo", "empiezas", "empieza", "empezamos", "empiezan"]], ["entender", "to understand", "eie", "Stem change e→ie in every form except nosotros.", ["entiendo", "entiendes", "entiende", "entendemos", "entienden"]], ["pensar", "to think; to plan", "eie", "Stem change e→ie in every form except nosotros.", ["pienso", "piensas", "piensa", "pensamos", "piensan"]], ["perder", "to lose; to miss", "eie", "Stem change e→ie in every form except nosotros.", ["pierdo", "pierdes", "pierde", "perdemos", "pierden"]], ["preferir", "to prefer", "eie", "Stem change e→ie in every form except nosotros.", ["prefiero", "prefieres", "prefiere", "preferimos", "prefieren"]], ["querer", "to want; to love", "eie", "Stem change e→ie in every form except nosotros.", ["quiero", "quieres", "quiere", "queremos", "quieren"]], ["almorzar", "to have lunch", "oue", "Stem change o→ue in every form except nosotros.", ["almuerzo", "almuerzas", "almuerza", "almorzamos", "almuerzan"]], ["contar", "to count; to tell", "oue", "Stem change o→ue in every form except nosotros.", ["cuento", "cuentas", "cuenta", "contamos", "cuentan"]], ["dormir", "to sleep", "oue", "Stem change o→ue in every form except nosotros.", ["duermo", "duermes", "duerme", "dormimos", "duermen"]], ["encontrar", "to find", "oue", "Stem change o→ue in every form except nosotros.", ["encuentro", "encuentras", "encuentra", "encontramos", "encuentran"]], ["mostrar", "to show", "oue", "Stem change o→ue in every form except nosotros.", ["muestro", "muestras", "muestra", "mostramos", "muestran"]], ["poder", "to be able to; can", "oue", "Stem change o→ue in every form except nosotros.", ["puedo", "puedes", "puede", "podemos", "pueden"]], ["recordar", "to remember", "oue", "Stem change o→ue in every form except nosotros.", ["recuerdo", "recuerdas", "recuerda", "recordamos", "recuerdan"]], ["volver", "to return", "oue", "Stem change o→ue in every form except nosotros.", ["vuelvo", "vuelves", "vuelve", "volvemos", "vuelven"]], ["jugar", "to play (a sport or game)", "oue", "Stem change u→ue (the only u→ue verb) in every form except nosotros.", ["juego", "juegas", "juega", "jugamos", "juegan"]], ["pedir", "to ask for; to request", "ei", "Stem change e→i in every form except nosotros.", ["pido", "pides", "pide", "pedimos", "piden"]], ["repetir", "to repeat", "ei", "Stem change e→i in every form except nosotros.", ["repito", "repites", "repite", "repetimos", "repiten"]], ["seguir", "to follow; to continue", "ei", "Stem change e→i in every form except nosotros. Yo drops the u: sigo.", ["sigo", "sigues", "sigue", "seguimos", "siguen"]], ["conseguir", "to get; to obtain", "ei", "Stem change e→i in every form except nosotros. Yo drops the u: consigo.", ["consigo", "consigues", "consigue", "conseguimos", "consiguen"]], ["decir", "to say; to tell", "ei", "Irregular yo (digo) plus e→i except nosotros.", ["digo", "dices", "dice", "decimos", "dicen"]], ["hacer", "to do; to make", "yo", "Irregular only in the yo form; every other form is regular.", ["hago", "haces", "hace", "hacemos", "hacen"]], ["poner", "to put; to place", "yo", "Irregular only in the yo form; every other form is regular.", ["pongo", "pones", "pone", "ponemos", "ponen"]], ["salir", "to leave; to go out", "yo", "Irregular only in the yo form; every other form is regular.", ["salgo", "sales", "sale", "salimos", "salen"]], ["suponer", "to suppose", "yo", "Irregular only in the yo form; every other form is regular.", ["supongo", "supones", "supone", "suponemos", "suponen"]], ["traer", "to bring", "yo", "Irregular only in the yo form; every other form is regular.", ["traigo", "traes", "trae", "traemos", "traen"]], ["ver", "to see", "yo", "Yo is veo; the other forms are regular (no accent on ves, ve, ven).", ["veo", "ves", "ve", "vemos", "ven"]], ["oír", "to hear", "yo", "Yo is oigo, and the y appears in tú, él/ella, ellos (oyes, oye, oyen). Nosotros has an accent: oímos.", ["oigo", "oyes", "oye", "oímos", "oyen"]]];      /* [infinitive, english, group, note, [yo, tú, él, nosotros, ellos]] */
+var GROUPS = [["erir", "-er / -ir verbs (3.3)"], ["tenerVenir", "Tener and venir (3.4)"], ["ir", "Ir (4.1)"], ["eie", "Stem-changing e→ie (4.2)"], ["oue", "Stem-changing o→ue, u→ue (4.2)"], ["ei", "Stem-changing e→i (4.3)"], ["yo", "Irregular yo forms (4.4)"]];    /* [id, label] */
+var GROUP_NOTE = {
+  erir:'Drop -er or -ir and add -o, -es, -e, -emos / -imos, -en. The two families differ only in nosotros: comemos, vivimos.',
+  tenerVenir:'A g in yo (tengo, vengo); e→ie in tú, él/ella, ellos; nosotros stays regular (tenemos, venimos).',
+  ir:'Completely irregular: voy, vas, va, vamos, van. Ir a + a place, or ir a + an infinitive.',
+  eie:'The stem e becomes ie in every form except nosotros: quiero, quieres... queremos.',
+  oue:'The stem o becomes ue in every form except nosotros: puedo, puedes... podemos. Jugar is the one u→ue verb: juego... jugamos.',
+  ei:'The stem e becomes i in every form except nosotros: pido, pides... pedimos. Seguir and conseguir drop the u in yo (sigo); decir also has an irregular yo (digo).',
+  yo:'Irregular only in the yo form (hago, pongo, salgo, supongo, traigo, veo). Oír also adds a y: oigo, oyes, oye, oímos, oyen.'
+};
+var PRON = [["yo"],["tú"],["él","ella","usted"],["nosotros","nosotras"],["ellos","ellas","ustedes"]];
+var PEOPLE = [[],[],["Ana","mi hermano","el profesor","mi amiga"],["Ana y yo","mis amigos y yo","mi familia y yo"],["mis padres","Carlos y Elena","los estudiantes"]];
+var PERSON_LABEL = ["yo","tú","él / ella / usted","nosotros/as","ellos / ellas / ustedes"];
+var round = [], qi = 0, answered = false, results = [];
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function store(k,v){ try{ localStorage.setItem('span1001_conj2_'+k, JSON.stringify(v)); }catch(e){} }
+function recall(k,d){ try{ var v=localStorage.getItem('span1001_conj2_'+k); return v?JSON.parse(v):d; }catch(e){ return d; } }
+function say(t){ document.getElementById('status').textContent = t; }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function plain(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim(); }
+function chosenGroups(){ return [].slice.call(document.querySelectorAll('#groupChips input:checked')).map(function(i){ return i.value; }); }
+function chosenVerbs(){ var g = chosenGroups(); return VERBS.filter(function(v){ return g.indexOf(v[2]) >= 0; }); }
+
+function startQuiz(retry){
+  var pool = chosenVerbs(), n = +document.getElementById('lenSel').value, mode = document.getElementById('subjSel').value;
+  if(!pool.length){ document.getElementById('quizBody').innerHTML = '<p>Choose at least one verb group above.</p>'; return; }
+  round = [];
+  if(retry && retry.length){ round = retry.slice(); }
+  else {
+    for(var i = 0; i < n; i++){
+      var v = pick(pool), p = Math.floor(Math.random()*5);
+      /* weight nosotros a little higher: it is where stem-changers stay regular */
+      if(Math.random() < 0.12 && (v[2] === 'eie' || v[2] === 'oue' || v[2] === 'ei' || v[2] === 'tenerVenir')) p = 3;
+      var subjects = PRON[p].concat(mode === 'all' ? PEOPLE[p] : []);
+      round.push({v: v, p: p, s: pick(subjects)});
+    }
+  }
+  qi = 0; results = []; showTab('quiz'); renderQ();
+}
+function renderQ(){
+  var b = document.getElementById('quizBody');
+  if(qi >= round.length){ return renderSummary(); }
+  var q = round[qi]; answered = false;
+  b.innerHTML = '<div class="q"><div class="count">Question ' + (qi+1) + ' of ' + round.length + '</div>' +
+    '<div class="prompt"><span class="subj" lang="es">' + esc(q.s) + '</span> ___ <span lang="es">(' + esc(q.v[0]) + ')</span></div>' +
+    '<div class="gloss">' + esc(q.v[1]) + '</div></div>' +
+    '<form class="answer" onsubmit="check(event)"><label class="sr-only" for="ans">Your answer</label>' +
+    '<input id="ans" lang="es" autocomplete="off" autocapitalize="off" spellcheck="false">' +
+    '<button type="submit" class="btn primary" id="checkBtn">Check</button></form>' +
+    '<div class="accents" aria-label="Insert an accented letter">' + ['á','é','í','ó','ú','ñ'].map(function(c){ return '<button type="button" onclick="ins(\'' + c + '\')" aria-label="Insert ' + c + '">' + c + '</button>'; }).join('') + '</div>' +
+    '<div id="fb" aria-live="polite"></div>';
+  document.getElementById('ans').focus();
+}
+function ins(c){ var a = document.getElementById('ans'); if(!a || answered) return; var s = a.selectionStart || a.value.length;
+  a.value = a.value.slice(0, s) + c + a.value.slice(a.selectionEnd || s); a.focus(); a.setSelectionRange(s+1, s+1); }
+function tableHTML(v, hit, caption){
+  var f = v[4], rows = [[0,3],[1,-1],[2,4]], h = '<table class="conj"><caption>' + caption + '</caption><thead><tr><th scope="col">Singular</th><th scope="col">Plural</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    h += '<tr>';
+    r.forEach(function(i){
+      if(i < 0){ h += '<td class="vos"><span class="p">vosotros/as</span>Spain only, not tested</td>'; return; }
+      h += '<td' + (i === hit ? ' class="hit"' : '') + '><span class="p">' + PERSON_LABEL[i] + '</span><span lang="es">' + esc(f[i]) + '</span>' + (i === hit ? ' <span class="sr-only">(this question)</span>' : '') + '</td>';
+    });
+    h += '</tr>';
+  });
+  return h + '</tbody></table>';
+}
+function check(e){
+  e.preventDefault();
+  var q = round[qi], a = document.getElementById('ans');
+  if(answered){ qi++; return renderQ(); }
+  var given = a.value.trim().toLowerCase(), want = q.v[4][q.p];
+  if(!given){ a.focus(); return; }
+  var exact = given === want, near = !exact && plain(given) === plain(want);
+  answered = true; a.readOnly = true;
+  results.push({q: q, given: given, ok: exact});
+  var cls = exact ? 'ok' : (near ? 'mid' : 'no');
+  var head = exact ? '✓ Correct: <span lang="es">' + esc(want) + '</span>'
+           : near ? '≈ Almost: check the accent. It is <span lang="es">' + esc(want) + '</span>.'
+           : '✗ Not quite. <span lang="es">' + esc(q.s) + ' <strong>' + esc(want) + '</strong></span>';
+  document.getElementById('fb').innerHTML = '<div class="fb ' + cls + '"><p>' + head + '</p><p class="note">' + esc(q.v[3]) + '</p></div>' +
+    tableHTML(q.v, q.p, '<span lang="es">' + esc(q.v[0]) + '</span> (' + esc(q.v[1]) + ')');
+  document.getElementById('checkBtn').textContent = (qi + 1 < round.length) ? 'Next →' : 'See results';
+  document.getElementById('checkBtn').focus();
+  say(exact ? 'Correct.' : (near ? 'Almost. Check the accent. ' : 'Not quite. ') + (exact ? '' : 'The answer is ' + want + '.'));
+}
+function renderSummary(){
+  var right = results.filter(function(r){ return r.ok; }).length, missed = results.filter(function(r){ return !r.ok; });
+  var h = '<div class="summary"><h2>' + right + ' / ' + results.length + ' correct</h2>';
+  if(missed.length){
+    h += '<p>Review these:</p><ul>' + missed.map(function(r){ return '<li><span lang="es">' + esc(r.q.s) + ' <strong>' + esc(r.q.v[4][r.q.p]) + '</strong> (' + esc(r.q.v[0]) + ')</span>' + (r.given ? ' <span class="muted">· you wrote “<span lang="es">' + esc(r.given) + '</span>”</span>' : '') + '</li>'; }).join('') + '</ul>';
+    h += '<button type="button" class="btn primary" onclick="retryMissed()">Practice the ones I missed</button> ';
+  } else { h += '<p>Every one right. Try a longer round, or switch on “names and people.”</p>'; }
+  h += '<button type="button" class="btn" onclick="startQuiz()">New round</button></div>';
+  document.getElementById('quizBody').innerHTML = h;
+  say(right + ' out of ' + results.length + ' correct.');
+}
+function retryMissed(){ startQuiz(shuffle(results.filter(function(r){ return !r.ok; }).map(function(r){ return r.q; }))); }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+function renderRef(){
+  var g = chosenGroups(), h = '';
+  GROUPS.forEach(function(gr){
+    if(g.indexOf(gr[0]) < 0) return;
+    var vs = VERBS.filter(function(v){ return v[2] === gr[0]; });
+    h += '<h2 class="group">' + esc(gr[1]) + '</h2><p class="ref-note">' + esc(GROUP_NOTE[gr[0]] || vs[0][3]) + '</p><div class="ref-grid">' +
+      vs.map(function(v){ return '<div class="ref-item">' + tableHTML(v, -1, '<span lang="es">' + esc(v[0]) + '</span> (' + esc(v[1]) + ')') + '</div>'; }).join('') + '</div>';
+  });
+  document.getElementById('refBody').innerHTML = h || '<p>Choose at least one verb group above.</p>';
+}
+function showTab(which){
+  var quiz = which === 'quiz';
+  document.getElementById('quizPanel').hidden = !quiz; document.getElementById('refPanel').hidden = quiz;
+  document.getElementById('t-quiz').setAttribute('aria-selected', String(quiz)); document.getElementById('t-ref').setAttribute('aria-selected', String(!quiz));
+  document.getElementById('t-quiz').tabIndex = quiz ? 0 : -1; document.getElementById('t-ref').tabIndex = quiz ? -1 : 0;
+  if(!quiz) renderRef();
+}
+document.querySelector('.tabs').addEventListener('keydown', function(e){
+  if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){ e.preventDefault(); var toRef = document.getElementById('t-quiz').getAttribute('aria-selected') === 'true';
+    showTab(toRef ? 'ref' : 'quiz'); document.getElementById(toRef ? 't-ref' : 't-quiz').focus(); }
+});
+function printRef(){ renderRef(); window.print(); }
+window.addEventListener('beforeprint', renderRef);
+
+function toggleFS(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+  else document.exitFullscreen();
+}
+document.addEventListener('fullscreenchange', function(){
+  var b = document.getElementById('fs-btn');
+  if(b) b.textContent = document.fullscreenElement ? '⛶ Exit Full Screen' : '⛶ Full Screen';
+});
+function toggleMode(){
+  var dark = document.body.getAttribute('data-mode') !== 'dark';
+  document.body.setAttribute('data-mode', dark ? 'dark' : 'light');
+  document.getElementById('modeToggle').setAttribute('aria-pressed', String(dark));
+  document.getElementById('modeLabel').textContent = dark ? 'Light mode' : 'Dark mode';
+}
+if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) toggleMode();
+
+(function init(){
+  var saved = recall('groups', GROUPS.map(function(g){ return g[0]; }));
+  document.getElementById('groupChips').innerHTML = GROUPS.map(function(g){
+    return '<label class="chip"><input type="checkbox" value="' + g[0] + '"' + (saved.indexOf(g[0]) >= 0 ? ' checked' : '') + '> ' + esc(g[1]) + '</label>'; }).join('');
+  document.getElementById('subjSel').value = recall('subj', 'pron');
+  document.getElementById('groupChips').addEventListener('change', function(){ store('groups', chosenGroups()); if(!document.getElementById('refPanel').hidden) renderRef(); });
+  document.getElementById('subjSel').addEventListener('change', function(){ store('subj', this.value); });
+  startQuiz();
+})();
+</script>
+</body>
+</html>

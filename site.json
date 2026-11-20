@@ -12,6 +12,31 @@
     "scheduleLong": "Tuesday & Thursday",
     "sections": [
       {
+        "id": "study-tools",
+        "title": "Study tools",
+        "titleEs": "Herramientas de estudio",
+        "items": [
+          {
+            "title": "Exam 1 conjugation practice",
+            "path": "study-tools/exam1-conjugation-practice.html",
+            "kind": "Practice",
+            "desc": "Chapters 1–2: -ar verbs, ser and estar, and gustar. Quiz yourself or print the verb tables."
+          },
+          {
+            "title": "Exam 2 conjugation practice",
+            "path": "study-tools/exam2-conjugation-practice.html",
+            "kind": "Practice",
+            "desc": "Chapters 3–4: 48 verbs (-er/-ir, tener/venir, ir, stem changes, irregular yo). Quiz yourself or print the verb tables."
+          },
+          {
+            "title": "Vocabulary flashcards",
+            "path": "study-tools/vocab-flashcards.html",
+            "kind": "Flashcards",
+            "desc": "Chapters 1–4 by chapter and topic, with audio, a review pile and printable cards."
+          }
+        ]
+      },
+      {
         "id": "oral-final",
         "title": "Oral Final",
         "titleEs": "Examen oral",

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPAN 1001 · Vocabulary Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Tokens: design-system skill, student-facing theme */
+  :root{
+    --navy:#1A3A6B; --navy-dark:#132C52; --gold:#B08D3F; --gold-dk:#7A5D14;
+    --offwhite:#F7F7F5; --white:#FFFFFF; --ink:#1F2937; --muted:#5A6472;
+    --border:rgba(31,41,55,0.16); --border-strong:rgba(31,41,55,0.32);
+    --surface:#FFFFFF; --bg:#F7F7F5; --focus:#1A3A6B;
+    --ok-bg:#E6F4EA; --ok-tx:#14532D; --no-bg:#FDECEA; --no-tx:#8B2520;
+  }
+  [data-mode="dark"]{
+    --navy:#9DB8EA; --navy-dark:#7B9FE0; --ink:#F1F3F6; --muted:#B8C0CE;
+    --border:rgba(241,243,246,0.16); --border-strong:rgba(241,243,246,0.32);
+    --surface:#181B22; --bg:#0F1115; --offwhite:#20242D; --focus:#D9B968;
+    --ok-bg:rgba(74,222,128,.14); --ok-tx:#86EFAC; --no-bg:rgba(248,113,113,.14); --no-tx:#FCA5A5;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0; font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; font-size:16px;}
+  .skip-link{position:absolute; left:-9999px; top:0; background:var(--navy-dark); color:#fff; padding:10px 16px; font-weight:700; z-index:100;}
+  .skip-link:focus{left:0;}
+  .wrap{max-width:940px; margin:0 auto; padding:16px 16px 56px;}
+  .page-toolbar{display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; margin-bottom:8px;}
+  .page-toolbar button, .btn{font:600 14px 'DM Sans',sans-serif; color:var(--navy); background:var(--surface); border:1.5px solid var(--border-strong);
+    border-radius:8px; padding:9px 14px; min-height:44px; cursor:pointer;}
+  .page-toolbar button:hover, .btn:hover{border-color:var(--navy);}
+  button:focus-visible, select:focus-visible, input:focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  h1{font-family:'Source Serif 4',serif; font-size:30px; color:var(--navy); margin:4px 0 4px;}
+  .lede{color:var(--muted); margin:0 0 18px;}
+  h2{font-family:'Source Serif 4',serif; font-size:20px; color:var(--navy); margin:0 0 10px;}
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:16px;}
+  fieldset{border:0; margin:0 0 12px; padding:0;}
+  legend{font-weight:700; font-size:14px; margin-bottom:6px; padding:0;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--border-strong); border-radius:999px; padding:6px 12px; min-height:40px; cursor:pointer; font-size:15px;}
+  .chip input{width:18px; height:18px; accent-color:var(--navy); margin:0;}
+  .row{display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end;}
+  label.sel{display:flex; flex-direction:column; font-weight:700; font-size:14px; gap:4px;}
+  select{font:500 15px 'DM Sans',sans-serif; color:var(--ink); background:var(--surface); border:1.5px solid var(--border-strong); border-radius:8px; padding:8px 10px; min-height:44px; max-width:100%;}
+  .count{color:var(--muted); font-size:14px;}
+
+  /* Study card */
+  .stage{display:flex; flex-direction:column; align-items:center; gap:14px;}
+  .card{width:100%; max-width:560px; min-height:240px; border:1.5px solid var(--border-strong); border-radius:16px; background:var(--surface);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:28px 24px; cursor:pointer;
+    font:inherit; color:var(--ink); position:relative;}
+  .card.back{background:var(--offwhite);}
+  .card .side{position:absolute; top:12px; left:16px; font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);}
+  .card .term{font-family:'Source Serif 4',serif; font-size:34px; font-weight:600; color:var(--navy); line-height:1.25;}
+  .card .meta{position:absolute; bottom:12px; left:0; right:0; font-size:13px; color:var(--muted);}
+  .card .hint{font-size:14px; color:var(--muted); margin-top:14px;}
+  .actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+  .btn.no{background:var(--no-bg); color:var(--no-tx); border-color:var(--no-tx);}
+  .btn.ok{background:var(--ok-bg); color:var(--ok-tx); border-color:var(--ok-tx);}
+  .progress{font-size:14px; color:var(--muted);}
+  .done{max-width:560px; text-align:center; padding:20px; border:1.5px dashed var(--border-strong); border-radius:16px;}
+  .keys{font-size:13px; color:var(--muted); text-align:center;}
+  kbd{font-family:inherit; border:1px solid var(--border-strong); border-radius:4px; padding:0 5px;}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;}
+  .howto{font-size:14px; color:var(--muted); margin:8px 0 0;}
+  .howto li{margin:2px 0;}
+
+  #printArea{display:none;}
+  @media print{ #status{display:none !important;} }
+  @page{size:letter; margin:0.5in;}
+  @media print{
+    body{background:#fff !important; color:#000 !important;}
+    .wrap, .skip-link, .no-print{display:none !important;}
+    #printArea{display:block;}
+    .sheet{width:7.5in; height:9.9in; overflow:hidden; display:grid; page-break-after:always; break-after:page;}
+    .sheet:last-child{page-break-after:auto; break-after:auto;}
+    .sheet.duplex{grid-template-columns:repeat(3,2.5in); grid-template-rows:repeat(4,2.47in);}
+    .sheet.fold{grid-template-columns:repeat(2,3.75in); grid-template-rows:repeat(5,1.97in);}
+    .pc{border:1px dashed #888; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.15in; position:relative; overflow:hidden;}
+    .pc .es{font-family:'Source Serif 4',Georgia,serif; font-size:18pt; font-weight:600; color:#000; line-height:1.2;}
+    .pc .en{font-family:'DM Sans',Arial,sans-serif; font-size:14pt; color:#000; line-height:1.25;}
+    .pc .tag{position:absolute; bottom:0.08in; left:0; right:0; font-size:7.5pt; color:#555;}
+    .pc.blank{border-color:#ddd;}
+    .fold .pc{flex-direction:row; padding:0;}
+    .fold .half{flex:1 1 0; min-width:0; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0.12in; position:relative;}
+    .fold .half + .half{border-left:1px dotted #999;}
+  }
+</style>
+</head>
+<body data-mode="light">
+<a class="skip-link" href="#main">Skip to flashcards</a>
+<div class="wrap">
+  <div class="page-toolbar no-print">
+    <button type="button" onclick="printCards()">🖨 Print flashcards</button>
+    <button type="button" id="fs-btn" onclick="toggleFS()">⛶ Full Screen</button>
+    <button type="button" id="modeToggle" aria-pressed="false" onclick="toggleMode()"><span id="modeLabel">Dark mode</span></button>
+  </div>
+  <main id="main">
+    <h1>Vocabulary Flashcards</h1>
+    <p class="lede">Every vocabulary word from Chapters 1–4, plus numbers, telling time and question words. Use a quick deck for Exam 1 or Exam 2, or pick your own chapters and topics, then study on screen or print the cards to cut out.</p>
+
+    <section class="panel" aria-labelledby="pickH">
+      <h2 id="pickH">1. Choose your words</h2>
+      <fieldset>
+        <legend>Quick decks</legend>
+        <div class="chips">
+          <button type="button" class="btn" onclick="preset([1,2])">Exam 1 · Chapters 1–2</button>
+          <button type="button" class="btn" onclick="preset([3,4])">Exam 2 · Chapters 3–4</button>
+          <button type="button" class="btn" onclick="preset([1,2,3,4])">Everything · Chapters 1–4</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Chapters</legend>
+        <div class="chips" id="chapterChips"></div>
+      </fieldset>
+      <div class="row">
+        <label class="sel" for="catSel">Topic
+          <select id="catSel"></select>
+        </label>
+        <label class="sel" for="dirSel">Show first
+          <select id="dirSel">
+            <option value="es">Spanish (say the English)</option>
+            <option value="en">English (say the Spanish)</option>
+          </select>
+        </label>
+        <span class="count" id="deckCount" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="studyH">
+      <h2 id="studyH">2. Study on screen</h2>
+      <div class="stage">
+        <div id="cardHost" style="width:100%;display:flex;justify-content:center;"></div>
+        <div class="actions" id="actions">
+          <button type="button" class="btn no" onclick="mark(false)">✗ Not yet</button>
+          <button type="button" class="btn" id="audioBtn" onclick="speak()">▶ Hear it</button>
+          <button type="button" class="btn ok" onclick="mark(true)">✓ Got it</button>
+        </div>
+        <p class="progress" id="progress" aria-live="polite"></p>
+        <div class="actions">
+          <button type="button" class="btn" onclick="buildDeck(true)">↺ Shuffle and restart</button>
+        </div>
+        <p class="keys">Keyboard: <kbd>Space</kbd> flip · <kbd>←</kbd> not yet · <kbd>→</kbd> got it</p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="printH">
+      <h2 id="printH">3. Print cards to cut out</h2>
+      <fieldset>
+        <legend>Card style</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="pmode" value="duplex" checked> Two-sided (12 per sheet)</label>
+          <label class="chip"><input type="radio" name="pmode" value="fold"> Fold-over, one-sided (10 per page)</label>
+        </div>
+      </fieldset>
+      <p class="count" id="printCount"></p>
+      <ul class="howto" id="howto"></ul>
+      <button type="button" class="btn" onclick="printCards()">🖨 Print these flashcards</button>
+    </section>
+  </main>
+</div>
+<div id="printArea" aria-hidden="true"></div>
+<div id="status" class="sr-only" role="status" aria-live="polite"></div>
+
+<script>
+var DATA = [[1, "Greetings and goodbyes", "Hola.", "Hi."], [1, "Greetings and goodbyes", "Buenos días.", "Good morning."], [1, "Greetings and goodbyes", "Buenas tardes.", "Good afternoon."], [1, "Greetings and goodbyes", "Buenas noches.", "Good evening; good night."], [1, "Greetings and goodbyes", "Adiós.", "Goodbye."], [1, "Greetings and goodbyes", "Nos vemos.", "See you."], [1, "Greetings and goodbyes", "Hasta luego.", "See you later."], [1, "Greetings and goodbyes", "Hasta la vista.", "See you later."], [1, "Greetings and goodbyes", "Hasta pronto.", "See you soon."], [1, "Greetings and goodbyes", "Hasta mañana.", "See you tomorrow."], [1, "Greetings and goodbyes", "Saludos a...", "Greetings to..."], [1, "Greetings and goodbyes", "Chau.", "Bye."], [1, "How are you?", "¿Cómo está usted?", "How are you? (formal)"], [1, "How are you?", "¿Cómo estás?", "How are you? (familiar)"], [1, "How are you?", "¿Qué hay de nuevo?", "What's new?"], [1, "How are you?", "¿Qué pasa?", "What's happening?"], [1, "How are you?", "¿Qué tal?", "How are you? / How's it going?"], [1, "How are you?", "(Muy) bien, gracias.", "(Very) well, thanks."], [1, "How are you?", "Nada.", "Nothing."], [1, "How are you?", "No muy bien.", "Not very well."], [1, "How are you?", "Regular.", "So-so; OK."], [1, "Courtesy and titles", "De nada.", "You're welcome."], [1, "Courtesy and titles", "No hay de qué.", "You're welcome."], [1, "Courtesy and titles", "Lo siento.", "I'm sorry."], [1, "Courtesy and titles", "(Muchas) gracias.", "Thank you (very much)."], [1, "Courtesy and titles", "por favor", "please"], [1, "Courtesy and titles", "señor (Sr.)", "Mr.; sir"], [1, "Courtesy and titles", "señora (Sra.)", "Mrs.; ma'am"], [1, "Courtesy and titles", "señorita (Srta.)", "Miss"], [1, "Introductions", "¿Cómo se llama usted?", "What's your name? (formal)"], [1, "Introductions", "¿Cómo te llamas?", "What's your name? (familiar)"], [1, "Introductions", "Me llamo...", "My name is..."], [1, "Introductions", "¿Y usted? / ¿Y tú?", "And you? (formal / familiar)"], [1, "Introductions", "Mucho gusto.", "Pleased to meet you."], [1, "Introductions", "El gusto es mío.", "The pleasure is mine."], [1, "Introductions", "Encantado/a.", "Delighted; pleased to meet you."], [1, "Introductions", "Igualmente.", "Likewise."], [1, "Introductions", "Le presento a...", "I'd like to introduce you to... (formal)"], [1, "Introductions", "Te presento a...", "I'd like to introduce you to... (familiar)"], [1, "Introductions", "el nombre", "name"], [1, "Introductions", "¿De dónde es usted?", "Where are you from? (formal)"], [1, "Introductions", "¿De dónde eres?", "Where are you from? (familiar)"], [1, "Introductions", "Soy de...", "I'm from..."], [1, "Introductions", "¿cuánto/a? ¿cuántos/as?", "how much? how many?"], [1, "Introductions", "¿de quién...?", "whose...? (singular)"], [1, "Introductions", "¿de quiénes...?", "whose...? (plural)"], [1, "Introductions", "(no) hay", "there is / there are (not)"], [1, "Numbers 0–30", "cero", "0"], [1, "Numbers 0–30", "uno", "1"], [1, "Numbers 0–30", "dos", "2"], [1, "Numbers 0–30", "tres", "3"], [1, "Numbers 0–30", "cuatro", "4"], [1, "Numbers 0–30", "cinco", "5"], [1, "Numbers 0–30", "seis", "6"], [1, "Numbers 0–30", "siete", "7"], [1, "Numbers 0–30", "ocho", "8"], [1, "Numbers 0–30", "nueve", "9"], [1, "Numbers 0–30", "diez", "10"], [1, "Numbers 0–30", "once", "11"], [1, "Numbers 0–30", "doce", "12"], [1, "Numbers 0–30", "trece", "13"], [1, "Numbers 0–30", "catorce", "14"], [1, "Numbers 0–30", "quince", "15"], [1, "Numbers 0–30", "dieciséis", "16"], [1, "Numbers 0–30", "diecisiete", "17"], [1, "Numbers 0–30", "dieciocho", "18"], [1, "Numbers 0–30", "diecinueve", "19"], [1, "Numbers 0–30", "veinte", "20"], [1, "Numbers 0–30", "veintiuno", "21"], [1, "Numbers 0–30", "veintidós", "22"], [1, "Numbers 0–30", "veintitrés", "23"], [1, "Numbers 0–30", "veinticuatro", "24"], [1, "Numbers 0–30", "veinticinco", "25"], [1, "Numbers 0–30", "veintiséis", "26"], [1, "Numbers 0–30", "veintisiete", "27"], [1, "Numbers 0–30", "veintiocho", "28"], [1, "Numbers 0–30", "veintinueve", "29"], [1, "Numbers 0–30", "treinta", "30"], [1, "Telling time", "¿Qué hora es?", "What time is it?"], [1, "Telling time", "Es la una.", "It's one o'clock."], [1, "Telling time", "Son las dos.", "It's two o'clock."], [1, "Telling time", "y cuarto / y quince", "quarter past"], [1, "Telling time", "y media / y treinta", "half past"], [1, "Telling time", "menos cuarto / menos quince", "quarter to"], [1, "Telling time", "en punto", "on the dot; sharp"], [1, "Telling time", "de la mañana", "in the morning (a.m.)"], [1, "Telling time", "de la tarde", "in the afternoon (p.m.)"], [1, "Telling time", "de la noche", "at night (p.m.)"], [1, "Telling time", "Es el mediodía.", "It's noon."], [1, "Telling time", "Es la medianoche.", "It's midnight."], [1, "Telling time", "¿A qué hora...?", "At what time...?"], [1, "Telling time", "a la una / a las dos", "at one / at two"], [1, "Nouns", "el autobús", "bus"], [1, "Nouns", "el chico", "boy"], [1, "Nouns", "la chica", "girl"], [1, "Nouns", "la computadora", "computer"], [1, "Nouns", "la comunidad", "community"], [1, "Nouns", "el/la conductor(a)", "driver"], [1, "Nouns", "la conversación", "conversation"], [1, "Nouns", "la cosa", "thing"], [1, "Nouns", "el cuaderno", "notebook"], [1, "Nouns", "el día", "day"], [1, "Nouns", "el diario", "diary"], [1, "Nouns", "el diccionario", "dictionary"], [1, "Nouns", "la escuela", "school"], [1, "Nouns", "el/la estudiante", "student"], [1, "Nouns", "la foto(grafía)", "photo(graph)"], [1, "Nouns", "el hombre", "man"], [1, "Nouns", "el/la joven", "young person"], [1, "Nouns", "el lápiz", "pencil"], [1, "Nouns", "la lección", "lesson"], [1, "Nouns", "la maleta", "suitcase"], [1, "Nouns", "la mano", "hand"], [1, "Nouns", "el mapa", "map"], [1, "Nouns", "la mujer", "woman"], [1, "Nouns", "la nacionalidad", "nationality"], [1, "Nouns", "el número", "number"], [1, "Nouns", "el país", "country"], [1, "Nouns", "la palabra", "word"], [1, "Nouns", "el/la pasajero/a", "passenger"], [1, "Nouns", "el problema", "problem"], [1, "Nouns", "el/la profesor(a)", "teacher; professor"], [1, "Nouns", "el programa", "program"], [1, "Nouns", "el/la turista", "tourist"], [1, "Nouns", "el video", "video"], [1, "Nouns", "ser", "to be"], [2, "Classroom and campus", "el/la compañero/a de clase", "classmate"], [2, "Classroom and campus", "el/la compañero/a de cuarto", "roommate"], [2, "Classroom and campus", "el borrador", "eraser"], [2, "Classroom and campus", "la calculadora", "calculator"], [2, "Classroom and campus", "el escritorio", "desk"], [2, "Classroom and campus", "el libro", "book"], [2, "Classroom and campus", "el marcador", "marker"], [2, "Classroom and campus", "la mesa", "table"], [2, "Classroom and campus", "la mochila", "backpack"], [2, "Classroom and campus", "el papel", "paper"], [2, "Classroom and campus", "la papelera", "wastebasket"], [2, "Classroom and campus", "la pizarra", "whiteboard; blackboard"], [2, "Classroom and campus", "la pluma", "pen"], [2, "Classroom and campus", "la puerta", "door"], [2, "Classroom and campus", "el reloj", "clock; watch"], [2, "Classroom and campus", "la silla", "chair; seat"], [2, "Classroom and campus", "la ventana", "window"], [2, "Classroom and campus", "la biblioteca", "library"], [2, "Classroom and campus", "la cafetería", "cafeteria"], [2, "Classroom and campus", "la casa", "house; home"], [2, "Classroom and campus", "el estadio", "stadium"], [2, "Classroom and campus", "el laboratorio", "laboratory"], [2, "Classroom and campus", "la librería", "bookstore"], [2, "Classroom and campus", "la residencia estudiantil", "dormitory"], [2, "Classroom and campus", "la universidad", "university; college"], [2, "Classroom and campus", "la clase", "class"], [2, "Classroom and campus", "el curso", "course"], [2, "Classroom and campus", "la especialización", "major"], [2, "Classroom and campus", "el examen", "test; exam"], [2, "Classroom and campus", "el horario", "schedule"], [2, "Classroom and campus", "la materia", "subject (course)"], [2, "Classroom and campus", "la prueba", "test; quiz"], [2, "Classroom and campus", "el semestre", "semester"], [2, "Classroom and campus", "la tarea", "homework"], [2, "Classroom and campus", "el trimestre", "trimester; quarter"], [2, "Subjects", "la administración de empresas", "business administration"], [2, "Subjects", "la arqueología", "archaeology"], [2, "Subjects", "el arte", "art"], [2, "Subjects", "la biología", "biology"], [2, "Subjects", "las ciencias", "sciences"], [2, "Subjects", "la computación", "computer science"], [2, "Subjects", "la contabilidad", "accounting"], [2, "Subjects", "la economía", "economics"], [2, "Subjects", "el español", "Spanish (language)"], [2, "Subjects", "la física", "physics"], [2, "Subjects", "la geografía", "geography"], [2, "Subjects", "la historia", "history"], [2, "Subjects", "las humanidades", "humanities"], [2, "Subjects", "el inglés", "English (language)"], [2, "Subjects", "las lenguas extranjeras", "foreign languages"], [2, "Subjects", "la literatura", "literature"], [2, "Subjects", "las matemáticas", "mathematics"], [2, "Subjects", "la música", "music"], [2, "Subjects", "el periodismo", "journalism"], [2, "Subjects", "la psicología", "psychology"], [2, "Subjects", "la química", "chemistry"], [2, "Subjects", "la sociología", "sociology"], [2, "Prepositions and place words", "al lado de", "next to; beside"], [2, "Prepositions and place words", "a la derecha de", "to the right of"], [2, "Prepositions and place words", "a la izquierda de", "to the left of"], [2, "Prepositions and place words", "allá", "over there"], [2, "Prepositions and place words", "allí", "there"], [2, "Prepositions and place words", "aquí", "here"], [2, "Prepositions and place words", "cerca de", "near"], [2, "Prepositions and place words", "con", "with"], [2, "Prepositions and place words", "debajo de", "below; under"], [2, "Prepositions and place words", "delante de", "in front of"], [2, "Prepositions and place words", "detrás de", "behind"], [2, "Prepositions and place words", "en", "in; on"], [2, "Prepositions and place words", "encima de", "on top of"], [2, "Prepositions and place words", "entre", "between; among"], [2, "Prepositions and place words", "lejos de", "far from"], [2, "Prepositions and place words", "sin", "without"], [2, "Prepositions and place words", "sobre", "on; over"], [2, "-AR verbs", "bailar", "to dance"], [2, "-AR verbs", "buscar", "to look for"], [2, "-AR verbs", "caminar", "to walk"], [2, "-AR verbs", "cantar", "to sing"], [2, "-AR verbs", "cenar", "to have dinner"], [2, "-AR verbs", "comprar", "to buy"], [2, "-AR verbs", "contestar", "to answer"], [2, "-AR verbs", "conversar", "to converse; to chat"], [2, "-AR verbs", "desayunar", "to have breakfast"], [2, "-AR verbs", "descansar", "to rest"], [2, "-AR verbs", "desear", "to wish; to desire"], [2, "-AR verbs", "dibujar", "to draw"], [2, "-AR verbs", "enseñar", "to teach"], [2, "-AR verbs", "escuchar la radio/música", "to listen to the radio/music"], [2, "-AR verbs", "esperar (+ inf.)", "to wait for; to hope"], [2, "-AR verbs", "estar", "to be"], [2, "-AR verbs", "estudiar", "to study"], [2, "-AR verbs", "explicar", "to explain"], [2, "-AR verbs", "gustar", "to like"], [2, "-AR verbs", "hablar", "to talk; to speak"], [2, "-AR verbs", "llegar", "to arrive"], [2, "-AR verbs", "llevar", "to carry"], [2, "-AR verbs", "mirar", "to look at; to watch"], [2, "-AR verbs", "necesitar (+ inf.)", "to need"], [2, "-AR verbs", "practicar", "to practice"], [2, "-AR verbs", "preguntar", "to ask (a question)"], [2, "-AR verbs", "preparar", "to prepare"], [2, "-AR verbs", "regresar", "to return"], [2, "-AR verbs", "terminar", "to end; to finish"], [2, "-AR verbs", "tomar", "to take; to drink"], [2, "-AR verbs", "trabajar", "to work"], [2, "-AR verbs", "viajar", "to travel"], [2, "Days of the week", "lunes", "Monday"], [2, "Days of the week", "martes", "Tuesday"], [2, "Days of the week", "miércoles", "Wednesday"], [2, "Days of the week", "jueves", "Thursday"], [2, "Days of the week", "viernes", "Friday"], [2, "Days of the week", "sábado", "Saturday"], [2, "Days of the week", "domingo", "Sunday"], [2, "Days of the week", "la semana", "week"], [2, "Days of the week", "¿Qué día es hoy?", "What day is it today?"], [2, "Days of the week", "Hoy es...", "Today is..."], [2, "Days of the week", "ahora", "now"], [2, "Days of the week", "sí", "yes"], [2, "Question words", "¿Qué?", "What?"], [2, "Question words", "¿Quién? / ¿Quiénes?", "Who?"], [2, "Question words", "¿Dónde?", "Where?"], [2, "Question words", "¿De dónde?", "From where?"], [2, "Question words", "¿Adónde?", "Where (to)?"], [2, "Question words", "¿Cómo?", "How?"], [2, "Question words", "¿Cuándo?", "When?"], [2, "Question words", "¿Cuál? / ¿Cuáles?", "Which? / Which ones?"], [2, "Question words", "¿Por qué?", "Why?"], [2, "Question words", "porque", "because"], [2, "Numbers 31 and up", "treinta y uno", "31"], [2, "Numbers 31 and up", "cuarenta", "40"], [2, "Numbers 31 and up", "cincuenta", "50"], [2, "Numbers 31 and up", "sesenta", "60"], [2, "Numbers 31 and up", "setenta", "70"], [2, "Numbers 31 and up", "ochenta", "80"], [2, "Numbers 31 and up", "noventa", "90"], [2, "Numbers 31 and up", "cien", "100"], [2, "Numbers 31 and up", "ciento uno", "101"], [2, "Numbers 31 and up", "doscientos/as", "200"], [2, "Numbers 31 and up", "trescientos/as", "300"], [2, "Numbers 31 and up", "cuatrocientos/as", "400"], [2, "Numbers 31 and up", "quinientos/as", "500"], [2, "Numbers 31 and up", "seiscientos/as", "600"], [2, "Numbers 31 and up", "setecientos/as", "700"], [2, "Numbers 31 and up", "ochocientos/as", "800"], [2, "Numbers 31 and up", "novecientos/as", "900"], [2, "Numbers 31 and up", "mil", "1.000 (1,000)"], [2, "Numbers 31 and up", "dos mil", "2.000 (2,000)"], [2, "Numbers 31 and up", "un millón (de)", "1.000.000 (1,000,000)"], [2, "Numbers 31 and up", "dos millones (de)", "2.000.000 (2,000,000)"], [3, "Family", "el/la abuelo/a", "grandfather / grandmother"], [3, "Family", "los abuelos", "grandparents"], [3, "Family", "el apellido", "last name"], [3, "Family", "el/la bisabuelo/a", "great-grandfather / great-grandmother"], [3, "Family", "el/la cuñado/a", "brother-in-law / sister-in-law"], [3, "Family", "el/la esposo/a", "husband / wife; spouse"], [3, "Family", "la familia", "family"], [3, "Family", "el/la gemelo/a", "twin"], [3, "Family", "el/la hermanastro/a", "stepbrother / stepsister"], [3, "Family", "el/la hermano/a", "brother / sister"], [3, "Family", "el/la hijastro/a", "stepson / stepdaughter"], [3, "Family", "el/la hijo/a", "son / daughter"], [3, "Family", "los hijos", "children"], [3, "Family", "la madrastra", "stepmother"], [3, "Family", "la madre", "mother"], [3, "Family", "el/la medio/a hermano/a", "half-brother / half-sister"], [3, "Family", "el/la nieto/a", "grandson / granddaughter"], [3, "Family", "la nuera", "daughter-in-law"], [3, "Family", "el padrastro", "stepfather"], [3, "Family", "el padre", "father"], [3, "Family", "los padres", "parents"], [3, "Family", "los parientes", "relatives"], [3, "Family", "el/la primo/a", "cousin"], [3, "Family", "el/la sobrino/a", "nephew / niece"], [3, "Family", "el/la suegro/a", "father-in-law / mother-in-law"], [3, "Family", "el/la tío/a", "uncle / aunt"], [3, "Family", "el yerno", "son-in-law"], [3, "People and professions", "el/la amigo/a", "friend"], [3, "People and professions", "la gente", "people"], [3, "People and professions", "el/la muchacho/a", "boy / girl"], [3, "People and professions", "el/la niño/a", "child"], [3, "People and professions", "el/la novio/a", "boyfriend / girlfriend"], [3, "People and professions", "la persona", "person"], [3, "People and professions", "el/la artista", "artist"], [3, "People and professions", "el/la doctor(a); el/la médico/a", "doctor; physician"], [3, "People and professions", "el/la ingeniero/a", "engineer"], [3, "People and professions", "el/la periodista", "journalist"], [3, "People and professions", "el/la programador(a)", "computer programmer"], [3, "Adjectives", "alto/a", "tall"], [3, "Adjectives", "antipático/a", "unpleasant"], [3, "Adjectives", "bajo/a", "short (height)"], [3, "Adjectives", "bonito/a", "pretty"], [3, "Adjectives", "buen, bueno/a", "good"], [3, "Adjectives", "delgado/a", "thin; slender"], [3, "Adjectives", "difícil", "difficult; hard"], [3, "Adjectives", "fácil", "easy"], [3, "Adjectives", "feo/a", "ugly"], [3, "Adjectives", "gordo/a", "fat"], [3, "Adjectives", "gran, grande", "big; great"], [3, "Adjectives", "guapo/a", "good-looking"], [3, "Adjectives", "importante", "important"], [3, "Adjectives", "inteligente", "intelligent"], [3, "Adjectives", "interesante", "interesting"], [3, "Adjectives", "joven (jóvenes)", "young"], [3, "Adjectives", "mal, malo/a", "bad"], [3, "Adjectives", "mismo/a", "same"], [3, "Adjectives", "moreno/a", "brunet(te); dark-haired"], [3, "Adjectives", "mucho/a", "much; many; a lot of"], [3, "Adjectives", "pelirrojo/a", "red-haired"], [3, "Adjectives", "pequeño/a", "small"], [3, "Adjectives", "rubio/a", "blond(e)"], [3, "Adjectives", "simpático/a", "nice; likeable"], [3, "Adjectives", "tonto/a", "foolish; silly"], [3, "Adjectives", "trabajador(a)", "hard-working"], [3, "Adjectives", "viejo/a", "old"], [3, "Nationalities", "alemán, alemana", "German"], [3, "Nationalities", "argentino/a", "Argentine"], [3, "Nationalities", "canadiense", "Canadian"], [3, "Nationalities", "chino/a", "Chinese"], [3, "Nationalities", "costarricense", "Costa Rican"], [3, "Nationalities", "cubano/a", "Cuban"], [3, "Nationalities", "dominicano/a", "Dominican"], [3, "Nationalities", "ecuatoriano/a", "Ecuadorian"], [3, "Nationalities", "español(a)", "Spanish"], [3, "Nationalities", "estadounidense", "from the U.S."], [3, "Nationalities", "francés, francesa", "French"], [3, "Nationalities", "inglés, inglesa", "English"], [3, "Nationalities", "italiano/a", "Italian"], [3, "Nationalities", "japonés, japonesa", "Japanese"], [3, "Nationalities", "mexicano/a", "Mexican"], [3, "Nationalities", "norteamericano/a", "(North) American"], [3, "Nationalities", "puertorriqueño/a", "Puerto Rican"], [3, "Nationalities", "ruso/a", "Russian"], [3, "Nationalities", "venezolano/a", "Venezuelan"], [3, "-ER / -IR verbs, tener and venir", "abrir", "to open"], [3, "-ER / -IR verbs, tener and venir", "aprender (a + inf.)", "to learn (to)"], [3, "-ER / -IR verbs, tener and venir", "asistir (a)", "to attend"], [3, "-ER / -IR verbs, tener and venir", "beber", "to drink"], [3, "-ER / -IR verbs, tener and venir", "comer", "to eat"], [3, "-ER / -IR verbs, tener and venir", "compartir", "to share"], [3, "-ER / -IR verbs, tener and venir", "comprender", "to understand"], [3, "-ER / -IR verbs, tener and venir", "correr", "to run"], [3, "-ER / -IR verbs, tener and venir", "creer (en)", "to believe (in)"], [3, "-ER / -IR verbs, tener and venir", "deber (+ inf.)", "should; ought to"], [3, "-ER / -IR verbs, tener and venir", "decidir (+ inf.)", "to decide"], [3, "-ER / -IR verbs, tener and venir", "describir", "to describe"], [3, "-ER / -IR verbs, tener and venir", "escribir", "to write"], [3, "-ER / -IR verbs, tener and venir", "leer", "to read"], [3, "-ER / -IR verbs, tener and venir", "recibir", "to receive"], [3, "-ER / -IR verbs, tener and venir", "vivir", "to live"], [3, "-ER / -IR verbs, tener and venir", "tener", "to have"], [3, "-ER / -IR verbs, tener and venir", "venir", "to come"], [3, "Expressions with tener", "tener ... años", "to be ... years old"], [3, "Expressions with tener", "tener calor", "to be hot"], [3, "Expressions with tener", "tener frío", "to be cold"], [3, "Expressions with tener", "tener cuidado", "to be careful"], [3, "Expressions with tener", "tener ganas de (+ inf.)", "to feel like (doing something)"], [3, "Expressions with tener", "tener hambre", "to be hungry"], [3, "Expressions with tener", "tener sed", "to be thirsty"], [3, "Expressions with tener", "tener miedo (de)", "to be afraid (of)"], [3, "Expressions with tener", "tener prisa", "to be in a hurry"], [3, "Expressions with tener", "tener que (+ inf.)", "to have to (do something)"], [3, "Expressions with tener", "tener razón", "to be right"], [3, "Expressions with tener", "no tener razón", "to be wrong"], [3, "Expressions with tener", "tener sueño", "to be sleepy"], [3, "Expressions with tener", "tener suerte", "to be lucky"], [4, "Pastimes", "andar en patineta", "to skateboard"], [4, "Pastimes", "bucear", "to scuba dive"], [4, "Pastimes", "escalar montañas", "to climb mountains"], [4, "Pastimes", "escribir una carta", "to write a letter"], [4, "Pastimes", "escribir un mensaje electrónico", "to write an e-mail"], [4, "Pastimes", "esquiar", "to ski"], [4, "Pastimes", "ganar", "to win"], [4, "Pastimes", "ir de excursión", "to go on a hike"], [4, "Pastimes", "leer el correo electrónico", "to read e-mail"], [4, "Pastimes", "leer un periódico", "to read a newspaper"], [4, "Pastimes", "leer una revista", "to read a magazine"], [4, "Pastimes", "nadar", "to swim"], [4, "Pastimes", "pasear", "to take a walk"], [4, "Pastimes", "pasear en bicicleta", "to ride a bicycle"], [4, "Pastimes", "patinar", "to skate"], [4, "Pastimes", "practicar deportes", "to play sports"], [4, "Pastimes", "tomar el sol", "to sunbathe"], [4, "Pastimes", "ver películas", "to watch movies"], [4, "Pastimes", "visitar monumentos", "to visit monuments"], [4, "Pastimes", "la diversión", "fun activity; entertainment"], [4, "Pastimes", "el fin de semana", "weekend"], [4, "Pastimes", "el pasatiempo", "pastime; hobby"], [4, "Pastimes", "los ratos libres", "free time"], [4, "Pastimes", "el videojuego", "video game"], [4, "Sports", "el baloncesto", "basketball"], [4, "Sports", "el béisbol", "baseball"], [4, "Sports", "el ciclismo", "cycling"], [4, "Sports", "el equipo", "team"], [4, "Sports", "el esquí (acuático)", "(water) skiing"], [4, "Sports", "el fútbol", "soccer"], [4, "Sports", "el fútbol americano", "football"], [4, "Sports", "el golf", "golf"], [4, "Sports", "el hockey", "hockey"], [4, "Sports", "el/la jugador(a)", "player"], [4, "Sports", "la natación", "swimming"], [4, "Sports", "el partido", "game; match"], [4, "Sports", "la pelota", "ball"], [4, "Sports", "el tenis", "tennis"], [4, "Sports", "el vóleibol", "volleyball"], [4, "Sports", "deportivo/a", "sports-related"], [4, "Sports", "favorito/a", "favorite"], [4, "Places", "el café", "café"], [4, "Places", "el centro", "downtown"], [4, "Places", "el cine", "movie theater"], [4, "Places", "el gimnasio", "gym"], [4, "Places", "la iglesia", "church"], [4, "Places", "el lugar", "place"], [4, "Places", "el museo", "museum"], [4, "Places", "el parque", "park"], [4, "Places", "la piscina", "swimming pool"], [4, "Places", "la plaza", "town square"], [4, "Places", "el restaurante", "restaurant"], [4, "Chapter 4 verbs", "almorzar (o:ue)", "to have lunch"], [4, "Chapter 4 verbs", "cerrar (e:ie)", "to close"], [4, "Chapter 4 verbs", "comenzar (e:ie)", "to begin"], [4, "Chapter 4 verbs", "conseguir (e:i)", "to get; to obtain"], [4, "Chapter 4 verbs", "contar (o:ue)", "to count; to tell"], [4, "Chapter 4 verbs", "decir (e:i)", "to say; to tell"], [4, "Chapter 4 verbs", "dormir (o:ue)", "to sleep"], [4, "Chapter 4 verbs", "empezar (e:ie)", "to begin"], [4, "Chapter 4 verbs", "encontrar (o:ue)", "to find"], [4, "Chapter 4 verbs", "entender (e:ie)", "to understand"], [4, "Chapter 4 verbs", "hacer", "to do; to make"], [4, "Chapter 4 verbs", "ir", "to go"], [4, "Chapter 4 verbs", "jugar (u:ue)", "to play (a sport or game)"], [4, "Chapter 4 verbs", "mostrar (o:ue)", "to show"], [4, "Chapter 4 verbs", "oír", "to hear"], [4, "Chapter 4 verbs", "pedir (e:i)", "to ask for; to request"], [4, "Chapter 4 verbs", "pensar (e:ie) (+ inf.)", "to intend; to plan"], [4, "Chapter 4 verbs", "pensar en", "to think about"], [4, "Chapter 4 verbs", "perder (e:ie)", "to lose; to miss"], [4, "Chapter 4 verbs", "poder (o:ue)", "to be able to; can"], [4, "Chapter 4 verbs", "poner", "to put; to place"], [4, "Chapter 4 verbs", "preferir (e:ie)", "to prefer"], [4, "Chapter 4 verbs", "querer (e:ie)", "to want; to love"], [4, "Chapter 4 verbs", "recordar (o:ue)", "to remember"], [4, "Chapter 4 verbs", "repetir (e:i)", "to repeat"], [4, "Chapter 4 verbs", "salir", "to leave; to go out"], [4, "Chapter 4 verbs", "seguir (e:i)", "to follow; to continue"], [4, "Chapter 4 verbs", "suponer", "to suppose"], [4, "Chapter 4 verbs", "traer", "to bring"], [4, "Chapter 4 verbs", "ver", "to see"], [4, "Chapter 4 verbs", "volver (o:ue)", "to return"]];
+var CH_LABEL = {1:'Chapter 1', 2:'Chapter 2', 3:'Chapter 3', 4:'Chapter 4'};
+var DEFAULT_CH = [3, 4];
+var deck = [], idx = 0, flipped = false, mastered = 0;
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function store(k, v){ try{ localStorage.setItem('span1001_flash_'+k, JSON.stringify(v)); }catch(e){} }
+function recall(k, d){ try{ var v = localStorage.getItem('span1001_flash_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+
+function chosenChapters(){ return [].slice.call(document.querySelectorAll('#chapterChips input:checked')).map(function(i){ return +i.value; }); }
+function selection(){
+  var chs = chosenChapters(), cat = document.getElementById('catSel').value;
+  return DATA.filter(function(r){ return chs.indexOf(r[0]) >= 0 && (cat === '*' || r[1] === cat); });
+}
+function fillCategories(){
+  var chs = chosenChapters(), sel = document.getElementById('catSel'), prev = sel.value || recall('cat', '*');
+  var cats = [];
+  DATA.forEach(function(r){ if(chs.indexOf(r[0]) >= 0 && cats.indexOf(r[1]) < 0) cats.push(r[1]); });
+  sel.innerHTML = '<option value="*">All topics in the chosen chapters</option>' + cats.map(function(c){ return '<option>'+esc(c)+'</option>'; }).join('');
+  sel.value = cats.indexOf(prev) >= 0 ? prev : '*';
+}
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function buildDeck(announce){
+  deck = shuffle(selection().slice()); idx = 0; flipped = false; mastered = 0;
+  var n = selection().length;
+  document.getElementById('deckCount').textContent = n + (n === 1 ? ' word selected' : ' words selected');
+  updatePrintInfo(); render();
+  if(announce) say('Deck shuffled: ' + deck.length + ' cards.');
+}
+function render(){
+  var host = document.getElementById('cardHost'), dir = document.getElementById('dirSel').value;
+  var acts = document.getElementById('actions');
+  if(!deck.length){
+    host.innerHTML = '<div class="done">' + (mastered ? '<strong>Done!</strong> You marked all ' + mastered + ' cards “Got it.” Shuffle to go again, or choose different words above.' : 'No words selected. Choose at least one chapter above.') + '</div>';
+    acts.hidden = true; document.getElementById('progress').textContent = ''; return;
+  }
+  acts.hidden = false;
+  var r = deck[idx], showEs = (dir === 'es') !== flipped;
+  var term = showEs ? r[2] : r[3];
+  host.innerHTML = '<button type="button" class="card' + (flipped ? ' back' : '') + '" id="theCard" onclick="flip()" aria-label="' +
+    esc((flipped ? 'Answer: ' : 'Card: ') + term + '. Press to flip.') + '">' +
+    '<span class="side">' + (showEs ? 'Español' : 'English') + '</span>' +
+    '<span class="term"' + (showEs ? ' lang="es"' : '') + '>' + esc(term) + '</span>' +
+    (flipped ? '' : '<span class="hint">Say it, then tap the card to check.</span>') +
+    '<span class="meta">' + esc(CH_LABEL[r[0]] + ' · ' + r[1]) + '</span></button>';
+  document.getElementById('progress').textContent = deck.length + ' left · ' + mastered + ' got it';
+}
+function flip(){ if(!deck.length) return; flipped = !flipped; render(); var c = document.getElementById('theCard'); if(c) c.focus();
+  if(flipped && document.getElementById('dirSel').value === 'en') speak(); }
+function mark(ok){
+  if(!deck.length) return;
+  var card = deck.splice(idx, 1)[0];
+  if(ok){ mastered++; } else { deck.splice(Math.min(deck.length, idx + 3 + Math.floor(Math.random()*3)), 0, card); }
+  if(idx >= deck.length) idx = 0;
+  flipped = false; render(); var c = document.getElementById('theCard'); if(c) c.focus();
+  say(ok ? 'Got it.' : 'Not yet; it will come back.');
+}
+function speak(){
+  if(!deck.length || !('speechSynthesis' in window)) return;
+  var u = new SpeechSynthesisUtterance(deck[idx][2].replace(/\(.*?\)/g, '').replace(/\//g, ', '));
+  u.lang = 'es-US'; u.rate = 0.85; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+}
+function say(t){ document.getElementById('status').textContent = t; }
+
+function preset(chs){
+  document.querySelectorAll('#chapterChips input').forEach(function(i){ i.checked = chs.indexOf(+i.value) >= 0; });
+  store('chapters', chs); document.getElementById('catSel').value = '*'; store('cat', '*'); fillCategories(); buildDeck(false);
+  say('Deck: chapters ' + chs.join(', ') + ', ' + selection().length + ' cards.');
+}
+
+/* ---------- Printing ---------- */
+function pmode(){ return document.querySelector('input[name=pmode]:checked').value; }
+function updatePrintInfo(){
+  var n = selection().length, m = pmode();
+  var per = m === 'duplex' ? 12 : 10, pages = Math.ceil(n / per);
+  document.getElementById('printCount').textContent = n + ' cards → ' + (m === 'duplex' ? pages + (pages === 1 ? ' sheet' : ' sheets') + ' (printed on both sides)' : pages + (pages === 1 ? ' page' : ' pages'));
+  document.getElementById('howto').innerHTML = m === 'duplex'
+    ? '<li>In the print window choose <strong>Two-sided</strong>, <strong>flip on long edge</strong>, and <strong>Actual size / 100%</strong> (not “fit to page”).</li><li>Spanish prints on the front, English on the back. Cut along the dashed lines.</li><li>No two-sided printer? Choose “Fold-over” instead.</li>'
+    : '<li>Print one-sided at <strong>Actual size / 100%</strong>.</li><li>Cut along the dashed lines, then fold each card on the dotted line so Spanish is on one side and English on the other.</li>';
+}
+function cardHTML(r, side){
+  if(!r) return '<div class="pc blank"></div>';
+  var tag = '<span class="tag">' + esc(CH_LABEL[r[0]] + ' · ' + r[1]) + '</span>';
+  return side === 'es' ? '<div class="pc"><span class="es" lang="es">' + esc(r[2]) + '</span>' + tag + '</div>'
+                       : '<div class="pc"><span class="en">' + esc(r[3]) + '</span>' + tag + '</div>';
+}
+function buildPrint(){
+  var rows = selection(), m = pmode(), out = '';
+  if(m === 'duplex'){
+    for(var p = 0; p < rows.length; p += 12){
+      var chunk = rows.slice(p, p + 12), front = '', back = '';
+      for(var r = 0; r < 4; r++){
+        for(var c = 0; c < 3; c++) front += cardHTML(chunk[r*3 + c], 'es');
+        for(var c2 = 2; c2 >= 0; c2--) back += cardHTML(chunk[r*3 + c2], 'en');   /* mirrored so the backs line up when flipped on the long edge */
+      }
+      out += '<div class="sheet duplex">' + front + '</div><div class="sheet duplex">' + back + '</div>';
+    }
+  } else {
+    for(var q = 0; q < rows.length; q += 10){
+      var cells = '';
+      for(var k = 0; k < 10; k++){
+        var x = rows[q + k];
+        cells += x ? '<div class="pc"><div class="half"><span class="es" lang="es">' + esc(x[2]) + '</span></div><div class="half"><span class="en">' + esc(x[3]) + '</span><span class="tag">' + esc(CH_LABEL[x[0]]) + '</span></div></div>'
+                   : '<div class="pc blank"></div>';
+      }
+      out += '<div class="sheet fold">' + cells + '</div>';
+    }
+  }
+  document.getElementById('printArea').innerHTML = out;
+}
+function printCards(){
+  if(!selection().length){ say('Choose at least one chapter first.'); alert('Choose at least one chapter first.'); return; }
+  buildPrint(); window.print();
+}
+window.addEventListener('beforeprint', buildPrint);
+
+/* ---------- Toolbar ---------- */
+function toggleFS(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+  else document.exitFullscreen();
+}
+document.addEventListener('fullscreenchange', function(){
+  var b = document.getElementById('fs-btn');
+  if(b) b.textContent = document.fullscreenElement ? '⛶ Exit Full Screen' : '⛶ Full Screen';
+});
+function toggleMode(){
+  var dark = document.body.getAttribute('data-mode') !== 'dark';
+  document.body.setAttribute('data-mode', dark ? 'dark' : 'light');
+  document.getElementById('modeToggle').setAttribute('aria-pressed', String(dark));
+  document.getElementById('modeLabel').textContent = dark ? 'Light mode' : 'Dark mode';
+}
+if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) toggleMode();
+
+/* ---------- Start ---------- */
+(function init(){
+  /* a link can open a specific deck: vocab-flashcards.html?chapters=1,2 (Exam 1) or ?chapters=3,4 (Exam 2) */
+  var q = (location.search.match(/[?&]chapters=([\d,]+)/) || [])[1];
+  var saved = q ? q.split(',').map(Number).filter(function(n){ return n >= 1 && n <= 4; }) : recall('chapters', DEFAULT_CH);
+  if(q) store('cat', '*');
+  document.getElementById('chapterChips').innerHTML = [1,2,3,4].map(function(n){
+    return '<label class="chip"><input type="checkbox" value="'+n+'"'+(saved.indexOf(n) >= 0 ? ' checked' : '')+'> '+CH_LABEL[n]+'</label>';
+  }).join('');
+  document.getElementById('dirSel').value = recall('dir', 'es');
+  fillCategories(); buildDeck(false);
+  document.getElementById('chapterChips').addEventListener('change', function(){ store('chapters', chosenChapters()); fillCategories(); buildDeck(false); });
+  document.getElementById('catSel').addEventListener('change', function(){ store('cat', this.value); buildDeck(false); });
+  document.getElementById('dirSel').addEventListener('change', function(){ store('dir', this.value); flipped = false; render(); });
+  document.querySelectorAll('input[name=pmode]').forEach(function(r){ r.addEventListener('change', updatePrintInfo); });
+  document.addEventListener('keydown', function(e){
+    var t = e.target.tagName;
+    if(t === 'SELECT' || t === 'INPUT' || t === 'TEXTAREA') return;
+    if(e.key === 'ArrowRight'){ e.preventDefault(); mark(true); }
+    else if(e.key === 'ArrowLeft'){ e.preventDefault(); mark(false); }
+    else if(e.key === ' ' && t !== 'BUTTON'){ e.preventDefault(); flip(); }
+  });
+})();
+</script>
+</body>
+</html>
