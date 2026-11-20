@@ -29,6 +29,7 @@ Term folders are named `season-year-schedule`: `fall-2026-tr`, `spring-2027-mwf`
 
 1. Put the file in `current/<section>/name.html`. Pages are **self-contained** (inline CSS/JS), so they keep working when the term moves to `archive/`.
 2. Add it to `site.json` under `current.sections` (`title`, `path`, `kind`, `desc`, and `"audience": "instructor"` for instructor-only tools).
+   Instructor items never appear on the student pages; `site.py build` lists them on the unlisted `current/instructor.html` (linked from `admin/`). Unlisted is not private: nothing sensitive goes on this site.
 3. Prescreen it: `python3 ../../scripts/prescreen.py current/<section>/name.html`, then the manual half of `PUBLISH_CHECKLIST.md` (project root).
 4. `python3 tools/site.py build` (rebuilds the index pages and runs the check).
 5. Commit and push. Pages updates in about a minute.

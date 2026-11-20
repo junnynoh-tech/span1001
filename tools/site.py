@@ -70,13 +70,15 @@ def mast(course, crumbs, kicker, h1, sub, card, sub_lang=None):
 """
 
 
-def sections_html(term, prefix):
-    if not term["sections"]:
-        return '<p class="empty">Nothing posted for this term yet.</p>'
+def sections_html(term, prefix, audience="student"):
+    # Daniel 11-20: instructor tools never appear on the student pages; they're listed on the unlisted current/instructor.html
     out = []
     for s in term["sections"]:
         items = []
-        for it in s["items"]:
+        mine = [it for it in s["items"] if (it.get("audience") == "instructor") == (audience == "instructor")]
+        if not mine:
+            continue
+        for it in mine:
             tags = f'<span class="tag">{e(it.get("kind", "Page"))}</span>'
             if it.get("audience") == "instructor":
                 tags += '<span class="tag instructor">Instructor</span>'
@@ -97,6 +99,8 @@ def sections_html(term, prefix):
     </ul>
     </div>
   </section>""")
+    if not out:
+        return '<p class="empty">Nothing posted for this term yet.</p>'
     return "\n".join(out)
 
 
@@ -120,7 +124,7 @@ def footer(site):
 """
 
 
-def term_page(site, term, depth, is_current, root_page=False):
+def term_page(site, term, depth, is_current, root_page=False, audience="student"):
     c = site["course"]
     prefix = "current/" if root_page else ""
     label = f"{term['term']} · {term['schedule']}"
@@ -136,7 +140,7 @@ def term_page(site, term, depth, is_current, root_page=False):
     title = f"{c['code']} · {label}"
     return (head(title, f"{c['code']} {c['title']}: pages and tools for {label}.", depth)
             + mast(c, crumbs, kicker, c["code"], c["title"], card)  # Daniel 11-19: English course title, not "Español elemental I"
-            + f'<main id="main"><div class="wrap layout">\n<div>\n{sections_html(term, prefix)}\n</div>\n'
+            + f'<main id="main"><div class="wrap layout">\n<div>\n{sections_html(term, prefix, audience)}\n</div>\n'
             + aside(site, depth, term["id"]) + "\n</div></main>\n" + footer(site))
 
 
@@ -154,12 +158,16 @@ def build():
     (ROOT / "current").mkdir(exist_ok=True)
     (ROOT / "index.html").write_text(term_page(site, cur, 0, True, root_page=True), encoding="utf8")
     (ROOT / "current/index.html").write_text(term_page(site, cur, 1, True), encoding="utf8")
+    # unlisted instructor page: not linked from any student page, not indexed by search engines
+    ins = term_page(site, cur, 1, True, audience="instructor").replace("<head>", '<head>\n<meta name="robots" content="noindex, nofollow">', 1)
+    ins = ins.replace(f"<title>{e(site['course']['code'])} · ", f"<title>Instructor tools · {e(site['course']['code'])} · ", 1)
+    (ROOT / "current/instructor.html").write_text(ins, encoding="utf8")
     for t in site["archive"]:
         d = ROOT / "archive" / t["id"]
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(term_page(site, t, 2, False), encoding="utf8")
     (ROOT / "404.html").write_text(page_404(site), encoding="utf8")
-    print("built: index.html, current/index.html, 404.html" + "".join(f", archive/{t['id']}/index.html" for t in site["archive"]))
+    print("built: index.html, current/index.html, current/instructor.html, 404.html" + "".join(f", archive/{t['id']}/index.html" for t in site["archive"]))
     return check()
 
 
